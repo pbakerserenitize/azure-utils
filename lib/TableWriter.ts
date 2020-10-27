@@ -151,22 +151,3 @@ export class TableWriter {
     return TableWriter.from(options)
   }
 }
-
-export function mergeTableWriters (writers: Partial<TableWriter>[], connection?: string): TableWriter[] {
-  const map = new Map<string, TableWriter>()
-
-  for (const writer of writers) {
-    const key = `${writer.tableName}::${writer.partitionKey}`
-    const merged = map.get(key)
-
-    if (typeof merged === 'undefined') {
-      map.set(key, TableWriter.from(writer, connection))
-    } else {
-      for (const tableRow of writer.tableRows) {
-        merged.addTableRow(tableRow)
-      }
-    }
-  }
-
-  return Array.from(map.values())
-}
