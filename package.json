@@ -1,0 +1,28 @@
+{
+  "name": "@nhsllc/azure-utils",
+  "version": "1.0.0",
+  "description": "Private utilitiy classes and methods for use with Microsoft Azure projects",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/nhsllc",
+    "access": "restricted"
+  },
+  "scripts": {
+    "prepack": "gulp compile",
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/nhsllc/azure-utils.git"
+  },
+  "author": "Net Health Shops LLC <integrations@nethealthshops.com>",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/nhsllc/azure-utils/issues"
+  },
+  "homepage": "https://github.com/nhsllc/azure-utils#readme"
+}
