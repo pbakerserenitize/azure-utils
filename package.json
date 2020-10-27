@@ -27,6 +27,7 @@
   "homepage": "https://github.com/nhsllc/azure-utils#readme",
   "dependencies": {
     "@azure/storage-blob": "^12.2.1",
+    "@azure/storage-queue": "^12.1.0",
     "azure-table-promise": "^1.2.0",
     "uuid": "^8.3.1"
   },
