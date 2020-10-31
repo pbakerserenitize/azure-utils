@@ -1,3 +1,6 @@
+/** Options for Azure Function helper `tableWriterBatch`.
+ * @category AzureFunctionHelper
+ */
 export interface TWBOptions {
   /** Connection string override for all connections. */
   allConnections?: string

@@ -4,6 +4,32 @@ import type { QueueBlobMessage } from '../Interfaces'
 import type { TWBOptions } from './Interfaces'
 import { TableWriterBatch } from '../TableWriterBatch'
 
+/** Helper method which acts as the body of an Azure Function designed for batching table writer instances.
+ * 
+ * ```javascript
+ * const { FunctionHelpers } = require('@nhsllc/azure-utils')
+ * const { loggerWithDefaults } = require('../shared/rollbar')
+ * 
+ * const logger = loggerWithDefaults()
+ * 
+ * module.exports = logger.azureFunctionHandler(
+ *   async function tableBatcher (context) {
+ *     try {
+ *       await FunctionHelpers.tableWriterBatch({
+ *         allConnections: process.env.orderdataservice_STORAGE,
+ *         queue: {
+ *           name: 'table-batcher',
+ *           numberOfMessages: 32
+ *         }
+ *       })
+ *     } catch (error) {
+ *       logger.error(error)
+ *     }
+ *   }
+ * )
+ * ```
+ * @category AzureFunctionHelper
+ */
 export async function tableWriterBatch (options: TWBOptions) {
   const { allConnections, blobConnection, queue, tableConnection } = options
   const { name: queueName, connection: queueConnection, numberOfMessages } = queue

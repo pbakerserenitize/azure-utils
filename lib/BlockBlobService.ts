@@ -5,8 +5,9 @@ import {
   StorageSharedKeyCredential as BlobCredential
 } from '@azure/storage-blob'
 
+/** @hidden */
 class BlobContainerManager {
-  /** @param {BlobServiceClient} blobService */
+  /** Class for managing blob containers, creating them if they don't exist. */
   constructor (blobService: BlobServiceClient) {
     this.blobService = blobService
     this.containers = new Map()
@@ -19,10 +20,7 @@ class BlobContainerManager {
     return this.containers.has(blobContainer)
   }
 
-  /**
-   * @param {string} blobContainer - The name of the blob container.
-   * @returns {Promise<ContainerClient>} - The container client instance.
-   */
+  /** Add a blob container by name. */
   async add (blobContainer: string): Promise<ContainerClient> {
     if (this.has(blobContainer)) {
       return this.get(blobContainer)
@@ -35,10 +33,7 @@ class BlobContainerManager {
     return containerClient
   }
 
-  /**
-   * @param {string} blobContainer - The name of the blob container.
-   * @returns {ContainerClient} - The container client instance.
-   */
+  /** Get a blob container by name. */
   get (blobContainer: string): ContainerClient {
     return this.containers.get(blobContainer)
   }
@@ -56,6 +51,25 @@ class BlobContainerManager {
   }
 }
 
+/** Convenience wrapper for managing blob service instances gracefully.
+ * 
+ * ```javascript
+ * const { BlockBlobService } = require('@nhsllc/azure-utils')
+ * 
+ * module.exports = async function example (context) {
+ *   const blobService = new BlockBlobService(process.env.STORAGE_CONNECTION)
+ *   const container = 'examples'
+ *   const json = { hello: 'world' }
+ *   const str = 'Hello, world!'
+ *   const buf = Buffer.from([20, 30, 40, 50])
+ * 
+ *   await blobService.write(container, 'test.json', json)
+ *   await blobService.write(container, 'test.txt', str)
+ *   await blobService.write(container, 'test.bin', buf)
+ * }
+ * ```
+ * @category AzureUtility
+ */
 export class BlockBlobService {
   /** Convenience wrapper for managing blob service instances gracefully.
    * @param {string} accountNameOrConnectionString - The account name or the connection string.

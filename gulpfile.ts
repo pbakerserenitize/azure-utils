@@ -12,3 +12,4 @@ function shellTask (commands: string | string[], options?: { name?: string; [pro
 
 export const test = shellTask(['mocha'], { name: 'test' })
 export const compile = shellTask(['tsc'], { name: 'compile' })
+export const docs = shellTask(['typedoc'], { name: 'docs' })
