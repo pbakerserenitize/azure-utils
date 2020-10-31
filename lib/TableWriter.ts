@@ -1,18 +1,14 @@
 import { azure, createTableService } from 'azure-table-promise'
 import { v4 as uuidv4 } from 'uuid'
 import { BlockBlobService } from './BlockBlobService'
-import type { QueueBlobMessage } from './Interfaces'
+import type { QueueBlobMessage, TableRow } from './Interfaces'
 
-type StringProperty = azure.TableUtilities.entityGenerator.EntityProperty<string>
+const {
+  /** @hidden */
+  String: StringEntity
+} = azure.TableUtilities.entityGenerator
 
-const { String: StringEntity } = azure.TableUtilities.entityGenerator
-
-export interface TableRow {
-  PartitionKey: string | StringProperty
-  RowKey: string | StringProperty
-  [property: string]: any
-}
-
+/** @hidden */
 function safeTableRow (item: TableRow): TableRow {
   return {
     ...item,
@@ -25,7 +21,27 @@ function safeTableRow (item: TableRow): TableRow {
   }
 }
 
+/** Class for managing a complete round-trip of one or more table rows for upsert into Azure Table Storage.
+ * 
+ * ```javascript
+ * const { TableWriter } = require('@nhsllc/azure-utils')
+ * 
+ * module.exports = async function example (context) {
+ *   const tableRows = [] // Fill up this array with table rows of the same partition key
+ *   const tableWriter = new TableWriter({
+ *     tableName: 'ExampleTable',
+ *     tableRows
+ *   })
+ * 
+ *   return {
+ *     tableBatcher: await tableWriter.toQueueMessage(process.env.STORAGE_CONNECTION)
+ *   }
+ * }
+ * ```
+ * @category AzureUtility
+ */
 export class TableWriter {
+  /** Class for managing a complete round-trip of one or more table rows for upsert into Azure Table Storage. */
   constructor (message: Partial<TableWriter> = {}) {
     this.partitionKey = message.partitionKey
     this.tableName = message.tableName
@@ -66,6 +82,7 @@ export class TableWriter {
     return Array.from(this._tableRowMap.values())
   }
 
+  /** Adds a single table row to this instance of writer. */
   addTableRow (tableRow: TableRow): void {
     const partitionKey = typeof tableRow.PartitionKey === 'string'
       ? tableRow.PartitionKey
@@ -81,6 +98,7 @@ export class TableWriter {
     this._tableRowMap.set(`${partitionKey}::${rowKey}`, safeTableRow(tableRow))
   }
 
+  /** Executes a batch, creating the table if it does not exist. */
   async executeBatch (connection?: string): Promise<void> {
     if (
       this.tableRows.length > 0 &&
@@ -88,6 +106,8 @@ export class TableWriter {
     ) {
       const tableService = createTableService(this.connection || connection)
       const BATCH_LIMIT = 100
+
+      await tableService.createTableIfNotExists(this.tableName)
 
       for (
         let start = 0, end = BATCH_LIMIT;
@@ -104,6 +124,7 @@ export class TableWriter {
     }
   }
 
+  /** Writes this instance of table writer to blob storage, and generates blob metadata intended to be a queue message. */
   async toQueueMessage (connection?: string): Promise<QueueBlobMessage> {
     if (
       this.tableRows.length > 0 &&
@@ -120,6 +141,7 @@ export class TableWriter {
     }
   }
 
+  /** Exports this instance as a plain JS object for `JSON.stringify`. */
   toJSON (): Partial<TableWriter> {
     return {
       blobName: this.blobName,
@@ -130,6 +152,7 @@ export class TableWriter {
     }
   }
 
+  /** Creates an instance of table writer from valid JSON or from a plain JS object. */
   static from (json: string | Partial<TableWriter>, connection?: string): TableWriter {
     const options = typeof json === 'string'
       ? JSON.parse(json) as Partial<TableWriter>
@@ -142,6 +165,7 @@ export class TableWriter {
     })
   }
 
+  /** Creates an instance of table writer from blob metadata. */
   static async fromBlob (message: QueueBlobMessage, connection: string | BlockBlobService): Promise<TableWriter> {
     const blobService = typeof connection === 'string'
       ? new BlockBlobService(connection)
