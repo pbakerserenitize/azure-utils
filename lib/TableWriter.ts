@@ -58,13 +58,15 @@ export class TableWriter {
       this.container = 'table-writer'
     }
 
-    if (typeof this.partitionKey === 'undefined' && message.tableRows.length > 0) {
+    const isTableRowArray = Array.isArray(message.tableRows)
+
+    if (typeof this.partitionKey === 'undefined' && isTableRowArray && message.tableRows.length > 0) {
       this.partitionKey = typeof message.tableRows[0].PartitionKey === 'string'
         ? message.tableRows[0].PartitionKey
         : message.tableRows[0].PartitionKey._
     }
 
-    if (Array.isArray(message.tableRows)) {
+    if (isTableRowArray) {
       for (const tableRow of message.tableRows) {
         this.addTableRow(tableRow)
       }
