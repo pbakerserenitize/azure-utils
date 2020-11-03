@@ -114,13 +114,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="tablewriterbatch.html#_sizelimitcache" class="tsd-kind-icon">_size<wbr>Limit<wbr>Cache</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="tablewriterbatch.html#_tablewritermap" class="tsd-kind-icon">_table<wbr>Writer<wbr>Map</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="tablewriterbatch.html#connection" class="tsd-kind-icon">connection</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="tablewriterbatch.html#maxwritersize" class="tsd-kind-icon">max<wbr>Writer<wbr>Size</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="tablewriterbatch.html#size" class="tsd-kind-icon">size</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="tablewriterbatch.html#tablewriters" class="tsd-kind-icon">table<wbr>Writers</a></li>
 							</ul>
 						</section>
@@ -150,7 +153,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriterBatch.ts#L31">lib/TableWriterBatch.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L32">lib/TableWriterBatch.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -172,12 +175,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_sizelimitcache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _size<wbr>Limit<wbr>Cache</h3>
+					<div class="tsd-signature tsd-kind-icon">_size<wbr>Limit<wbr>Cache<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L53">lib/TableWriterBatch.ts:53</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="_tablewritermap" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _table<wbr>Writer<wbr>Map</h3>
 					<div class="tsd-signature tsd-kind-icon">_table<wbr>Writer<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="tablewriter.html" class="tsd-signature-type">TableWriter</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriterBatch.ts#L46">lib/TableWriterBatch.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L52">lib/TableWriterBatch.ts:52</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -187,13 +200,50 @@
 					<div class="tsd-signature tsd-kind-icon">connection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriterBatch.ts#L45">lib/TableWriterBatch.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L49">lib/TableWriterBatch.ts:49</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An Azure connection string.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="maxwritersize" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> max<wbr>Writer<wbr>Size</h3>
+					<div class="tsd-signature tsd-kind-icon">max<wbr>Writer<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L51">lib/TableWriterBatch.ts:51</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Limit the size of table writer instances.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="size" class="tsd-anchor"></a>
+					<h3>size</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L59">lib/TableWriterBatch.ts:59</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 					<a name="tablewriters" class="tsd-anchor"></a>
 					<h3>table<wbr>Writers</h3>
@@ -204,7 +254,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriterBatch.ts#L48">lib/TableWriterBatch.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L55">lib/TableWriterBatch.ts:55</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="tablewriter.html" class="tsd-signature-type">TableWriter</a><span class="tsd-signature-symbol">[]</span></h4>
@@ -224,7 +274,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriterBatch.ts#L53">lib/TableWriterBatch.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L64">lib/TableWriterBatch.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -255,7 +305,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriterBatch.ts#L67">lib/TableWriterBatch.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L115">lib/TableWriterBatch.ts:115</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -283,7 +333,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriterBatch.ts#L84">lib/TableWriterBatch.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L132">lib/TableWriterBatch.ts:132</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="tablewriterbatch.html" class="tsd-signature-type">TableWriterBatch</a><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -300,7 +350,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriterBatch.ts#L74">lib/TableWriterBatch.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L122">lib/TableWriterBatch.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -328,7 +378,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriterBatch.ts#L91">lib/TableWriterBatch.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L139">lib/TableWriterBatch.ts:139</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -359,7 +409,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriterBatch.ts#L104">lib/TableWriterBatch.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriterBatch.ts#L152">lib/TableWriterBatch.ts:152</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -407,10 +457,19 @@
 								<a href="tablewriterbatch.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="tablewriterbatch.html#_sizelimitcache" class="tsd-kind-icon">_size<wbr>Limit<wbr>Cache</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="tablewriterbatch.html#_tablewritermap" class="tsd-kind-icon">_table<wbr>Writer<wbr>Map</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="tablewriterbatch.html#connection" class="tsd-kind-icon">connection</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="tablewriterbatch.html#maxwritersize" class="tsd-kind-icon">max<wbr>Writer<wbr>Size</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="tablewriterbatch.html#size" class="tsd-kind-icon">size</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="tablewriterbatch.html#tablewriters" class="tsd-kind-icon">table<wbr>Writers</a>

@@ -118,6 +118,7 @@
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="tablewriter.html#size" class="tsd-kind-icon">size</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="tablewriter.html#tablerows" class="tsd-kind-icon">table<wbr>Rows</a></li>
 							</ul>
 						</section>
@@ -147,7 +148,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L43">lib/TableWriter.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L43">lib/TableWriter.ts:43</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -174,7 +175,7 @@
 					<div class="tsd-signature tsd-kind-icon">_table<wbr>Row<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="../interfaces/tablerow.html" class="tsd-signature-type">TableRow</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L79">lib/TableWriter.ts:79</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L84">lib/TableWriter.ts:84</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -184,9 +185,14 @@
 					<div class="tsd-signature tsd-kind-icon">blob<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L74">lib/TableWriter.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L75">lib/TableWriter.ts:75</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A blob name; one will be set dynamically, which is recommended.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="connection" class="tsd-anchor"></a>
@@ -194,9 +200,14 @@
 					<div class="tsd-signature tsd-kind-icon">connection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L75">lib/TableWriter.ts:75</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L77">lib/TableWriter.ts:77</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An Azure connection string.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="container" class="tsd-anchor"></a>
@@ -204,9 +215,14 @@
 					<div class="tsd-signature tsd-kind-icon">container<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L76">lib/TableWriter.ts:76</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L79">lib/TableWriter.ts:79</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A blob container; defaults to <code>table-writer</code>, will be dynamically created.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="partitionkey" class="tsd-anchor"></a>
@@ -214,9 +230,14 @@
 					<div class="tsd-signature tsd-kind-icon">partition<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L77">lib/TableWriter.ts:77</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L81">lib/TableWriter.ts:81</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A partition key; will be determined from the first table row unless provided.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="tablename" class="tsd-anchor"></a>
@@ -224,13 +245,35 @@
 					<div class="tsd-signature tsd-kind-icon">table<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L78">lib/TableWriter.ts:78</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L83">lib/TableWriter.ts:83</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A table name; table will be created dynamically when executing the batch.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="size" class="tsd-anchor"></a>
+					<h3>size</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L90">lib/TableWriter.ts:90</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 					<a name="tablerows" class="tsd-anchor"></a>
 					<h3>table<wbr>Rows</h3>
@@ -241,7 +284,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L81">lib/TableWriter.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L86">lib/TableWriter.ts:86</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/tablerow.html" class="tsd-signature-type">TableRow</a><span class="tsd-signature-symbol">[]</span></h4>
@@ -261,7 +304,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L86">lib/TableWriter.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L95">lib/TableWriter.ts:95</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -289,7 +332,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L102">lib/TableWriter.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L111">lib/TableWriter.ts:111</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -317,7 +360,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L145">lib/TableWriter.ts:145</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L154">lib/TableWriter.ts:154</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -339,7 +382,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L128">lib/TableWriter.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L137">lib/TableWriter.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -367,7 +410,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L156">lib/TableWriter.ts:156</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L165">lib/TableWriter.ts:165</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -398,7 +441,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/60c2857/lib/TableWriter.ts#L169">lib/TableWriter.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/0736997/lib/TableWriter.ts#L178">lib/TableWriter.ts:178</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -459,6 +502,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="tablewriter.html#tablename" class="tsd-kind-icon">table<wbr>Name</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="tablewriter.html#size" class="tsd-kind-icon">size</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="tablewriter.html#tablerows" class="tsd-kind-icon">table<wbr>Rows</a>
