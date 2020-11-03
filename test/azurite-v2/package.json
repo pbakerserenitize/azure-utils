@@ -1,0 +1,10 @@
+{
+  "name": "azurite-v2",
+  "version": "2.7.1",
+  "bundledDependencies": [
+    "azurite"
+  ],
+  "dependencies": {
+    "azurite": "^2.7.1"
+  }
+}
