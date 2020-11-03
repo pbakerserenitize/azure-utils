@@ -1,4 +1,4 @@
-import { deepStrictEqual, strictEqual } from 'assert'
+import { deepStrictEqual, doesNotThrow, strictEqual } from 'assert'
 import { BlockBlobService } from '../index'
 
 const connection = 'UseDevelopmentStorage=true'
@@ -16,6 +16,11 @@ describe('BlockBlobService', async () => {
     const hello2 = await blobService2.readWithFallback(container, 'not-real.txt', filename)
 
     strictEqual(hello1.toString('utf8'), hello2.toString('utf8'))
+    doesNotThrow(() => {
+      const blobService3 = new BlockBlobService(connection, connection)
+
+      strictEqual(blobService3 instanceof BlockBlobService, true)
+    })
   })
 
   it('should support buffer on error and revive json', async () => {
