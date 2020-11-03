@@ -158,7 +158,7 @@ export class BlockBlobService {
   async readWithFallback (blobContainer: string, blobName: string, fallbackBlobName: string): Promise<Buffer> {
     const containerClient = await this.containers.add(blobContainer)
 
-    if (this.has(blobContainer, blobName)) {
+    if (await this.has(blobContainer, blobName)) {
       const blockBlobClient = containerClient.getBlockBlobClient(blobName)
 
       return await blockBlobClient.downloadToBuffer()
