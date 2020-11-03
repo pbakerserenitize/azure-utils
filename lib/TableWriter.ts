@@ -71,15 +71,24 @@ export class TableWriter {
     }
   }
 
+  /** A blob name; one will be set dynamically, which is recommended. */
   blobName: string
+  /** An Azure connection string. */
   connection?: string
+  /** A blob container; defaults to `table-writer`, will be dynamically created. */
   container: string
+  /** A partition key; will be determined from the first table row unless provided. */
   partitionKey: string
+  /** A table name; table will be created dynamically when executing the batch. */
   tableName: string
   private _tableRowMap: Map<string, TableRow>
 
   get tableRows (): TableRow[] {
     return Array.from(this._tableRowMap.values())
+  }
+
+  get size (): number {
+    return this._tableRowMap.size
   }
 
   /** Adds a single table row to this instance of writer. */

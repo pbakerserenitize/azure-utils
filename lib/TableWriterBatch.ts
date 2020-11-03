@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import type { BlockBlobService } from './BlockBlobService'
 import type { QueueBlobMessage } from './Interfaces'
 import { TableWriter } from './TableWriter'
@@ -32,6 +33,8 @@ export class TableWriterBatch {
   /** Class for managing one or more TableWriter instances to round-trip into Azure Table Storage. */
   constructor (batchMessage: Partial<TableWriterBatch> = {}) {
     this.connection = batchMessage.connection
+    this.maxWriterSize = batchMessage.maxWriterSize
+    this._sizeLimitCache = new Map()
     this._tableWriterMap = new Map()
 
     if (Array.isArray(batchMessage.tableWriters)) {
@@ -42,24 +45,69 @@ export class TableWriterBatch {
 
   }
 
+  /** An Azure connection string. */
   connection?: string
+  /** Limit the size of table writer instances. */
+  maxWriterSize?: number
   private _tableWriterMap: Map<string, TableWriter>
+  private _sizeLimitCache: Map<string, string>
 
   get tableWriters (): TableWriter[] {
     return Array.from(this._tableWriterMap.values())
   }
 
+  get size (): number {
+    return this._tableWriterMap.size
+  }
+
   /** Adds a single table writer to this instance; merges writers with same table name/partition key combination. */
   addTableWriter (writer: Partial<TableWriter>, connection?: string): void {
     const key = `${writer.tableName}::${writer.partitionKey}`
-    const merged = this._tableWriterMap.get(key)
 
-    if (typeof merged === 'undefined') {
-      this._tableWriterMap.set(key, TableWriter.from(writer, connection || this.connection))
-    } else {
-      for (const tableRow of writer.tableRows) {
-        merged.addTableRow(tableRow)
+    if (typeof this.maxWriterSize === 'undefined' || this.maxWriterSize === 0) {
+      const merged = this._tableWriterMap.get(key)
+
+      if (typeof merged === 'undefined') {
+        this._tableWriterMap.set(key, TableWriter.from(writer, connection || this.connection))
+      } else {
+        for (const tableRow of writer.tableRows) {
+          merged.addTableRow(tableRow)
+        }
       }
+    } else {
+      const setNewMerged = () => {
+        return new TableWriter({
+          tableName: writer.tableName,
+          partitionKey: writer.partitionKey,
+          container: writer.container,
+          connection: writer.connection || connection || this.connection
+        })
+      }
+      let uuidKey = this._sizeLimitCache.get(key) || uuidv4()
+      let merged = this._tableWriterMap.get(uuidKey) || setNewMerged()
+
+      for (const tableRow of writer.tableRows) {
+        if (merged.size < this.maxWriterSize) {
+          merged.addTableRow(tableRow)
+        } else {
+          // Ensure that the table writer is tracked.
+          this._tableWriterMap.set(uuidKey, merged)
+
+          // Create new references.
+          uuidKey = uuidv4()
+          merged = setNewMerged()
+
+          // Add the table row to the new writer instance.
+          merged.addTableRow(tableRow)
+
+          // Track new references.
+          this._sizeLimitCache.set(key, uuidKey)
+          this._tableWriterMap.set(uuidKey, merged)
+        }
+      }
+
+      this._sizeLimitCache.set(key, uuidKey)
+      this._tableWriterMap.set(uuidKey, merged)
     }
   }
 
