@@ -62,7 +62,14 @@ export class TableWriterBatch {
 
   /** Adds a single table writer to this instance; merges writers with same table name/partition key combination. */
   addTableWriter (writer: Partial<TableWriter>, connection?: string): void {
-    const key = `${writer.tableName}::${writer.partitionKey}`
+    const inferPartitionKey = () => {
+      if (Array.isArray(writer.tableRows) && writer.tableRows.length > 0) {
+        return typeof writer.tableRows[0].PartitionKey === 'string'
+          ? writer.tableRows[0].PartitionKey
+          : writer.tableRows[0].PartitionKey._
+      }
+    }
+    const key = `${writer.tableName}::${writer.partitionKey || inferPartitionKey()}`
 
     if (typeof this.maxWriterSize === 'undefined' || this.maxWriterSize === 0) {
       const merged = this._tableWriterMap.get(key)
@@ -78,7 +85,7 @@ export class TableWriterBatch {
       const setNewMerged = () => {
         return new TableWriter({
           tableName: writer.tableName,
-          partitionKey: writer.partitionKey,
+          partitionKey: writer.partitionKey || inferPartitionKey(),
           container: writer.container,
           connection: writer.connection || connection || this.connection
         })
