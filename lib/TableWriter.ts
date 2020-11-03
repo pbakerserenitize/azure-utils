@@ -89,6 +89,12 @@ export class TableWriter {
     return Array.from(this._tableRowMap.values())
   }
 
+  set tableRows (rows: TableRow[]) {
+    for (const tableRow of rows) {
+      this.addTableRow(tableRow)
+    }
+  }
+
   get size (): number {
     return this._tableRowMap.size
   }
