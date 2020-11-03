@@ -47,8 +47,8 @@ function shellTask (commands: string | string[], options?: { name?: string; [pro
 export const lint = shellTask(['prettier-standard --check --lint'], { name: 'format' })
 export const format = shellTask(['prettier-standard --lint'], { name: 'format' })
 
-export const mocha = shellTask(['mocha'], { name: 'mocha' })
-export const nyc = shellTask(['nyc mocha'], { name: 'nyc' })
+export const mocha = shellTask(['mocha'], { name: 'mocha', ignoreErrors: true })
+export const nyc = shellTask(['nyc mocha'], { name: 'nyc', ignoreErrors: true })
 export const test = gulp.series(azuriteStart, mocha, azuriteStop)
 export const coverage = gulp.series(azuriteStart, nyc, azuriteStop)
 
