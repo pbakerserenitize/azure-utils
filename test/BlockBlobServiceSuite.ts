@@ -1,7 +1,6 @@
 import { deepStrictEqual, doesNotThrow, strictEqual } from 'assert'
 import { BlockBlobService } from '../index'
-
-const connection = 'UseDevelopmentStorage=true'
+import { connection } from './helpers'
 
 describe('BlockBlobService', async () => {
   it('should read and write files', async () => {

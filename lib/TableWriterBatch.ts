@@ -52,8 +52,14 @@ export class TableWriterBatch {
   private _tableWriterMap: Map<string, TableWriter>
   private _sizeLimitCache: Map<string, string>
 
-  get tableWriters (): TableWriter[] {
+  get tableWriters (): Partial<TableWriter>[] {
     return Array.from(this._tableWriterMap.values())
+  }
+
+  set tableWriters (writers: Partial<TableWriter>[]) {
+    for (const tableWriter of writers) {
+      this.addTableWriter(tableWriter)
+    }
   }
 
   get size (): number {

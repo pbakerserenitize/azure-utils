@@ -1,30 +1,6 @@
 import { doesNotThrow, throws, strictEqual, doesNotReject } from 'assert'
-import { TableRow, TableWriter } from '../index'
-
-const connection = 'UseDevelopmentStorage=true'
-const tableRows: TableRow[] = [
-  {
-    PartitionKey: 'test',
-    RowKey: 'test1',
-    data: 1
-  },
-  {
-    PartitionKey: 'test',
-    RowKey: 'test2',
-    data: 2
-  },
-  {
-    PartitionKey: {
-      _: 'test',
-      $: 'Edm.String'
-    },
-    RowKey: {
-      _: 'test3',
-      $: 'Edm.String'
-    },
-    data: 3
-  }
-]
+import { TableWriter } from '../index'
+import { connection, tableRows, validError } from './helpers'
 
 describe('TableWriter', async () => {
   it('should manage table rows', () => {
@@ -58,7 +34,6 @@ describe('TableWriter', async () => {
     tableWriter.tableName = 'Test'
     tableWriter.partitionKey = 'test'
     tableWriter.tableRows = tableRows
-    const validError = 'Cannot read property \'tableName\' of undefined'
 
     await doesNotReject(async () => {
       try {
