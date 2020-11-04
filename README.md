@@ -27,3 +27,7 @@ In TypeScript:
 ```ts
 import { TableWriter } from '@nhsllc/azure-utils'
 ```
+
+## Documentation
+
+Can be found at the root of the repository under [docs](./docs/index.html).
