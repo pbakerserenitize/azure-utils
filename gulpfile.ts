@@ -31,8 +31,9 @@ const azuriteTable = createAzuriteService(
   './node_modules/azurite-v2/node_modules/azurite/bin/table',
   azuriteV2Dir
 )
-const azuriteStart = gulp.parallel(azuriteTable.start as any, azuriteBlob.start as any)
-const azuriteStop = gulp.parallel(azuriteTable.stop, azuriteBlob.stop)
+const azuriteQueue = createAzuriteService('azuriteQueue', './node_modules/azurite/dist/src/queue/main', azuriteV3Dir)
+const azuriteStart = gulp.parallel(azuriteTable.start as any, azuriteBlob.start as any, azuriteQueue.start as any)
+const azuriteStop = gulp.parallel(azuriteTable.stop, azuriteBlob.stop, azuriteQueue.stop)
 
 function shellTask (commands: string | string[], options?: { name?: string; [prop: string]: any }): () => Promise<void> {
   const task = shell.task(commands, options as any)

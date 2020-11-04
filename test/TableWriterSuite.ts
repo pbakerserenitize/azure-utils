@@ -39,7 +39,7 @@ describe('TableWriter', async () => {
       try {
         await tableWriter.executeBatch(connection)
       } catch (error) {
-        // Azurite does not have complete support for batches; look for specific error.
+        // Azurite V2 does not have complete support for batches; look for specific error.
         if (error.message !== validError) {
           throw error
         }
