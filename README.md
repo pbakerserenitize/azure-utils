@@ -11,6 +11,7 @@ Install via npm:
 # If not already logged in, make sure to log in using your github username and a personal token.
 # Note the the registry URL is different from that used by the install command.
 # Alternatively, a .npmrc file could be stored in the project root, or environment variables.
+# Using powershell, run:
 npm login --registry=https://npm.pkg.github.com/
 # Use the personal access token as your password
 # Using the organization registry URL allows pass-through of packages from npmjs.com.
