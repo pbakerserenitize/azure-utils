@@ -33,7 +33,7 @@ describe('TableWriter', async () => {
     const tableWriter = new TableWriter()
     tableWriter.tableName = 'Test'
     tableWriter.partitionKey = 'test'
-    tableWriter.tableRows = tableRows
+    tableWriter.tableRows = tableRows as any
 
     await doesNotReject(async () => {
       try {
@@ -51,7 +51,7 @@ describe('TableWriter', async () => {
     const tableWriter = new TableWriter()
     tableWriter.tableName = 'Test'
     tableWriter.partitionKey = 'test'
-    tableWriter.tableRows = tableRows
+    tableWriter.tableRows = tableRows as any
     let message: any
 
     await doesNotReject(async () => {

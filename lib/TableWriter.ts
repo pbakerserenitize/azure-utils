@@ -27,6 +27,10 @@ function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
   }
 }
 
+export type TableWriterMessage = Partial<Omit<TableWriter, 'tableRows'>> & {
+  tableRows?: Array<LegacyTableRow | TableRow>
+}
+
 /** Class for managing a complete round-trip of one or more table rows for upsert into Azure Table Storage.
  *
  * ```javascript
@@ -48,11 +52,7 @@ function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
  */
 export class TableWriter {
   /** Class for managing a complete round-trip of one or more table rows for upsert into Azure Table Storage. */
-  constructor (
-    message: Partial<TableWriter> & {
-      tableRows?: Array<LegacyTableRow | TableRow>
-    } = {}
-  ) {
+  constructor (message: TableWriterMessage = {}) {
     this.partitionKey = message.partitionKey
     this.tableName = message.tableName
     this.blobName = message.blobName
@@ -187,8 +187,8 @@ export class TableWriter {
   }
 
   /** Creates an instance of table writer from valid JSON or from a plain JS object. */
-  static from (json: string | Partial<TableWriter>, connection?: string): TableWriter {
-    const options = typeof json === 'string' ? (JSON.parse(json) as Partial<TableWriter>) : json
+  static from (json: string | TableWriterMessage, connection?: string): TableWriter {
+    const options: TableWriterMessage = typeof json === 'string' ? JSON.parse(json) : json
 
     return new TableWriter({
       ...options,
@@ -200,7 +200,7 @@ export class TableWriter {
   /** Creates an instance of table writer from blob metadata. */
   static async fromBlob (message: QueueBlobMessage, connection: string | BlockBlobService): Promise<TableWriter> {
     const blobService = typeof connection === 'string' ? new BlockBlobService(connection) : connection
-    const options: Partial<TableWriter> = await blobService.read(message.container, message.blobName, true)
+    const options: TableWriterMessage = await blobService.read(message.container, message.blobName, true)
 
     return TableWriter.from(options)
   }
