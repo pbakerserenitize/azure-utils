@@ -4,24 +4,24 @@ import type { BlockBlobService } from './BlockBlobService'
 import type { LegacyTableRow, QueueBlobMessage, TableRow } from './Interfaces'
 
 /** Class for managing one or more TableWriter instances to round-trip into Azure Table Storage.
- * 
+ *
  * ```javascript
  * const { TableWriterBatch } = require('@nhsllc/azure-utils')
- * 
+ *
  * module.exports = async function example (context) {
  *   const data = [] // Perhaps some data to generate rows for different table/partition keys
  *   const tableWriterBatch = new TableWriterBatch()
- * 
+ *
  *   for (const item of data) {
  *     const tableRows = [] // Fill up this array with table rows of the same partition key
  *     // Do some work generating rows
- * 
+ *
  *     tableWriterBatch.addTableWriter({
  *       tableName: 'ExampleTable',
  *       tableRows
  *     })
  *   }
- * 
+ *
  *   return {
  *     tableBatcher: await tableWriterBatch.toQueueMessages(process.env.STORAGE_CONNECTION)
  *   }
@@ -42,7 +42,6 @@ export class TableWriterBatch {
         this.addTableWriter(tableWriter)
       }
     }
-
   }
 
   /** An Azure connection string. */
@@ -67,14 +66,19 @@ export class TableWriterBatch {
   }
 
   /** Adds a single table writer to this instance; merges writers with same table name/partition key combination. */
-  addTableWriter (writer: Partial<TableWriter> & { tableRows?: Array<LegacyTableRow | TableRow> }, connection?: string): void {
+  addTableWriter (
+    writer: Partial<TableWriter> & {
+      tableRows?: Array<LegacyTableRow | TableRow>
+    },
+    connection?: string
+  ): void {
     const inferPartitionKey = () => {
       if (Array.isArray(writer.tableRows) && writer.tableRows.length > 0) {
         return typeof writer.tableRows[0].partitionKey === 'string'
           ? writer.tableRows[0].partitionKey
           : typeof writer.tableRows[0].PartitionKey === 'string'
-            ? writer.tableRows[0].PartitionKey
-            : writer.tableRows[0].PartitionKey._
+          ? writer.tableRows[0].PartitionKey
+          : writer.tableRows[0].PartitionKey._
       }
     }
     const key = `${writer.tableName}::${writer.partitionKey || inferPartitionKey()}`
@@ -152,9 +156,7 @@ export class TableWriterBatch {
 
   /** Creates a table writer batch instance from valid JSON or a JS object. */
   static from (json: string | Partial<TableWriterBatch>, connection?: string): TableWriterBatch {
-    const options = typeof json === 'string'
-      ? JSON.parse(json) as Partial<TableWriterBatch>
-      : json
+    const options = typeof json === 'string' ? (JSON.parse(json) as Partial<TableWriterBatch>) : json
 
     return new TableWriterBatch({
       ...options,
@@ -164,7 +166,10 @@ export class TableWriterBatch {
   }
 
   /** Creates a table writer batch instance from an array of blob metadata. */
-  static async fromBlobs (messages: QueueBlobMessage[], connection: string | BlockBlobService): Promise<TableWriterBatch> {
+  static async fromBlobs (
+    messages: QueueBlobMessage[],
+    connection: string | BlockBlobService
+  ): Promise<TableWriterBatch> {
     const tableWriters: TableWriter[] = []
 
     for (const message of messages) {

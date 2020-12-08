@@ -8,7 +8,10 @@ describe('AzureFunctions', async () => {
     const queueService = QueueServiceClient.fromConnectionString(connection)
     const queueName = 'test-queue'
     const queueClient = queueService.getQueueClient(queueName)
-    const queueMessage = await TableWriter.from({ tableName: 'Test', tableRows }).toQueueMessage(connection)
+    const queueMessage = await TableWriter.from({
+      tableName: 'Test',
+      tableRows
+    }).toQueueMessage(connection)
 
     await queueClient.createIfNotExists()
     await queueClient.sendMessage(Buffer.from(JSON.stringify(queueMessage)).toString('base64'))

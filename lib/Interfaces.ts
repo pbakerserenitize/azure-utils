@@ -1,4 +1,4 @@
-import type { azure } from 'azure-table-promise'
+import { azure } from 'azure-table-promise'
 
 /** @hidden */
 type StringProperty = azure.TableUtilities.entityGenerator.EntityProperty<string>

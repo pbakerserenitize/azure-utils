@@ -52,17 +52,17 @@ class BlobContainerManager {
 }
 
 /** Convenience wrapper for managing blob service instances gracefully.
- * 
+ *
  * ```javascript
  * const { BlockBlobService } = require('@nhsllc/azure-utils')
- * 
+ *
  * module.exports = async function example (context) {
  *   const blobService = new BlockBlobService(process.env.STORAGE_CONNECTION)
  *   const container = 'examples'
  *   const json = { hello: 'world' }
  *   const str = 'Hello, world!'
  *   const buf = Buffer.from([20, 30, 40, 50])
- * 
+ *
  *   await blobService.write(container, 'test.json', json)
  *   await blobService.write(container, 'test.txt', str)
  *   await blobService.write(container, 'test.bin', buf)
@@ -113,7 +113,7 @@ export class BlockBlobService {
   async write (
     blobContainer: string,
     blobName: string,
-    blobContent: string|Buffer|any[]|Record<string|number,any>
+    blobContent: string | Buffer | any[] | Record<string | number, any>
   ): Promise<BlockBlobUploadResponse> {
     const containerClient = await this.containers.add(blobContainer)
     const blockBlobClient = containerClient.getBlockBlobClient(blobName)

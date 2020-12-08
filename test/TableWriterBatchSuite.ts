@@ -1,4 +1,4 @@
-import { doesNotThrow, throws, strictEqual, doesNotReject } from 'assert'
+import { doesNotThrow, strictEqual, doesNotReject } from 'assert'
 import { TableWriterBatch, TableWriter } from '../index'
 import { connection, tableRows, validError } from './helpers'
 
@@ -41,7 +41,7 @@ describe('TableWriterBatch', async () => {
         tableRows
       }
     ]
-    const size  = tableWriterBatch.size
+    const size = tableWriterBatch.size
 
     strictEqual(size, 2)
     doesNotThrow(() => {

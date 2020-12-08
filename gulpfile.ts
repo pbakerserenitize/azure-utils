@@ -35,7 +35,10 @@ const azuriteQueue = createAzuriteService('azuriteQueue', './node_modules/azurit
 const azuriteStart = gulp.parallel(azuriteTable.start as any, azuriteBlob.start as any, azuriteQueue.start as any)
 const azuriteStop = gulp.parallel(azuriteTable.stop, azuriteBlob.stop, azuriteQueue.stop)
 
-function shellTask (commands: string | string[], options?: { name?: string; [prop: string]: any }): () => Promise<void> {
+function shellTask (
+  commands: string | string[],
+  options?: { name?: string; [prop: string]: any }
+): () => Promise<void> {
   const task = shell.task(commands, options as any)
 
   if (options && typeof options.name === 'string') {
@@ -45,8 +48,12 @@ function shellTask (commands: string | string[], options?: { name?: string; [pro
   return task
 }
 
-export const lint = shellTask(['prettier-standard --check --lint'], { name: 'format' })
-export const format = shellTask(['prettier-standard --lint'], { name: 'format' })
+export const lint = shellTask(['prettier-standard --check --lint'], {
+  name: 'format'
+})
+export const format = shellTask(['prettier-standard --lint'], {
+  name: 'format'
+})
 
 export const mocha = shellTask(['mocha'], { name: 'mocha', ignoreErrors: true })
 export const nyc = shellTask(['nyc mocha'], { name: 'nyc', ignoreErrors: true })

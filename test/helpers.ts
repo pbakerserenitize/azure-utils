@@ -2,7 +2,7 @@ import type { LegacyTableRow, TableRow } from '../index'
 
 export const connection = 'UseDevelopmentStorage=true'
 
-export const validError = 'Cannot read property \'tableName\' of undefined'
+export const validError = "Cannot read property 'tableName' of undefined"
 
 export const tableRows: Array<LegacyTableRow | TableRow> = [
   {
