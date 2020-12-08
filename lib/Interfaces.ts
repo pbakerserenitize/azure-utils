@@ -11,11 +11,20 @@ export interface QueueBlobMessage {
   container: string
 }
 
-/** Helper interface for table rows.
+/** Helper interface for legacy table rows.
+ * @category AzureUtility
+ */
+export interface LegacyTableRow {
+  PartitionKey: string | StringProperty
+  RowKey: string | StringProperty
+  [property: string]: any
+}
+
+/** Helper interface for table rows. This is the preferred object.
  * @category AzureUtility
  */
 export interface TableRow {
-  PartitionKey: string | StringProperty
-  RowKey: string | StringProperty
+  partitionKey: string
+  rowKey: string
   [property: string]: any
 }

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
-import type { BlockBlobService } from './BlockBlobService'
-import type { QueueBlobMessage } from './Interfaces'
 import { TableWriter } from './TableWriter'
+import type { BlockBlobService } from './BlockBlobService'
+import type { LegacyTableRow, QueueBlobMessage, TableRow } from './Interfaces'
 
 /** Class for managing one or more TableWriter instances to round-trip into Azure Table Storage.
  * 
@@ -67,12 +67,14 @@ export class TableWriterBatch {
   }
 
   /** Adds a single table writer to this instance; merges writers with same table name/partition key combination. */
-  addTableWriter (writer: Partial<TableWriter>, connection?: string): void {
+  addTableWriter (writer: Partial<TableWriter> & { tableRows?: Array<LegacyTableRow | TableRow> }, connection?: string): void {
     const inferPartitionKey = () => {
       if (Array.isArray(writer.tableRows) && writer.tableRows.length > 0) {
-        return typeof writer.tableRows[0].PartitionKey === 'string'
-          ? writer.tableRows[0].PartitionKey
-          : writer.tableRows[0].PartitionKey._
+        return typeof writer.tableRows[0].partitionKey === 'string'
+          ? writer.tableRows[0].partitionKey
+          : typeof writer.tableRows[0].PartitionKey === 'string'
+            ? writer.tableRows[0].PartitionKey
+            : writer.tableRows[0].PartitionKey._
       }
     }
     const key = `${writer.tableName}::${writer.partitionKey || inferPartitionKey()}`

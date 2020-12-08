@@ -1,13 +1,13 @@
-import type { TableRow } from '../index'
+import type { LegacyTableRow, TableRow } from '../index'
 
 export const connection = 'UseDevelopmentStorage=true'
 
 export const validError = 'Cannot read property \'tableName\' of undefined'
 
-export const tableRows: TableRow[] = [
+export const tableRows: Array<LegacyTableRow | TableRow> = [
   {
-    PartitionKey: 'test',
-    RowKey: 'test1',
+    partitionKey: 'test',
+    rowKey: 'test1',
     data: 1
   },
   {

@@ -1,23 +1,33 @@
-import { azure, createTableService } from 'azure-table-promise'
+import { TableClient } from '@azure/data-tables'
 import { v4 as uuidv4 } from 'uuid'
 import { BlockBlobService } from './BlockBlobService'
-import type { QueueBlobMessage, TableRow } from './Interfaces'
-
-const {
-  /** @hidden */
-  String: StringEntity
-} = azure.TableUtilities.entityGenerator
+import type { LegacyTableRow, QueueBlobMessage, TableRow } from './Interfaces'
 
 /** @hidden */
-function safeTableRow (item: TableRow): TableRow {
+function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
+  const { PartitionKey, RowKey, partitionKey, rowKey } = item
+
+  if (PartitionKey && RowKey) {
+    delete item.PartitionKey
+    delete item.RowKey
+
+    return {
+      ...item,
+      partitionKey: typeof PartitionKey === 'string'
+        ? PartitionKey
+        : PartitionKey._,
+      rowKey: typeof RowKey === 'string'
+        ? RowKey
+        : RowKey._
+    }
+  }
+
+  if (!partitionKey || !rowKey) throw new Error('Table row must contain both partitionKey and rowKey.')
+
   return {
     ...item,
-    PartitionKey: typeof item.PartitionKey === 'string'
-      ? StringEntity(item.PartitionKey)
-      : item.PartitionKey,
-    RowKey: typeof item.RowKey === 'string'
-      ? StringEntity(item.RowKey)
-      : item.RowKey
+    partitionKey,
+    rowKey
   }
 }
 
@@ -42,7 +52,7 @@ function safeTableRow (item: TableRow): TableRow {
  */
 export class TableWriter {
   /** Class for managing a complete round-trip of one or more table rows for upsert into Azure Table Storage. */
-  constructor (message: Partial<TableWriter> = {}) {
+  constructor (message: Partial<TableWriter> & { tableRows?: Array<LegacyTableRow | TableRow> } = {}) {
     this.partitionKey = message.partitionKey
     this.tableName = message.tableName
     this.blobName = message.blobName
@@ -61,9 +71,11 @@ export class TableWriter {
     const isTableRowArray = Array.isArray(message.tableRows)
 
     if (typeof this.partitionKey === 'undefined' && isTableRowArray && message.tableRows.length > 0) {
-      this.partitionKey = typeof message.tableRows[0].PartitionKey === 'string'
-        ? message.tableRows[0].PartitionKey
-        : message.tableRows[0].PartitionKey._
+      this.partitionKey = typeof message.tableRows[0].partitionKey === 'string'
+        ? message.tableRows[0].partitionKey
+        : typeof message.tableRows[0].PartitionKey === 'string'
+          ? message.tableRows[0].PartitionKey
+          : message.tableRows[0].PartitionKey._
     }
 
     if (isTableRowArray) {
@@ -100,13 +112,17 @@ export class TableWriter {
   }
 
   /** Adds a single table row to this instance of writer. */
-  addTableRow (tableRow: TableRow): void {
-    const partitionKey = typeof tableRow.PartitionKey === 'string'
-      ? tableRow.PartitionKey
-      : tableRow.PartitionKey._
-    const rowKey = typeof tableRow.RowKey === 'string'
-      ? tableRow.RowKey
-      : tableRow.RowKey._
+  addTableRow (tableRow: LegacyTableRow | TableRow): void {
+    const partitionKey = typeof tableRow.partitionKey === 'string'
+      ? tableRow.partitionKey
+      : typeof tableRow.PartitionKey === 'string'
+        ? tableRow.PartitionKey
+        : tableRow.PartitionKey._
+    const rowKey = typeof tableRow.rowKey === 'string'
+      ? tableRow.rowKey
+      : typeof tableRow.RowKey === 'string'
+        ? tableRow.RowKey
+        : tableRow.RowKey._
 
     if (partitionKey !== this.partitionKey) {
       throw new Error(`PartitionKey ${partitionKey} does not match this writer's instance: ${this.partitionKey}`)
@@ -121,23 +137,27 @@ export class TableWriter {
       this.tableRows.length > 0 &&
       (typeof this.connection === 'string' || typeof connection === 'string')
     ) {
-      const tableService = createTableService(this.connection || connection)
+      const tableClient = TableClient.fromConnectionString(this.connection || connection, this.tableName)
       const BATCH_LIMIT = 100
 
-      await tableService.createTableIfNotExists(this.tableName)
+      await tableClient.create()
 
-      for (
-        let start = 0, end = BATCH_LIMIT;
-        start < this.tableRows.length;
-        start += BATCH_LIMIT, end += BATCH_LIMIT
-      ) {
-        const batch = new azure.TableBatch()
-        const tableRows = this.tableRows.slice(start, end)
+      let batch = tableClient.createBatch(this.partitionKey)
+      let batchSize = 0
 
-        for (const tableRow of tableRows) batch.insertOrMergeEntity(tableRow)
+      for (const tableRow of this.tableRows) {
+        if (batchSize === BATCH_LIMIT) {
+          await batch.submitBatch()
 
-        await tableService.executeBatch(this.tableName, batch)
+          batch = tableClient.createBatch(this.partitionKey)
+          batchSize = 0
+        }
+
+        batch.updateEntity(tableRow, 'Merge')
+        batchSize += 1
       }
+
+      if (batchSize > 0) await batch.submitBatch()
     }
   }
 
