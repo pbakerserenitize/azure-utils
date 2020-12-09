@@ -1,7 +1,7 @@
 import { QueueServiceClient } from '@azure/storage-queue'
 import { doesNotReject } from 'assert'
 import { FunctionHelpers, TableWriter } from '../index'
-import { connection, mockTableService, tableRows, unmockTableService, validError } from './helpers'
+import { connection, mockTableService, tableRows, unmockTableService } from './helpers'
 
 describe('AzureFunctions', async () => {
   beforeEach(async () => {
@@ -26,17 +26,10 @@ describe('AzureFunctions', async () => {
     await queueClient.sendMessage('')
 
     await doesNotReject(async () => {
-      try {
-        await FunctionHelpers.tableWriterBatch({
-          allConnections: connection,
-          queue: { name: queueName }
-        })
-      } catch (error) {
-        // Azurite V2 does not have complete support for batches; look for specific error.
-        if (error.message !== validError) {
-          throw error
-        }
-      }
+      await FunctionHelpers.tableWriterBatch({
+        allConnections: connection,
+        queue: { name: queueName }
+      })
     })
   })
 })
