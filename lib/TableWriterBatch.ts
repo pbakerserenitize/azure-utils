@@ -71,9 +71,9 @@ export class TableWriterBatch {
       if (Array.isArray(writer.tableRows) && writer.tableRows.length > 0) {
         return typeof writer.tableRows[0].partitionKey === 'string'
           ? writer.tableRows[0].partitionKey
-          : typeof writer.tableRows[0].PartitionKey === 'string'
-          ? writer.tableRows[0].PartitionKey
-          : writer.tableRows[0].PartitionKey._
+          : typeof writer.tableRows[0].PartitionKey === 'object'
+          ? writer.tableRows[0].PartitionKey._
+          : writer.tableRows[0].PartitionKey
       }
     }
     const key = `${writer.tableName}::${writer.partitionKey || inferPartitionKey()}`
