@@ -3,8 +3,11 @@ import { v4 as uuidv4 } from 'uuid'
 import { BlockBlobService } from './BlockBlobService'
 import type { LegacyTableRow, QueueBlobMessage, TableRow } from './Interfaces'
 
-/** @hidden */
-function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
+/** Method for making a compliant table row from multiple variations.
+ * For library internals only; not meant for external use.
+ * @hidden
+ */
+export function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
   const copy = { ...item }
   const { PartitionKey, RowKey, partitionKey, rowKey } = copy
 
@@ -75,9 +78,9 @@ export class TableWriter {
       this.partitionKey =
         typeof message.tableRows[0].partitionKey === 'string'
           ? message.tableRows[0].partitionKey
-          : typeof message.tableRows[0].PartitionKey === 'string'
-          ? message.tableRows[0].PartitionKey
-          : message.tableRows[0].PartitionKey._
+          : typeof message.tableRows[0].PartitionKey === 'object'
+          ? message.tableRows[0].PartitionKey._
+          : message.tableRows[0].PartitionKey
     }
 
     if (isTableRowArray) {
@@ -115,24 +118,14 @@ export class TableWriter {
 
   /** Adds a single table row to this instance of writer. */
   addTableRow (tableRow: LegacyTableRow | TableRow): void {
-    const partitionKey =
-      typeof tableRow.partitionKey === 'string'
-        ? tableRow.partitionKey
-        : typeof tableRow.PartitionKey === 'string'
-        ? tableRow.PartitionKey
-        : tableRow.PartitionKey._
-    const rowKey =
-      typeof tableRow.rowKey === 'string'
-        ? tableRow.rowKey
-        : typeof tableRow.RowKey === 'string'
-        ? tableRow.RowKey
-        : tableRow.RowKey._
+    const safe = safeTableRow(tableRow)
+    const { partitionKey, rowKey } = safe
 
     if (partitionKey !== this.partitionKey) {
       throw new Error(`PartitionKey ${partitionKey} does not match this writer's instance: ${this.partitionKey}`)
     }
 
-    this._tableRowMap.set(`${partitionKey}::${rowKey}`, safeTableRow(tableRow))
+    this._tableRowMap.set(`${partitionKey}::${rowKey}`, safe)
   }
 
   /** Executes a batch, creating the table if it does not exist. */
