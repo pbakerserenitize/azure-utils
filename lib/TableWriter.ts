@@ -5,14 +5,15 @@ import type { LegacyTableRow, QueueBlobMessage, TableRow } from './Interfaces'
 
 /** @hidden */
 function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
-  const { PartitionKey, RowKey, partitionKey, rowKey } = item
+  const copy = { ...item }
+  const { PartitionKey, RowKey, partitionKey, rowKey } = copy
 
   if (PartitionKey && RowKey) {
-    delete item.PartitionKey
-    delete item.RowKey
+    delete copy.PartitionKey
+    delete copy.RowKey
 
     return {
-      ...item,
+      ...copy,
       partitionKey: typeof PartitionKey === 'string' ? PartitionKey : PartitionKey._,
       rowKey: typeof RowKey === 'string' ? RowKey : RowKey._
     }
@@ -21,7 +22,7 @@ function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
   if (!partitionKey || !rowKey) throw new Error('Table row must contain both partitionKey and rowKey.')
 
   return {
-    ...item,
+    ...copy,
     partitionKey,
     rowKey
   }
