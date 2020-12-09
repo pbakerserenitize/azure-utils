@@ -1,8 +1,16 @@
-import { doesNotThrow, throws, strictEqual, doesNotReject } from 'assert'
+import { doesNotThrow, strictEqual, doesNotReject } from 'assert'
 import { TableWriterBatch, TableWriter } from '../index'
-import { connection, tableRows, validError } from './helpers'
+import { connection, mockTableService, tableRows, unmockTableService } from './helpers'
 
 describe('TableWriterBatch', async () => {
+  beforeEach(async () => {
+    mockTableService()
+  })
+
+  afterEach(async () => {
+    unmockTableService()
+  })
+
   it('should manage table writers', async () => {
     const tableBatchWriter = TableWriterBatch.from({
       connection,
@@ -20,14 +28,7 @@ describe('TableWriterBatch', async () => {
     strictEqual(size, 1)
     strictEqual(typeof tableBatchWriter.toJSON(), 'object')
     await doesNotReject(async () => {
-      try {
-        await tableBatchWriter.executeBatches(connection)
-      } catch (error) {
-        // Azurite V2 does not have complete support for batches; look for specific error.
-        if (error.message !== validError) {
-          throw error
-        }
-      }
+      await tableBatchWriter.executeBatches(connection)
     })
   })
 
@@ -38,10 +39,10 @@ describe('TableWriterBatch', async () => {
     tableWriterBatch.tableWriters = [
       {
         tableName: 'Test',
-        tableRows
+        tableRows: tableRows as any
       }
     ]
-    const size  = tableWriterBatch.size
+    const size = tableWriterBatch.size
 
     strictEqual(size, 2)
     doesNotThrow(() => {
@@ -61,7 +62,7 @@ describe('TableWriterBatch', async () => {
     tableWriterBatch.tableWriters = [
       {
         tableName: 'Test',
-        tableRows
+        tableRows: tableRows as any
       }
     ]
     let messages: any[]

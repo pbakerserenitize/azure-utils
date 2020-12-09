@@ -1,8 +1,16 @@
 import { doesNotThrow, throws, strictEqual, doesNotReject } from 'assert'
-import { TableWriter } from '../index'
-import { connection, tableRows, validError } from './helpers'
+import { TableRow, TableWriter } from '../index'
+import { connection, tableRows, mockTableService, unmockTableService } from './helpers'
 
 describe('TableWriter', async () => {
+  beforeEach(async () => {
+    mockTableService()
+  })
+
+  afterEach(async () => {
+    unmockTableService()
+  })
+
   it('should manage table rows', () => {
     const tableWriter = TableWriter.from({
       tableName: 'Test',
@@ -19,8 +27,17 @@ describe('TableWriter', async () => {
       })
     })
     throws(() => {
-      const partitionKey: any = rows[1].PartitionKey
-      partitionKey._ = 'Throw'
+      const original: any = rows[1]
+      original.partitionKey = 'Throw'
+
+      TableWriter.from({
+        tableName: 'Test',
+        tableRows: rows
+      })
+    })
+    throws(() => {
+      const original: any = rows[1]
+      original.partitionKey = null
 
       TableWriter.from({
         tableName: 'Test',
@@ -31,19 +48,22 @@ describe('TableWriter', async () => {
 
   it('should execute batch', async () => {
     const tableWriter = new TableWriter()
+    const tableRows: TableRow[] = []
+
+    for (let i = 0; i < 101; i += 1) {
+      tableRows.push({
+        partitionKey: 'test',
+        rowKey: 'test' + i.toString(),
+        data: i
+      })
+    }
+
     tableWriter.tableName = 'Test'
     tableWriter.partitionKey = 'test'
     tableWriter.tableRows = tableRows
 
     await doesNotReject(async () => {
-      try {
-        await tableWriter.executeBatch(connection)
-      } catch (error) {
-        // Azurite V2 does not have complete support for batches; look for specific error.
-        if (error.message !== validError) {
-          throw error
-        }
-      }
+      await tableWriter.executeBatch(connection)
     })
   })
 
@@ -51,7 +71,7 @@ describe('TableWriter', async () => {
     const tableWriter = new TableWriter()
     tableWriter.tableName = 'Test'
     tableWriter.partitionKey = 'test'
-    tableWriter.tableRows = tableRows
+    tableWriter.tableRows = tableRows as any
     let message: any
 
     await doesNotReject(async () => {
