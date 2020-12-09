@@ -1,6 +1,6 @@
 import { doesNotThrow, throws, strictEqual, doesNotReject } from 'assert'
-import { TableWriter } from '../index'
-import { connection, tableRows, validError, mockTableService, unmockTableService } from './helpers'
+import { TableRow, TableWriter } from '../index'
+import { connection, tableRows, mockTableService, unmockTableService } from './helpers'
 
 describe('TableWriter', async () => {
   beforeEach(async () => {
@@ -27,8 +27,17 @@ describe('TableWriter', async () => {
       })
     })
     throws(() => {
-      const partitionKey: any = rows[1].PartitionKey
-      partitionKey._ = 'Throw'
+      const original: any = rows[1]
+      original.partitionKey = 'Throw'
+
+      TableWriter.from({
+        tableName: 'Test',
+        tableRows: rows
+      })
+    })
+    throws(() => {
+      const original: any = rows[1]
+      original.partitionKey = null
 
       TableWriter.from({
         tableName: 'Test',
@@ -39,9 +48,19 @@ describe('TableWriter', async () => {
 
   it('should execute batch', async () => {
     const tableWriter = new TableWriter()
+    const tableRows: TableRow[] = []
+
+    for (let i = 0; i < 101; i += 1) {
+      tableRows.push({
+        partitionKey: 'test',
+        rowKey: 'test' + i.toString(),
+        data: i
+      })
+    }
+
     tableWriter.tableName = 'Test'
     tableWriter.partitionKey = 'test'
-    tableWriter.tableRows = tableRows as any
+    tableWriter.tableRows = tableRows
 
     await doesNotReject(async () => {
       await tableWriter.executeBatch(connection)
