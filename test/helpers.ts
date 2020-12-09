@@ -13,8 +13,6 @@ BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;
 QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;
 TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;`.replace(/[\r\n]*/gu, '')
 
-export const validError = "Cannot read property 'tableName' of undefined"
-
 export const tableRows: Array<LegacyTableRow | TableRow> = [
   {
     partitionKey: 'test',
