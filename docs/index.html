@@ -72,12 +72,14 @@
 					<h2>Usage</h2>
 				</a>
 				<p>Install via npm:</p>
-				<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> If not already logged <span class="hljs-keyword">in</span>, make sure to <span class="hljs-built_in">log</span> <span class="hljs-keyword">in</span> using your github username and a personal token.</span>
+				<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> If needed, generate a personal access token. Go to [<span class="hljs-string">&#x27;github.com&#x27;</span>], login, click your profile &gt; Settings &gt; Developer Settings &gt; Personal access tokens &gt; Generate new token. Name the token and check the checkboxes <span class="hljs-keyword">for</span> `repo` and `write:packages`.</span>
+<span class="hljs-meta">#</span><span class="bash"> If not already logged <span class="hljs-keyword">in</span>, make sure to <span class="hljs-built_in">log</span> <span class="hljs-keyword">in</span> using your github username and a personal token.</span>
 <span class="hljs-meta">#</span><span class="bash"> Note the the registry URL is different from that used by the install <span class="hljs-built_in">command</span>.</span>
 <span class="hljs-meta">#</span><span class="bash"> Alternatively, a .npmrc file could be stored <span class="hljs-keyword">in</span> the project root, or environment variables.</span>
+<span class="hljs-meta">#</span><span class="bash"> Using powershell, run:</span>
 npm login --registry=https://npm.pkg.github.com/
-<span class="hljs-meta">
-#</span><span class="bash"> Using the organization registry URL allows pass-through of packages from npmjs.com.</span>
+<span class="hljs-meta">#</span><span class="bash"> Use the personal access token as your password</span>
+<span class="hljs-meta">#</span><span class="bash"> Using the organization registry URL allows pass-through of packages from npmjs.com.</span>
 npm install --registry=https://npm.pkg.github.com/nhsllc @nhsllc/azure-utils</code></pre>
 				<p>In JavaScript:</p>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> { TableWriter } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@nhsllc/azure-utils&#x27;</span>)</code></pre>
@@ -109,6 +111,9 @@ npm install --registry=https://npm.pkg.github.com/nhsllc @nhsllc/azure-utils</co
 						<a href="classes/tablewriterbatch.html" class="tsd-kind-icon">Table<wbr>Writer<wbr>Batch</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="interfaces/legacytablerow.html" class="tsd-kind-icon">Legacy<wbr>Table<wbr>Row</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="interfaces/queueblobmessage.html" class="tsd-kind-icon">Queue<wbr>Blob<wbr>Message</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
@@ -116,6 +121,9 @@ npm install --registry=https://npm.pkg.github.com/nhsllc @nhsllc/azure-utils</co
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="interfaces/tablerow.html" class="tsd-kind-icon">Table<wbr>Row</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#tablewritermessage" class="tsd-kind-icon">Table<wbr>Writer<wbr>Message</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#functionhelpers" class="tsd-kind-icon">Function<wbr>Helpers</a>

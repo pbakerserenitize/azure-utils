@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>QueueBlobMessage | @nhsllc/azure-utils</title>
+	<title>LegacyTableRow | @nhsllc/azure-utils</title>
 	<meta name="description" content="Documentation for @nhsllc/azure-utils">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="queueblobmessage.html">QueueBlobMessage</a>
+					<a href="legacytablerow.html">LegacyTableRow</a>
 				</li>
 			</ul>
-			<h1>Interface QueueBlobMessage</h1>
+			<h1>Interface LegacyTableRow</h1>
 		</div>
 	</div>
 </header>
@@ -69,7 +69,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Helper interface for queue-to-blob metadata.</p>
+						<p>Helper interface for legacy table rows.</p>
 					</div>
 				</div>
 			</section>
@@ -77,9 +77,18 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">QueueBlobMessage</span>
+						<span class="target">LegacyTableRow</span>
 					</li>
 				</ul>
+			</section>
+			<section class="tsd-panel tsd-kind-interface tsd-is-external">
+				<h3 class="tsd-before-signature">Indexable</h3>
+				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>property: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></div>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Helper interface for legacy table rows.</p>
+					</div>
+				</div>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
@@ -88,8 +97,8 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="queueblobmessage.html#blobname" class="tsd-kind-icon">blob<wbr>Name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="queueblobmessage.html#container" class="tsd-kind-icon">container</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="legacytablerow.html#partitionkey" class="tsd-kind-icon">Partition<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="legacytablerow.html#rowkey" class="tsd-kind-icon">Row<wbr>Key</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,22 +107,22 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="blobname" class="tsd-anchor"></a>
-					<h3>blob<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">blob<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="partitionkey" class="tsd-anchor"></a>
+					<h3>Partition<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">Partition<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StringProperty</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9d1e636/lib/Interfaces.ts#L10">lib/Interfaces.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9d1e636/lib/Interfaces.ts#L18">lib/Interfaces.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="container" class="tsd-anchor"></a>
-					<h3>container</h3>
-					<div class="tsd-signature tsd-kind-icon">container<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="rowkey" class="tsd-anchor"></a>
+					<h3>Row<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">Row<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">StringProperty</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9d1e636/lib/Interfaces.ts#L11">lib/Interfaces.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9d1e636/lib/Interfaces.ts#L19">lib/Interfaces.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -138,24 +147,24 @@
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="../classes/tablewriterbatch.html" class="tsd-kind-icon">Table<wbr>Writer<wbr>Batch</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-is-external">
-						<a href="legacytablerow.html" class="tsd-kind-icon">Legacy<wbr>Table<wbr>Row</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-is-external">
-						<a href="queueblobmessage.html" class="tsd-kind-icon">Queue<wbr>Blob<wbr>Message</a>
+						<a href="legacytablerow.html" class="tsd-kind-icon">Legacy<wbr>Table<wbr>Row</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="queueblobmessage.html#blobname" class="tsd-kind-icon">blob<wbr>Name</a>
+								<a href="legacytablerow.html#partitionkey" class="tsd-kind-icon">Partition<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="queueblobmessage.html#container" class="tsd-kind-icon">container</a>
+								<a href="legacytablerow.html#rowkey" class="tsd-kind-icon">Row<wbr>Key</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="queueblobmessage.html" class="tsd-kind-icon">Queue<wbr>Blob<wbr>Message</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="twboptions.html" class="tsd-kind-icon">TWBOptions</a>
 					</li>
