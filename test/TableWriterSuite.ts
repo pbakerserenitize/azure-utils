@@ -1,8 +1,16 @@
 import { doesNotThrow, throws, strictEqual, doesNotReject } from 'assert'
 import { TableWriter } from '../index'
-import { connection, tableRows, validError } from './helpers'
+import { connection, tableRows, validError, mockTableService, unmockTableService } from './helpers'
 
 describe('TableWriter', async () => {
+  beforeEach(async () => {
+    mockTableService()
+  })
+
+  afterEach(async () => {
+    unmockTableService()
+  })
+
   it('should manage table rows', () => {
     const tableWriter = TableWriter.from({
       tableName: 'Test',
@@ -36,14 +44,7 @@ describe('TableWriter', async () => {
     tableWriter.tableRows = tableRows as any
 
     await doesNotReject(async () => {
-      try {
-        await tableWriter.executeBatch(connection)
-      } catch (error) {
-        // Azurite V2 does not have complete support for batches; look for specific error.
-        if (error.message !== validError) {
-          throw error
-        }
-      }
+      await tableWriter.executeBatch(connection)
     })
   })
 
