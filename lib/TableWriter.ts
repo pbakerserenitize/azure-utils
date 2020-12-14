@@ -42,6 +42,7 @@ export function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
 
 export type TableWriterMessage = Partial<Omit<TableWriter, 'tableRows'>> & {
   tableRows?: Array<LegacyTableRow | TableRow>
+  writeType?: TableOperation
 }
 
 /** Class for managing a complete round-trip of one or more table rows for upsert into Azure Table Storage.
@@ -110,16 +111,15 @@ export class TableWriter {
     if (isTableRowArray) {
       let operation: TableOperation
 
-      if (this._operationMap.delete.size === message.tableRows.length) {
-        operation = 'delete'
-      }
-
-      if (this._operationMap.merge.size === message.tableRows.length) {
-        operation = 'merge'
-      }
-
-      if (this._operationMap.replace.size === message.tableRows.length) {
-        operation = 'replace'
+      if (typeof message.writeType === 'undefined' || message.writeType === null) {
+        for (const tblOperation of TABLE_OPERATIONS) {
+          if (this._operationMap[tblOperation].size === message.tableRows.length) {
+            operation = tblOperation
+            break
+          }
+        }
+      } else {
+        operation = message.writeType
       }
 
       if (typeof operation === 'string') {
