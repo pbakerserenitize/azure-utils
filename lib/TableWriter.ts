@@ -3,6 +3,15 @@ import { v4 as uuidv4 } from 'uuid'
 import { BlockBlobService } from './BlockBlobService'
 import type { LegacyTableRow, QueueBlobMessage, TableRow } from './Interfaces'
 
+type TableOperation = 'delete' | 'merge' | 'replace'
+interface TableWriterOperations {
+  delete?: string[]
+  merge?: string[]
+  replace?: string[]
+}
+
+const TABLE_OPERATIONS: TableOperation[] = ['delete', 'merge', 'replace']
+
 /** Method for making a compliant table row from multiple variations.
  * For library internals only; not meant for external use.
  * @hidden
@@ -33,6 +42,7 @@ export function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
 
 export type TableWriterMessage = Partial<Omit<TableWriter, 'tableRows'>> & {
   tableRows?: Array<LegacyTableRow | TableRow>
+  writeType?: TableOperation
 }
 
 /** Class for managing a complete round-trip of one or more table rows for upsert into Azure Table Storage.
@@ -63,6 +73,11 @@ export class TableWriter {
     this.container = message.container
     this.connection = message.connection
     this._tableRowMap = new Map() // Using Map allows for easy deduplication of table rows.
+    this._operationMap = {
+      delete: new Set(),
+      merge: new Set(),
+      replace: new Set()
+    }
 
     if (typeof this.blobName === 'undefined') {
       this.blobName = uuidv4() + '.json'
@@ -83,9 +98,57 @@ export class TableWriter {
           : message.tableRows[0].PartitionKey
     }
 
+    if (typeof message.operations === 'object') {
+      for (const operation of TABLE_OPERATIONS) {
+        if (typeof message.operations[operation] === 'object') {
+          for (const mapKey of message.operations[operation]) {
+            this._operationMap[operation].add(mapKey)
+          }
+        }
+      }
+    }
+
     if (isTableRowArray) {
-      for (const tableRow of message.tableRows) {
-        this.addTableRow(tableRow)
+      let operation: TableOperation
+
+      if (typeof message.writeType === 'undefined' || message.writeType === null) {
+        for (const tblOperation of TABLE_OPERATIONS) {
+          if (this._operationMap[tblOperation].size === message.tableRows.length) {
+            operation = tblOperation
+            break
+          }
+        }
+      } else {
+        operation = message.writeType
+      }
+
+      if (typeof operation === 'string') {
+        // Fast path; if all table rows are the same operation, no lookups are required.
+        for (const tableRow of message.tableRows) {
+          this.addTableRow(tableRow, operation)
+        }
+      } else {
+        for (const tableRow of message.tableRows) {
+          const safe = safeTableRow(tableRow)
+          const { partitionKey, rowKey } = safe
+
+          if (partitionKey !== this.partitionKey) {
+            throw new Error(`PartitionKey ${partitionKey} does not match this writer's instance: ${this.partitionKey}`)
+          }
+
+          const mapKey = `${partitionKey}::${rowKey}`
+          operation = 'merge'
+
+          for (const tblOperation of TABLE_OPERATIONS) {
+            if (this._operationMap[tblOperation].has(mapKey)) {
+              operation = tblOperation
+              break
+            }
+          }
+
+          this._tableRowMap.set(mapKey, safe)
+          this._operationMap[operation].add(mapKey)
+        }
       }
     }
   }
@@ -101,6 +164,7 @@ export class TableWriter {
   /** A table name; table will be created dynamically when executing the batch. */
   tableName: string
   private _tableRowMap: Map<string, TableRow>
+  private _operationMap: Record<TableOperation, Set<string>>
 
   get tableRows (): TableRow[] {
     return Array.from(this._tableRowMap.values())
@@ -112,12 +176,20 @@ export class TableWriter {
     }
   }
 
+  get operations (): TableWriterOperations {
+    return {
+      delete: Array.from(this._operationMap.delete),
+      merge: Array.from(this._operationMap.merge),
+      replace: Array.from(this._operationMap.replace)
+    }
+  }
+
   get size (): number {
     return this._tableRowMap.size
   }
 
   /** Adds a single table row to this instance of writer. */
-  addTableRow (tableRow: LegacyTableRow | TableRow): void {
+  addTableRow (tableRow: LegacyTableRow | TableRow, operation: TableOperation = 'merge'): void {
     const safe = safeTableRow(tableRow)
     const { partitionKey, rowKey } = safe
 
@@ -125,7 +197,10 @@ export class TableWriter {
       throw new Error(`PartitionKey ${partitionKey} does not match this writer's instance: ${this.partitionKey}`)
     }
 
-    this._tableRowMap.set(`${partitionKey}::${rowKey}`, safe)
+    const mapKey = `${partitionKey}::${rowKey}`
+
+    this._tableRowMap.set(mapKey, safe)
+    this._operationMap[operation].add(mapKey)
   }
 
   /** Executes a batch, creating the table if it does not exist. */
@@ -136,22 +211,38 @@ export class TableWriter {
 
       await tableClient.create()
 
-      let batch = tableClient.createBatch(this.partitionKey)
-      let batchSize = 0
-
-      for (const tableRow of this.tableRows) {
-        if (batchSize === BATCH_LIMIT) {
+      for (const operation of TABLE_OPERATIONS) {
+        let batch = tableClient.createBatch(this.partitionKey)
+        let batchSize = 0
+        const submit = async () => {
           await batch.submitBatch()
 
           batch = tableClient.createBatch(this.partitionKey)
           batchSize = 0
         }
 
-        batch.updateEntity(tableRow, 'Merge')
-        batchSize += 1
-      }
+        for (const mapKey of this._operationMap[operation]) {
+          if (batchSize === BATCH_LIMIT) submit()
 
-      if (batchSize > 0) await batch.submitBatch()
+          const tableRow = this._tableRowMap.get(mapKey)
+
+          switch (operation) {
+            case 'delete':
+              batch.deleteEntity(tableRow.partitionKey, tableRow.rowKey)
+              break
+            case 'merge':
+              batch.updateEntity(tableRow, 'Merge')
+              break
+            case 'replace':
+              batch.updateEntity(tableRow, 'Replace')
+              break
+          }
+
+          batchSize += 1
+        }
+
+        if (batchSize > 0) submit()
+      }
     }
   }
 
@@ -176,7 +267,8 @@ export class TableWriter {
       container: this.container,
       partitionKey: this.partitionKey,
       tableName: this.tableName,
-      tableRows: this.tableRows
+      tableRows: this.tableRows,
+      operations: this.operations
     }
   }
 

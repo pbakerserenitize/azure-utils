@@ -17,7 +17,8 @@ describe('TableWriterBatch', async () => {
       tableWriters: [
         TableWriter.from({
           tableName: 'Test',
-          tableRows
+          tableRows,
+          writeType: 'delete'
         })
       ]
     })
