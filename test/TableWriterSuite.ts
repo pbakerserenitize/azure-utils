@@ -44,6 +44,12 @@ describe('TableWriter', async () => {
         tableRows: rows
       })
     })
+    throws(() => {
+      tableWriter.addTableRow({
+        ...rows[2],
+        partitionKey: 'null'
+      })
+    })
   })
 
   it('should execute batch', async () => {
@@ -61,6 +67,31 @@ describe('TableWriter', async () => {
     tableWriter.tableName = 'Test'
     tableWriter.partitionKey = 'test'
     tableWriter.tableRows = tableRows
+
+    await doesNotReject(async () => {
+      await tableWriter.executeBatch(connection)
+    })
+  })
+
+  it('should execute mixed batch delete and replace', async () => {
+    const tableRows: TableRow[] = []
+
+    for (let i = 0; i < 101; i += 1) {
+      tableRows.push({
+        partitionKey: 'test',
+        rowKey: 'test' + i.toString(),
+        data: i
+      })
+    }
+
+    const tableWriter = new TableWriter({
+      tableName: 'Test',
+      tableRows,
+      operations: {
+        delete: tableRows.slice(0, 50).map(item => `${item.partitionKey}::${item.rowKey}`),
+        replace: tableRows.slice(50, 75).map(item => `${item.partitionKey}::${item.rowKey}`)
+      }
+    })
 
     await doesNotReject(async () => {
       await tableWriter.executeBatch(connection)
