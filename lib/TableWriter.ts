@@ -137,14 +137,13 @@ export class TableWriter {
           }
 
           const mapKey = `${partitionKey}::${rowKey}`
+          operation = 'merge'
 
-          if (this._operationMap.delete.has(mapKey)) {
-            operation = 'delete'
-          } else if (this._operationMap.replace.has(mapKey)) {
-            operation = 'replace'
-          } else {
-            // Default to 'merge'
-            operation = 'merge'
+          for (const tblOperation of TABLE_OPERATIONS) {
+            if (this._operationMap[tblOperation].has(mapKey)) {
+              operation = tblOperation
+              break
+            }
           }
 
           this._tableRowMap.set(mapKey, safe)
