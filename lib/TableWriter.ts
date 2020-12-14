@@ -131,6 +131,11 @@ export class TableWriter {
         for (const tableRow of message.tableRows) {
           const safe = safeTableRow(tableRow)
           const { partitionKey, rowKey } = safe
+
+          if (partitionKey !== this.partitionKey) {
+            throw new Error(`PartitionKey ${partitionKey} does not match this writer's instance: ${this.partitionKey}`)
+          }
+
           const mapKey = `${partitionKey}::${rowKey}`
 
           if (this._operationMap.delete.has(mapKey)) {
