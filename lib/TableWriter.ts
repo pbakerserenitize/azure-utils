@@ -1,4 +1,4 @@
-import { TableClient } from '@azure/data-tables'
+import { azure, createTableService } from 'azure-table-promise'
 import { v4 as uuidv4 } from 'uuid'
 import { BlockBlobService } from './BlockBlobService'
 import type { LegacyTableRow, QueueBlobMessage, TableRow } from './Interfaces'
@@ -16,7 +16,7 @@ const TABLE_OPERATIONS: TableOperation[] = ['delete', 'merge', 'replace']
  * For library internals only; not meant for external use.
  * @hidden
  */
-export function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
+export function safeTableRow (item: LegacyTableRow | TableRow): LegacyTableRow {
   const copy = { ...item }
   const { PartitionKey, RowKey, partitionKey, rowKey } = copy
 
@@ -26,8 +26,8 @@ export function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
 
     return {
       ...copy,
-      partitionKey: typeof PartitionKey === 'string' ? PartitionKey : PartitionKey._,
-      rowKey: typeof RowKey === 'string' ? RowKey : RowKey._
+      PartitionKey: typeof PartitionKey === 'string' ? { _: PartitionKey, $: 'Edm.String' } : PartitionKey,
+      RowKey: typeof RowKey === 'string' ? { _: RowKey, $: 'Edm.String' } : RowKey
     }
   }
 
@@ -35,8 +35,8 @@ export function safeTableRow (item: LegacyTableRow | TableRow): TableRow {
 
   return {
     ...copy,
-    partitionKey,
-    rowKey
+    PartitionKey: { _: partitionKey, $: 'Edm.String' },
+    RowKey: { _: rowKey, $: 'Edm.String' }
   }
 }
 
@@ -130,13 +130,13 @@ export class TableWriter {
       } else {
         for (const tableRow of message.tableRows) {
           const safe = safeTableRow(tableRow)
-          const { partitionKey, rowKey } = safe
+          const { PartitionKey, RowKey } = safe
 
-          if (partitionKey !== this.partitionKey) {
-            throw new Error(`PartitionKey ${partitionKey} does not match this writer's instance: ${this.partitionKey}`)
+          if ((PartitionKey as any)._ !== this.partitionKey) {
+            throw new Error(`PartitionKey ${(PartitionKey as any)._} does not match this writer's instance: ${this.partitionKey}`)
           }
 
-          const mapKey = `${partitionKey}::${rowKey}`
+          const mapKey = `${(PartitionKey as any)._}::${(RowKey as any)._}`
           operation = 'merge'
 
           for (const tblOperation of TABLE_OPERATIONS) {
@@ -163,14 +163,14 @@ export class TableWriter {
   partitionKey: string
   /** A table name; table will be created dynamically when executing the batch. */
   tableName: string
-  private _tableRowMap: Map<string, TableRow>
+  private _tableRowMap: Map<string, LegacyTableRow>
   private _operationMap: Record<TableOperation, Set<string>>
 
-  get tableRows (): TableRow[] {
+  get tableRows (): LegacyTableRow[] {
     return Array.from(this._tableRowMap.values())
   }
 
-  set tableRows (rows: TableRow[]) {
+  set tableRows (rows: LegacyTableRow[]) {
     for (const tableRow of rows) {
       this.addTableRow(tableRow)
     }
@@ -191,13 +191,13 @@ export class TableWriter {
   /** Adds a single table row to this instance of writer. */
   addTableRow (tableRow: LegacyTableRow | TableRow, operation: TableOperation = 'merge'): void {
     const safe = safeTableRow(tableRow)
-    const { partitionKey, rowKey } = safe
+    const { PartitionKey, RowKey } = safe
 
-    if (partitionKey !== this.partitionKey) {
-      throw new Error(`PartitionKey ${partitionKey} does not match this writer's instance: ${this.partitionKey}`)
+    if ((PartitionKey as any)._ !== this.partitionKey) {
+      throw new Error(`PartitionKey ${(PartitionKey as any)._} does not match this writer's instance: ${this.partitionKey}`)
     }
 
-    const mapKey = `${partitionKey}::${rowKey}`
+    const mapKey = `${(PartitionKey as any)._}::${(RowKey as any)._}`
 
     this._tableRowMap.set(mapKey, safe)
     this._operationMap[operation].add(mapKey)
@@ -206,11 +206,12 @@ export class TableWriter {
   /** Executes a batch, creating the table if it does not exist. */
   async executeBatch (connection?: string): Promise<void> {
     if (this.tableRows.length > 0 && (typeof this.connection === 'string' || typeof connection === 'string')) {
-      const tableClient = TableClient.fromConnectionString(this.connection || connection, this.tableName)
+      const tableService = createTableService(this.connection || connection)
+      // const tableClient = TableClient.fromConnectionString(this.connection || connection, this.tableName)
       const BATCH_LIMIT = 100
 
       try {
-        await tableClient.create()
+        await tableService.createTableIfNotExists(this.tableName)
       } catch (error) {
         if (!(typeof error.message === 'string' && error.message.includes('table specified already exists'))) {
           throw error
@@ -218,12 +219,12 @@ export class TableWriter {
       }
 
       for (const operation of TABLE_OPERATIONS) {
-        let batch = tableClient.createBatch(this.partitionKey)
+        let batch = new azure.TableBatch() // tableClient.createBatch(this.partitionKey)
         let batchSize = 0
         const submit = async () => {
-          await batch.submitBatch()
+          await tableService.executeBatch(this.tableName, batch) // batch.submitBatch()
 
-          batch = tableClient.createBatch(this.partitionKey)
+          batch = new azure.TableBatch() // tableClient.createBatch(this.partitionKey)
           batchSize = 0
         }
 
@@ -234,13 +235,13 @@ export class TableWriter {
 
           switch (operation) {
             case 'delete':
-              batch.deleteEntity(tableRow.partitionKey, tableRow.rowKey)
+              batch.deleteEntity(tableRow) // batch.deleteEntity(tableRow.partitionKey, tableRow.rowKey)
               break
             case 'merge':
-              batch.updateEntity(tableRow, 'Merge')
+              batch.insertOrMergeEntity(tableRow) // batch.updateEntity(tableRow, 'Merge')
               break
             case 'replace':
-              batch.updateEntity(tableRow, 'Replace')
+              batch.insertOrReplaceEntity(tableRow) // batch.updateEntity(tableRow, 'Replace')
               break
           }
 
