@@ -209,7 +209,13 @@ export class TableWriter {
       const tableClient = TableClient.fromConnectionString(this.connection || connection, this.tableName)
       const BATCH_LIMIT = 100
 
-      await tableClient.create()
+      try {
+        await tableClient.create()
+      } catch (error) {
+        if (!(typeof error.message === 'string' && error.message.includes('table specified already exists'))) {
+          throw error
+        }
+      }
 
       for (const operation of TABLE_OPERATIONS) {
         let batch = tableClient.createBatch(this.partitionKey)
