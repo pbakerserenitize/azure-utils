@@ -228,7 +228,7 @@ export class TableWriter {
         }
 
         for (const mapKey of this._operationMap[operation]) {
-          if (batchSize === BATCH_LIMIT) submit()
+          if (batchSize === BATCH_LIMIT) await submit()
 
           const tableRow = this._tableRowMap.get(mapKey)
 
@@ -247,7 +247,7 @@ export class TableWriter {
           batchSize += 1
         }
 
-        if (batchSize > 0) submit()
+        if (batchSize > 0) await submit()
       }
     }
   }
