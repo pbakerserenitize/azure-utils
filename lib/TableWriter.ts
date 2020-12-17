@@ -1,4 +1,5 @@
-import { azure, createTableService } from 'azure-table-promise'
+import { azure } from 'azure-table-promise'
+import { createPromiseTableService } from 'azure-table-promise/dist/src/CreateTableService'
 import { v4 as uuidv4 } from 'uuid'
 import { BlockBlobService } from './BlockBlobService'
 import type { LegacyTableRow, QueueBlobMessage, TableRow } from './Interfaces'
@@ -206,7 +207,7 @@ export class TableWriter {
   /** Executes a batch, creating the table if it does not exist. */
   async executeBatch (connection?: string): Promise<void> {
     if (this.tableRows.length > 0 && (typeof this.connection === 'string' || typeof connection === 'string')) {
-      const tableService = createTableService(this.connection || connection)
+      const tableService = createPromiseTableService(this.connection || connection)
       // const tableClient = TableClient.fromConnectionString(this.connection || connection, this.tableName)
       const BATCH_LIMIT = 100
 

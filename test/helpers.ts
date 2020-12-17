@@ -1,7 +1,6 @@
 import { ImportMock } from 'ts-mock-imports'
-import { TableClient } from '@azure/data-tables'
-import * as DataTables from '@azure/data-tables'
 import { createPromiseTableService } from 'azure-table-promise'
+import * as AzureTablePromise from 'azure-table-promise/dist/src/CreateTableService'
 import type { LegacyTableRow, TableRow } from '../index'
 
 // The new table library does not yet support the shorthand of 'UseDevelopmentStorage=true'.
@@ -38,30 +37,14 @@ export const tableRows: Array<LegacyTableRow | TableRow> = [
 ]
 
 export function mockTableService () {
-  const { fromConnectionString } = TableClient
   // This entire mock may be able to be removed when Azurite V3 supports tables.
-  ImportMock.mockOther(DataTables, 'TableClient', {
-    fromConnectionString (connection: string, tableName: string, options: any): any {
-      const tableService = createPromiseTableService(connection)
-      const tableClient = fromConnectionString(connection, tableName, options)
-      const createBatchShadow = tableClient.createBatch.bind(tableClient)
+  const createTableSvcShadow = createPromiseTableService
 
-      tableClient.create = async function create (options?: any): Promise<any> {
-        // Azurite V2 errors on new library method for creating a table, use old library method.
-        return await tableService.createTableIfNotExists(tableName)
-      }
+  ImportMock.mockOther(AzureTablePromise, 'createPromiseTableService', function createTableService (connection: string) {
+    const tableService = createTableSvcShadow(connection)
+    tableService.executeBatch = async function executeBatch (tableName: string, tableBatch: any, options?: any): Promise<any> {}
 
-      tableClient.createBatch = function createBatch (partitionKey: string): any {
-        const batch = createBatchShadow(partitionKey)
-
-        // Azurite V2 does not have complete support for batches; return a void promise or other mock response.
-        batch.submitBatch = async function submitBatch (): Promise<any> {}
-
-        return batch
-      }
-
-      return tableClient
-    }
+    return tableService
   })
 }
 
