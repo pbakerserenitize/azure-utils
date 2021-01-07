@@ -31,6 +31,14 @@ describe('TableWriterBatch', async () => {
     await doesNotReject(async () => {
       await tableBatchWriter.executeBatches(connection)
     })
+
+    const res = tableBatchWriter.removeTableRow('Test', 'test', 'test1')
+
+    strictEqual(typeof res, 'boolean')
+
+    const res2 = tableBatchWriter.removeTableRow('Nope', 'dumb', 'unreal')
+
+    strictEqual(typeof res2, 'boolean')
   })
 
   it('should manage table writer size', async () => {
@@ -54,6 +62,10 @@ describe('TableWriterBatch', async () => {
 
       strictEqual(tableWriterBatch2.size, 1)
     })
+
+    const res = tableWriterBatch.removeTableRow('Test', 'test', 'test1')
+
+    strictEqual(typeof res, 'boolean')
   })
 
   it('should handle to and from blob message', async () => {

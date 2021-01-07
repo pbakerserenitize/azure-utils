@@ -1,4 +1,5 @@
 import {
+  BlobDeleteIfExistsResponse,
   BlobServiceClient,
   BlockBlobUploadResponse,
   ContainerClient,
@@ -102,6 +103,21 @@ export class BlockBlobService {
     const blockBlobClient = containerClient.getBlockBlobClient(blobName)
 
     return await blockBlobClient.exists()
+  }
+
+  /**
+   * Write a blob to a container, serializing objects and arrays to JSON.
+   * @param {string} blobContainer - The container for the blob.
+   * @param {string} blobName - The name of the blob.
+   */
+  async delete (
+    blobContainer: string,
+    blobName: string
+  ): Promise<BlobDeleteIfExistsResponse> {
+    const containerClient = await this.containers.add(blobContainer)
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName)
+
+    return await blockBlobClient.deleteIfExists()
   }
 
   /**
