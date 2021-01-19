@@ -106,7 +106,7 @@ export class BlockBlobService {
   }
 
   /**
-   * Write a blob to a container, serializing objects and arrays to JSON.
+   * Delete a blob from a container.
    * @param {string} blobContainer - The container for the blob.
    * @param {string} blobName - The name of the blob.
    */
