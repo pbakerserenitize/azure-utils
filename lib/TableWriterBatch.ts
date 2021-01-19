@@ -125,6 +125,26 @@ export class TableWriterBatch {
     }
   }
 
+  /** Adds a single table row to this instance of writer. */
+  removeTableRow (tableName: string, partitionKey: string, rowKey: string): boolean {
+    const mapKey = `${tableName}::${partitionKey}`
+    const remove = (writer: TableWriter): boolean => {
+      if (typeof writer === 'object') {
+        return writer.removeTableRow(partitionKey, rowKey)
+      }
+
+      return true
+    }
+
+    if (typeof this.maxWriterSize === 'undefined' || this.maxWriterSize === 0) {
+      return remove(this._tableWriterMap.get(mapKey))
+    }
+
+    const uuidKey = this._sizeLimitCache.get(mapKey)
+
+    return remove(this._tableWriterMap.get(uuidKey))
+  }
+
   /** Executes batches on all table writers in this instance. */
   async executeBatches (connection?: string): Promise<void> {
     for (const writer of this.tableWriters) {

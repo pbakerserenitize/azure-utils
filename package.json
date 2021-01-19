@@ -1,6 +1,6 @@
 {
   "name": "@nhsllc/azure-utils",
-  "version": "2.1.3",
+  "version": "2.3.0",
   "description": "Private utilitiy classes and methods for use with Microsoft Azure projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

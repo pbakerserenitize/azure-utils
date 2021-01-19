@@ -204,6 +204,13 @@ export class TableWriter {
     this._operationMap[operation].add(mapKey)
   }
 
+  /** Removes a single table row from this isntance of writer. */
+  removeTableRow (partitionKey: string, rowKey: string): boolean {
+    const mapKey = `${partitionKey}::${rowKey}`
+
+    return this._tableRowMap.delete(mapKey)
+  }
+
   /** Executes a batch, creating the table if it does not exist. */
   async executeBatch (connection?: string): Promise<void> {
     if (this.tableRows.length > 0 && (typeof this.connection === 'string' || typeof connection === 'string')) {
