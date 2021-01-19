@@ -86,10 +86,15 @@
 								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/queueblobmessage.html" class="tsd-kind-icon">Queue<wbr>Blob<wbr>Message</a></li>
 								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/tablerow.html" class="tsd-kind-icon">Table<wbr>Row</a></li>
 							</ul>
+							<h3>Other Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/tablewriteroperations.html" class="tsd-kind-icon">Table<wbr>Writer<wbr>Operations</a></li>
+							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-is-external"><a href="globals.html#tableoperation" class="tsd-kind-icon">Table<wbr>Operation</a></li>
 								<li class="tsd-kind-type-alias tsd-is-external"><a href="globals.html#tablewritermessage" class="tsd-kind-icon">Table<wbr>Writer<wbr>Message</a></li>
 							</ul>
 						</section>
@@ -97,6 +102,10 @@
 							<h3>AzureFunctionHelper Variables</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-variable"><a href="globals.html#functionhelpers" class="tsd-kind-icon">Function<wbr>Helpers</a></li>
+							</ul>
+							<h3>Other Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-is-external"><a href="globals.html#table_operations" class="tsd-kind-icon">TABLE_<wbr>OPERATIONS</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-external">
@@ -111,12 +120,22 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-is-external">
-					<a name="tablewritermessage" class="tsd-anchor"></a>
-					<h3>Table<wbr>Writer<wbr>Message</h3>
-					<div class="tsd-signature tsd-kind-icon">Table<wbr>Writer<wbr>Message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><a href="classes/tablewriter.html" class="tsd-signature-type">TableWriter</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"tableRows"</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>tableRows<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/legacytablerow.html" class="tsd-signature-type">LegacyTableRow</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/tablerow.html" class="tsd-signature-type">TableRow</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> }</span></div>
+					<a name="tableoperation" class="tsd-anchor"></a>
+					<h3>Table<wbr>Operation</h3>
+					<div class="tsd-signature tsd-kind-icon">Table<wbr>Operation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"delete"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"merge"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"replace"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9d1e636/lib/TableWriter.ts#L34">lib/TableWriter.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9c018af/lib/TableWriter.ts#L6">lib/TableWriter.ts:6</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-is-external">
+					<a name="tablewritermessage" class="tsd-anchor"></a>
+					<h3>Table<wbr>Writer<wbr>Message</h3>
+					<div class="tsd-signature tsd-kind-icon">Table<wbr>Writer<wbr>Message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Omit</span><span class="tsd-signature-symbol">&lt;</span><a href="classes/tablewriter.html" class="tsd-signature-type">TableWriter</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">"tableRows"</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>tableRows<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="interfaces/legacytablerow.html" class="tsd-signature-type">LegacyTableRow</a><span class="tsd-signature-symbol"> | </span><a href="interfaces/tablerow.html" class="tsd-signature-type">TableRow</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">; </span>writeType<span class="tsd-signature-symbol">?: </span><a href="globals.html#tableoperation" class="tsd-signature-type">TableOperation</a><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9c018af/lib/TableWriter.ts#L43">lib/TableWriter.ts:43</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -129,7 +148,7 @@
 					<div class="tsd-signature tsd-kind-icon">Function<wbr>Helpers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;C:/Users/ahuggins/development/azure-utils/lib/AzureFunctions/index&quot;</span><span class="tsd-signature-symbol"> = AzureFunctions</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9d1e636/index.ts#L11">index.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9c018af/index.ts#L11">index.ts:11</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -137,6 +156,19 @@
 							<p>Named export of all Azure Function helpers and interfaces.</p>
 						</div>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Other Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-external">
+					<a name="table_operations" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> TABLE_<wbr>OPERATIONS</h3>
+					<div class="tsd-signature tsd-kind-icon">TABLE_<wbr>OPERATIONS<span class="tsd-signature-symbol">:</span> <a href="globals.html#tableoperation" class="tsd-signature-type">TableOperation</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = [&#x27;delete&#x27;, &#x27;merge&#x27;, &#x27;replace&#x27;]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9c018af/lib/TableWriter.ts#L13">lib/TableWriter.ts:13</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -151,7 +183,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9d1e636/lib/AzureFunctions/tableWriterBatch.ts#L33">lib/AzureFunctions/tableWriterBatch.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/nhsllc/azure-utils/blob/9c018af/lib/AzureFunctions/tableWriterBatch.ts#L33">lib/AzureFunctions/tableWriterBatch.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -222,11 +254,20 @@
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="interfaces/tablerow.html" class="tsd-kind-icon">Table<wbr>Row</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="interfaces/tablewriteroperations.html" class="tsd-kind-icon">Table<wbr>Writer<wbr>Operations</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-is-external">
+						<a href="globals.html#tableoperation" class="tsd-kind-icon">Table<wbr>Operation</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-is-external">
 						<a href="globals.html#tablewritermessage" class="tsd-kind-icon">Table<wbr>Writer<wbr>Message</a>
 					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#functionhelpers" class="tsd-kind-icon">Function<wbr>Helpers</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-external">
+						<a href="globals.html#table_operations" class="tsd-kind-icon">TABLE_<wbr>OPERATIONS</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-external">
 						<a href="globals.html#tablewriterbatch" class="tsd-kind-icon">table<wbr>Writer<wbr>Batch</a>

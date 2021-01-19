@@ -1,5 +1,5 @@
 import { doesNotThrow, throws, strictEqual, doesNotReject } from 'assert'
-import { TableRow, TableWriter } from '../index'
+import { LegacyTableRow, TableRow, TableWriter } from '../index'
 import { connection, tableRows, mockTableService, unmockTableService } from './helpers'
 
 describe('TableWriter', async () => {
@@ -28,16 +28,16 @@ describe('TableWriter', async () => {
     })
     throws(() => {
       const original: any = rows[1]
-      original.partitionKey = 'Throw'
+      original.PartitionKey = 'Throw'
 
-      TableWriter.from({
+      console.log(TableWriter.from({
         tableName: 'Test',
         tableRows: rows
-      })
+      }).tableRows)
     })
     throws(() => {
       const original: any = rows[1]
-      original.partitionKey = null
+      original.PartitionKey = null
 
       TableWriter.from({
         tableName: 'Test',
@@ -47,19 +47,19 @@ describe('TableWriter', async () => {
     throws(() => {
       tableWriter.addTableRow({
         ...rows[2],
-        partitionKey: 'null'
+        PartitionKey: 'null'
       })
     })
   })
 
   it('should execute batch', async () => {
     const tableWriter = new TableWriter()
-    const tableRows: TableRow[] = []
+    const tableRows: LegacyTableRow[] = []
 
     for (let i = 0; i < 101; i += 1) {
       tableRows.push({
-        partitionKey: 'test',
-        rowKey: 'test' + i.toString(),
+        PartitionKey: 'test',
+        RowKey: 'test' + i.toString(),
         data: i
       })
     }
