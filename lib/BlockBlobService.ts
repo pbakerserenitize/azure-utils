@@ -143,6 +143,7 @@ export class BlockBlobService {
 
   /**
    * Read a blob from a container, optionally parsing JSON.
+   * Always returns a value; receive an empty buffer, or 'null' for empty JSON.
    * @param {string} blobContainer - The container for the blob.
    * @param {string} blobName - The name of the blob.
    * @param {boolean} [json=false] - Parse the blob to JSON.
@@ -155,33 +156,32 @@ export class BlockBlobService {
   async read (blobContainer: string, blobName: string, json: boolean = false): Promise<any> {
     const containerClient = await this.containers.add(blobContainer)
     const blockBlobClient = containerClient.getBlockBlobClient(blobName)
+    const tryDownload = async () => {
+      try {
+        return await blockBlobClient.downloadToBuffer()
+      } catch (error) {
+        return Buffer.alloc(0)
+      }
+    }
 
     if (json) {
-      const buffer = await blockBlobClient.downloadToBuffer()
+      const buffer = await tryDownload()
       const content = buffer.toString('utf8')
 
-      return JSON.parse(content)
+      return JSON.parse(content === '' ? 'null' : content)
     }
 
-    try {
-      return await blockBlobClient.downloadToBuffer()
-    } catch (error) {
-      return Buffer.alloc(0)
-    }
+    return await tryDownload()
   }
 
-  /** Read a blob with a fallback blob name. */
+  /** Read a blob with a fallback blob name.
+   * * Always returns a value; receive an empty buffer, or 'null' for empty JSON.
+   */
   async readWithFallback (blobContainer: string, blobName: string, fallbackBlobName: string): Promise<Buffer> {
-    const containerClient = await this.containers.add(blobContainer)
-
     if (await this.has(blobContainer, blobName)) {
-      const blockBlobClient = containerClient.getBlockBlobClient(blobName)
-
-      return await blockBlobClient.downloadToBuffer()
+      return await this.read(blobContainer, blobName)
     }
 
-    const blockBlobFallback = containerClient.getBlockBlobClient(fallbackBlobName)
-
-    return await blockBlobFallback.downloadToBuffer()
+    return await this.read(blobContainer, fallbackBlobName)
   }
 }
