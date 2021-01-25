@@ -6,6 +6,31 @@ import {
   StorageSharedKeyCredential as BlobCredential
 } from '@azure/storage-blob'
 
+export type BlobOperation = 'delete' | 'read' | 'write'
+export type BlobAllResult = BlobDeleteIfExistsResponse | Buffer | Record<string, any> | any[] | null | BlockBlobUploadResponse
+
+export interface BlobAllBase {
+  operation: BlobOperation
+  container: string
+  name: string
+}
+
+export interface BlobAllDelete extends BlobAllBase {
+  operation: 'delete'
+}
+
+export interface BlobAllRead extends BlobAllBase {
+  operation: 'read'
+  json?: boolean
+}
+
+export interface BlobAllWrite extends BlobAllBase {
+  operation: 'write'
+  content: string | Buffer | any[] | Record<string | number, any>
+}
+
+export type BlobAllInput = BlobAllDelete | BlobAllRead | BlobAllWrite
+
 /** @hidden */
 class BlobContainerManager {
   /** Class for managing blob containers, creating them if they don't exist. */
@@ -175,7 +200,7 @@ export class BlockBlobService {
   }
 
   /** Read a blob with a fallback blob name.
-   * * Always returns a value; receive an empty buffer, or 'null' for empty JSON.
+   * Always returns a value; receive an empty buffer, or 'null' for empty JSON.
    */
   async readWithFallback (blobContainer: string, blobName: string, fallbackBlobName: string): Promise<Buffer> {
     if (await this.has(blobContainer, blobName)) {
@@ -183,5 +208,29 @@ export class BlockBlobService {
     }
 
     return await this.read(blobContainer, fallbackBlobName)
+  }
+
+  /** Takes an array of inputs, and returns them using Promise.all in the order they were given. */
+  async all (inputs: BlobAllDelete[]): Promise<BlobDeleteIfExistsResponse[]>
+  async all (inputs: BlobAllRead[]): Promise<Array<Buffer | Record<string, any> | any[] | null>>
+  async all (inputs: BlobAllWrite[]): Promise<BlockBlobUploadResponse[]>
+  async all (inputs: BlobAllInput[]): Promise<BlobAllResult[]>
+  async all (inputs: BlobAllInput[]): Promise<BlobAllResult[]> {
+    const promises: Promise<any>[]= []
+
+    for (const input of inputs) {
+      switch (input.operation) {
+        case 'delete':
+          promises.push(this.delete(input.container, input.name))
+          break
+        case 'read':
+          promises.push(this.read(input.container, input.name, input.json))
+          break
+        case 'write':
+          promises.push(this.write(input.container, input.name, input.content))
+      }
+    }
+
+    return await Promise.all(promises)
   }
 }

@@ -1,5 +1,6 @@
-import { deepStrictEqual, doesNotThrow, strictEqual } from 'assert'
+import { deepStrictEqual, doesNotThrow, rejects, strictEqual } from 'assert'
 import { BlockBlobService } from '../index'
+import { BlobAllInput } from '../lib/BlockBlobService'
 import { connection } from './helpers'
 
 describe('BlockBlobService', async () => {
@@ -26,16 +27,84 @@ describe('BlockBlobService', async () => {
     const blobService = new BlockBlobService(connection)
     const container = 'testing'
     const filename = 'test.txt'
+    const filename2 = 'test2.txt'
     const content = { hello: 'world!' }
 
     await blobService.write(container, filename, content)
+    await blobService.write(container, filename2, 'not JSON')
 
     const hello = await blobService.read(container, filename, true)
     const buf = await blobService.readWithFallback(container, filename, 'not-real.txt')
     const zeroBuf = await blobService.read(container, 'not-real.txt')
+    const nullResult = await blobService.read(container, 'not-real.txt', true)
 
     deepStrictEqual(hello, content)
     strictEqual(buf.toString('utf8'), JSON.stringify(content))
     strictEqual(zeroBuf.toString('utf8'), '')
+    strictEqual(nullResult, null)
+
+    rejects(async () => {
+      await blobService.read(container, filename2, true)
+    })
+  })
+
+  it('should support blob deletes', async () => {
+    const blobService = new BlockBlobService(connection)
+    const container = 'testing'
+    const filename = 'test.txt'
+    const content = { hello: 'world!' }
+
+    await blobService.write(container, filename, content)
+    const res = await blobService.delete(container, filename)
+
+    strictEqual(res.succeeded, true)
+  })
+
+  it('should support an array of blob inputs to read, write, and delete', async () => {
+    const blobService = new BlockBlobService(connection)
+    const container = 'testing'
+    const filename = 'read.txt'
+    const content = 'a'
+    const inputs: BlobAllInput[] = [
+      {
+        operation: 'delete',
+        container,
+        name: 'deleted.txt'
+      },
+      {
+        operation: 'read',
+        container,
+        name: filename
+      },
+      {
+        operation: 'write',
+        container,
+        name: 'write.txt',
+        content
+      }
+    ]
+
+    // Seeds content to be read for testing.
+    await blobService.write(container, filename, content)
+
+    // Ordered destructuring expecting results in the order of the inputs.
+    const [deleteResult, readResult, writeResult] = await blobService.all(inputs)
+
+    // Duck type the delete result.
+    if ('succeeded' in deleteResult) {
+      strictEqual(typeof deleteResult.succeeded, 'boolean')
+    } else {
+      throw new Error("Delete result misisng property 'succeeded'.")
+    }
+    if (readResult instanceof Buffer) {
+      strictEqual(readResult.toString('utf8'), content)
+    } else {
+      throw new Error("Read result was not an instance of Buffer.")
+    }
+    if ('etag' in writeResult) {
+      strictEqual(typeof writeResult.etag, 'string')
+    } else {
+      throw new Error("Write result misisng property 'etag'.")
+    }
   })
 })
