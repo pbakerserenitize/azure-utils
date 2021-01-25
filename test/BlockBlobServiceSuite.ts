@@ -1,6 +1,5 @@
 import { deepStrictEqual, doesNotThrow, rejects, strictEqual } from 'assert'
-import { BlockBlobService } from '../index'
-import { BlobAllInput } from '../lib/BlockBlobService'
+import { BlockBlobService, BlobAllInput } from '../index'
 import { connection } from './helpers'
 
 describe('BlockBlobService', async () => {

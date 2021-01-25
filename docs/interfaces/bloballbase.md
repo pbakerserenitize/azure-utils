@@ -2,6 +2,8 @@
 
 # Interface: BlobAllBase
 
+Helper interface for `BlockBlobService.all`.
+
 ## Hierarchy
 
 * **BlobAllBase**
@@ -26,7 +28,7 @@
 
 • **container**: *string*
 
-Defined in: [lib/BlockBlobService.ts:14](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L14)
+Defined in: [lib/Interfaces.ts:15](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/Interfaces.ts#L15)
 
 ___
 
@@ -34,7 +36,7 @@ ___
 
 • **name**: *string*
 
-Defined in: [lib/BlockBlobService.ts:15](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L15)
+Defined in: [lib/Interfaces.ts:16](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/Interfaces.ts#L16)
 
 ___
 
@@ -42,4 +44,4 @@ ___
 
 • **operation**: [*BlobOperation*](../modules.md#bloboperation)
 
-Defined in: [lib/BlockBlobService.ts:13](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L13)
+Defined in: [lib/Interfaces.ts:14](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/Interfaces.ts#L14)

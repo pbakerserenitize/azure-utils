@@ -1,7 +1,48 @@
+import { BlobDeleteIfExistsResponse, BlockBlobUploadResponse } from '@azure/storage-blob'
 import { azure } from 'azure-table-promise'
 
 /** @hidden */
 type StringProperty = azure.TableUtilities.entityGenerator.EntityProperty<string>
+
+export type BlobOperation = 'delete' | 'read' | 'write'
+export type BlobAllResult = BlobDeleteIfExistsResponse | Buffer | Record<string, any> | any[] | null | BlockBlobUploadResponse
+
+/** Helper interface for `BlockBlobService.all`.
+ * @category AzureUtility
+ */
+export interface BlobAllBase {
+  operation: BlobOperation
+  container: string
+  name: string
+}
+
+/** Helper interface for `BlockBlobService.all`.
+ * @category AzureUtility
+ */
+export interface BlobAllDelete extends BlobAllBase {
+  operation: 'delete'
+}
+
+/** Helper interface for `BlockBlobService.all`.
+ * @category AzureUtility
+ */
+export interface BlobAllRead extends BlobAllBase {
+  operation: 'read'
+  json?: boolean
+}
+
+/** Helper interface for `BlockBlobService.all`.
+ * @category AzureUtility
+ */
+export interface BlobAllWrite extends BlobAllBase {
+  operation: 'write'
+  content: string | Buffer | any[] | Record<string | number, any>
+}
+
+/** Helper union type for `BlockBlobService.all`.
+ * @category AzureUtility
+ */
+export type BlobAllInput = BlobAllDelete | BlobAllRead | BlobAllWrite
 
 /** Helper interface for queue-to-blob metadata.
  * @category AzureUtility

@@ -5,31 +5,13 @@ import {
   ContainerClient,
   StorageSharedKeyCredential as BlobCredential
 } from '@azure/storage-blob'
-
-export type BlobOperation = 'delete' | 'read' | 'write'
-export type BlobAllResult = BlobDeleteIfExistsResponse | Buffer | Record<string, any> | any[] | null | BlockBlobUploadResponse
-
-export interface BlobAllBase {
-  operation: BlobOperation
-  container: string
-  name: string
-}
-
-export interface BlobAllDelete extends BlobAllBase {
-  operation: 'delete'
-}
-
-export interface BlobAllRead extends BlobAllBase {
-  operation: 'read'
-  json?: boolean
-}
-
-export interface BlobAllWrite extends BlobAllBase {
-  operation: 'write'
-  content: string | Buffer | any[] | Record<string | number, any>
-}
-
-export type BlobAllInput = BlobAllDelete | BlobAllRead | BlobAllWrite
+import {
+  BlobAllDelete,
+  BlobAllInput,
+  BlobAllRead,
+  BlobAllResult,
+  BlobAllWrite
+} from './Interfaces'
 
 /** @hidden */
 class BlobContainerManager {

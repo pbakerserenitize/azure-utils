@@ -2,6 +2,8 @@
 
 # Interface: BlobAllRead
 
+Helper interface for `BlockBlobService.all`.
+
 ## Hierarchy
 
 * [*BlobAllBase*](bloballbase.md)
@@ -25,7 +27,7 @@
 
 Inherited from: [BlobAllBase](bloballbase.md).[container](bloballbase.md#container)
 
-Defined in: [lib/BlockBlobService.ts:14](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L14)
+Defined in: [lib/Interfaces.ts:15](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/Interfaces.ts#L15)
 
 ___
 
@@ -33,7 +35,7 @@ ___
 
 • `Optional` **json**: *boolean*
 
-Defined in: [lib/BlockBlobService.ts:24](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L24)
+Defined in: [lib/Interfaces.ts:31](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/Interfaces.ts#L31)
 
 ___
 
@@ -43,7 +45,7 @@ ___
 
 Inherited from: [BlobAllBase](bloballbase.md).[name](bloballbase.md#name)
 
-Defined in: [lib/BlockBlobService.ts:15](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L15)
+Defined in: [lib/Interfaces.ts:16](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/Interfaces.ts#L16)
 
 ___
 
@@ -53,4 +55,4 @@ ___
 
 Overrides: [BlobAllBase](bloballbase.md).[operation](bloballbase.md#operation)
 
-Defined in: [lib/BlockBlobService.ts:23](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L23)
+Defined in: [lib/Interfaces.ts:30](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/Interfaces.ts#L30)
