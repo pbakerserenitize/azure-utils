@@ -1,4 +1,4 @@
 {
-  "inputFiles": ["index.ts"],
-  "mode": "file"
+  "entryPoints": ["index.ts"],
+  "entryDocument": "index.md"
 }
