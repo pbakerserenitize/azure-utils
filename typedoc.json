@@ -1,4 +1,4 @@
 {
-  "entryPoints": ["index.ts"],
+  "entryPoints": ["index.ts", "lib/AzureFunctions/index.ts"],
   "entryDocument": "README.md"
 }

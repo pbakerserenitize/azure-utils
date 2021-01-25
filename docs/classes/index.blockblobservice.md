@@ -1,6 +1,8 @@
-[@nhsllc/azure-utils](../README.md) / [Exports](../modules.md) / BlockBlobService
+[@nhsllc/azure-utils](../README.md) / [Modules](../modules.md) / [index](../modules/index.md) / BlockBlobService
 
 # Class: BlockBlobService
+
+[index](../modules/index.md).BlockBlobService
 
 Convenience wrapper for managing blob service instances gracefully.
 
@@ -28,27 +30,27 @@ module.exports = async function example (context) {
 
 ### Constructors
 
-- [constructor](blockblobservice.md#constructor)
+- [constructor](index.blockblobservice.md#constructor)
 
 ### Properties
 
-- [blobService](blockblobservice.md#blobservice)
-- [containers](blockblobservice.md#containers)
+- [blobService](index.blockblobservice.md#blobservice)
+- [containers](index.blockblobservice.md#containers)
 
 ### Methods
 
-- [all](blockblobservice.md#all)
-- [delete](blockblobservice.md#delete)
-- [has](blockblobservice.md#has)
-- [read](blockblobservice.md#read)
-- [readWithFallback](blockblobservice.md#readwithfallback)
-- [write](blockblobservice.md#write)
+- [all](index.blockblobservice.md#all)
+- [delete](index.blockblobservice.md#delete)
+- [has](index.blockblobservice.md#has)
+- [read](index.blockblobservice.md#read)
+- [readWithFallback](index.blockblobservice.md#readwithfallback)
+- [write](index.blockblobservice.md#write)
 
 ## Constructors
 
 ### constructor
 
-\+ **new BlockBlobService**(`accountNameOrConnectionString`: *string*, `accountKey?`: *string*): [*BlockBlobService*](blockblobservice.md)
+\+ **new BlockBlobService**(`accountNameOrConnectionString`: *string*, `accountKey?`: *string*): [*BlockBlobService*](index.blockblobservice.md)
 
 Convenience wrapper for managing blob service instances gracefully.
 
@@ -59,9 +61,9 @@ Name | Type | Description |
 `accountNameOrConnectionString` | *string* | The account name or the connection string.   |
 `accountKey?` | *string* | - |
 
-**Returns:** [*BlockBlobService*](blockblobservice.md)
+**Returns:** [*BlockBlobService*](index.blockblobservice.md)
 
-Defined in: [lib/BlockBlobService.ts:81](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L81)
+Defined in: [lib/BlockBlobService.ts:81](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L81)
 
 ## Properties
 
@@ -69,7 +71,7 @@ Defined in: [lib/BlockBlobService.ts:81](https://github.com/nhsllc/azure-utils/b
 
 • **blobService**: *BlobServiceClient*
 
-Defined in: [lib/BlockBlobService.ts:99](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L99)
+Defined in: [lib/BlockBlobService.ts:99](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L99)
 
 ___
 
@@ -77,13 +79,13 @@ ___
 
 • **containers**: *BlobContainerManager*
 
-Defined in: [lib/BlockBlobService.ts:100](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L100)
+Defined in: [lib/BlockBlobService.ts:100](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L100)
 
 ## Methods
 
 ### all
 
-▸ **all**(`inputs`: [*BlobAllDelete*](../interfaces/bloballdelete.md)[]): *Promise*<*BlobDeleteIfExistsResponse*[]\>
+▸ **all**(`inputs`: [*BlobAllDelete*](../interfaces/index.bloballdelete.md)[]): *Promise*<*BlobDeleteIfExistsResponse*[]\>
 
 Takes an array of inputs, and returns them using Promise.all in the order they were given.
 
@@ -91,47 +93,47 @@ Takes an array of inputs, and returns them using Promise.all in the order they w
 
 Name | Type |
 ------ | ------ |
-`inputs` | [*BlobAllDelete*](../interfaces/bloballdelete.md)[] |
+`inputs` | [*BlobAllDelete*](../interfaces/index.bloballdelete.md)[] |
 
 **Returns:** *Promise*<*BlobDeleteIfExistsResponse*[]\>
 
-Defined in: [lib/BlockBlobService.ts:201](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L201)
+Defined in: [lib/BlockBlobService.ts:201](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L201)
 
-▸ **all**(`inputs`: [*BlobAllRead*](../interfaces/bloballread.md)[]): *Promise*<(*any*[] | *Buffer* | *Record*<*string*, *any*\>)[]\>
+▸ **all**(`inputs`: [*BlobAllRead*](../interfaces/index.bloballread.md)[]): *Promise*<(*any*[] | *Buffer* | *Record*<*string*, *any*\>)[]\>
 
 #### Parameters:
 
 Name | Type |
 ------ | ------ |
-`inputs` | [*BlobAllRead*](../interfaces/bloballread.md)[] |
+`inputs` | [*BlobAllRead*](../interfaces/index.bloballread.md)[] |
 
 **Returns:** *Promise*<(*any*[] | *Buffer* | *Record*<*string*, *any*\>)[]\>
 
-Defined in: [lib/BlockBlobService.ts:202](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L202)
+Defined in: [lib/BlockBlobService.ts:202](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L202)
 
-▸ **all**(`inputs`: [*BlobAllWrite*](../interfaces/bloballwrite.md)[]): *Promise*<BlockBlobUploadResponse[]\>
+▸ **all**(`inputs`: [*BlobAllWrite*](../interfaces/index.bloballwrite.md)[]): *Promise*<BlockBlobUploadResponse[]\>
 
 #### Parameters:
 
 Name | Type |
 ------ | ------ |
-`inputs` | [*BlobAllWrite*](../interfaces/bloballwrite.md)[] |
+`inputs` | [*BlobAllWrite*](../interfaces/index.bloballwrite.md)[] |
 
 **Returns:** *Promise*<BlockBlobUploadResponse[]\>
 
-Defined in: [lib/BlockBlobService.ts:203](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L203)
+Defined in: [lib/BlockBlobService.ts:203](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L203)
 
-▸ **all**(`inputs`: [*BlobAllInput*](../modules.md#bloballinput)[]): *Promise*<[*BlobAllResult*](../modules.md#bloballresult)[]\>
+▸ **all**(`inputs`: [*BlobAllInput*](../modules/index.md#bloballinput)[]): *Promise*<[*BlobAllResult*](../modules/index.md#bloballresult)[]\>
 
 #### Parameters:
 
 Name | Type |
 ------ | ------ |
-`inputs` | [*BlobAllInput*](../modules.md#bloballinput)[] |
+`inputs` | [*BlobAllInput*](../modules/index.md#bloballinput)[] |
 
-**Returns:** *Promise*<[*BlobAllResult*](../modules.md#bloballresult)[]\>
+**Returns:** *Promise*<[*BlobAllResult*](../modules/index.md#bloballresult)[]\>
 
-Defined in: [lib/BlockBlobService.ts:204](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L204)
+Defined in: [lib/BlockBlobService.ts:204](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L204)
 
 ___
 
@@ -150,7 +152,7 @@ Name | Type | Description |
 
 **Returns:** *Promise*<*BlobDeleteIfExistsResponse*\>
 
-Defined in: [lib/BlockBlobService.ts:120](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L120)
+Defined in: [lib/BlockBlobService.ts:120](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L120)
 
 ___
 
@@ -171,7 +173,7 @@ Name | Type | Description |
 
 The contents of the blob; objects and arrays will be jsonified.
 
-Defined in: [lib/BlockBlobService.ts:108](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L108)
+Defined in: [lib/BlockBlobService.ts:108](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L108)
 
 ___
 
@@ -193,7 +195,7 @@ Name | Type | Description |
 
 The blob contents as a buffer instance.
 
-Defined in: [lib/BlockBlobService.ts:159](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L159)
+Defined in: [lib/BlockBlobService.ts:159](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L159)
 
 ▸ **read**(`blobContainer`: *string*, `blobName`: *string*, `json`: *false*): *Promise*<*Buffer*\>
 
@@ -207,7 +209,7 @@ Name | Type |
 
 **Returns:** *Promise*<*Buffer*\>
 
-Defined in: [lib/BlockBlobService.ts:160](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L160)
+Defined in: [lib/BlockBlobService.ts:160](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L160)
 
 ▸ **read**(`blobContainer`: *string*, `blobName`: *string*, `json`: *true*): *Promise*<*any*\>
 
@@ -221,7 +223,7 @@ Name | Type |
 
 **Returns:** *Promise*<*any*\>
 
-Defined in: [lib/BlockBlobService.ts:161](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L161)
+Defined in: [lib/BlockBlobService.ts:161](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L161)
 
 ▸ **read**(`blobContainer`: *string*, `blobName`: *string*, `json`: *boolean*): *Promise*<*any*\>
 
@@ -235,7 +237,7 @@ Name | Type |
 
 **Returns:** *Promise*<*any*\>
 
-Defined in: [lib/BlockBlobService.ts:162](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L162)
+Defined in: [lib/BlockBlobService.ts:162](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L162)
 
 ___
 
@@ -256,7 +258,7 @@ Name | Type |
 
 **Returns:** *Promise*<*Buffer*\>
 
-Defined in: [lib/BlockBlobService.ts:192](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L192)
+Defined in: [lib/BlockBlobService.ts:192](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L192)
 
 ___
 
@@ -276,4 +278,4 @@ Name | Type | Description |
 
 **Returns:** *Promise*<BlockBlobUploadResponse\>
 
-Defined in: [lib/BlockBlobService.ts:136](https://github.com/nhsllc/azure-utils/blob/be2dce5/lib/BlockBlobService.ts#L136)
+Defined in: [lib/BlockBlobService.ts:136](https://github.com/nhsllc/azure-utils/blob/a788737/lib/BlockBlobService.ts#L136)

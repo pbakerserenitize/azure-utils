@@ -1,4 +1,4 @@
-@nhsllc/azure-utils / [Exports](modules.md)
+@nhsllc/azure-utils / [Modules](modules.md)
 
 # @nhsllc/azure-utils
 
