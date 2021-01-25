@@ -1,4 +1,4 @@
-[@nhsllc/azure-utils](../index.md) / [Exports](../modules.md) / TableWriterBatch
+[@nhsllc/azure-utils](../README.md) / [Exports](../modules.md) / TableWriterBatch
 
 # Class: TableWriterBatch
 
@@ -75,7 +75,7 @@ Name | Type | Default value |
 
 **Returns:** [*TableWriterBatch*](tablewriterbatch.md)
 
-Defined in: [lib/TableWriterBatch.ts:32](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L32)
+Defined in: [lib/TableWriterBatch.ts:32](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L32)
 
 ## Properties
 
@@ -83,7 +83,7 @@ Defined in: [lib/TableWriterBatch.ts:32](https://github.com/nhsllc/azure-utils/b
 
 • `Private` **\_sizeLimitCache**: *Map*<*string*, *string*\>
 
-Defined in: [lib/TableWriterBatch.ts:52](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L52)
+Defined in: [lib/TableWriterBatch.ts:52](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L52)
 
 ___
 
@@ -91,7 +91,7 @@ ___
 
 • `Private` **\_tableWriterMap**: *Map*<*string*, [*TableWriter*](tablewriter.md)\>
 
-Defined in: [lib/TableWriterBatch.ts:51](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L51)
+Defined in: [lib/TableWriterBatch.ts:51](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L51)
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 An Azure connection string.
 
-Defined in: [lib/TableWriterBatch.ts:48](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L48)
+Defined in: [lib/TableWriterBatch.ts:48](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L48)
 
 ___
 
@@ -111,7 +111,7 @@ ___
 
 Limit the size of table writer instances.
 
-Defined in: [lib/TableWriterBatch.ts:50](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L50)
+Defined in: [lib/TableWriterBatch.ts:50](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L50)
 
 ## Accessors
 
@@ -121,7 +121,7 @@ Defined in: [lib/TableWriterBatch.ts:50](https://github.com/nhsllc/azure-utils/b
 
 **Returns:** *number*
 
-Defined in: [lib/TableWriterBatch.ts:64](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L64)
+Defined in: [lib/TableWriterBatch.ts:64](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L64)
 
 ___
 
@@ -131,7 +131,7 @@ ___
 
 **Returns:** *Partial*<[*TableWriter*](tablewriter.md)\>[]
 
-Defined in: [lib/TableWriterBatch.ts:54](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L54)
+Defined in: [lib/TableWriterBatch.ts:54](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L54)
 
 • **tableWriters**(`writers`: *Partial*<[*TableWriter*](tablewriter.md)\>[]): *void*
 
@@ -143,7 +143,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [lib/TableWriterBatch.ts:58](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L58)
+Defined in: [lib/TableWriterBatch.ts:58](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L58)
 
 ## Methods
 
@@ -162,7 +162,7 @@ Name | Type |
 
 **Returns:** *void*
 
-Defined in: [lib/TableWriterBatch.ts:69](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L69)
+Defined in: [lib/TableWriterBatch.ts:69](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L69)
 
 ___
 
@@ -180,7 +180,7 @@ Name | Type |
 
 **Returns:** *Promise*<*void*\>
 
-Defined in: [lib/TableWriterBatch.ts:149](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L149)
+Defined in: [lib/TableWriterBatch.ts:149](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L149)
 
 ___
 
@@ -200,7 +200,7 @@ Name | Type |
 
 **Returns:** *boolean*
 
-Defined in: [lib/TableWriterBatch.ts:129](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L129)
+Defined in: [lib/TableWriterBatch.ts:129](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L129)
 
 ___
 
@@ -210,7 +210,7 @@ ___
 
 **Returns:** *Partial*<[*TableWriterBatch*](tablewriterbatch.md)\>
 
-Defined in: [lib/TableWriterBatch.ts:166](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L166)
+Defined in: [lib/TableWriterBatch.ts:166](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L166)
 
 ___
 
@@ -228,7 +228,7 @@ Name | Type |
 
 **Returns:** *Promise*<[*QueueBlobMessage*](../interfaces/queueblobmessage.md)[]\>
 
-Defined in: [lib/TableWriterBatch.ts:156](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L156)
+Defined in: [lib/TableWriterBatch.ts:156](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L156)
 
 ___
 
@@ -247,7 +247,7 @@ Name | Type |
 
 **Returns:** [*TableWriterBatch*](tablewriterbatch.md)
 
-Defined in: [lib/TableWriterBatch.ts:173](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L173)
+Defined in: [lib/TableWriterBatch.ts:173](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L173)
 
 ___
 
@@ -266,4 +266,4 @@ Name | Type |
 
 **Returns:** *Promise*<[*TableWriterBatch*](tablewriterbatch.md)\>
 
-Defined in: [lib/TableWriterBatch.ts:184](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriterBatch.ts#L184)
+Defined in: [lib/TableWriterBatch.ts:184](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriterBatch.ts#L184)

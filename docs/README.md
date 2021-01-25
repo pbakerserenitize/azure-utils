@@ -34,4 +34,4 @@ import { TableWriter } from '@nhsllc/azure-utils'
 
 ## Documentation
 
-Can be found at the root of the repository under [docs](./docs/index.html).
+Can be found at the root of the repository under [docs](./docs/README.md).

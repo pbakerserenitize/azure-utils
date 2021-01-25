@@ -1,4 +1,4 @@
-[@nhsllc/azure-utils](../index.md) / [Exports](../modules.md) / QueueBlobMessage
+[@nhsllc/azure-utils](../README.md) / [Exports](../modules.md) / QueueBlobMessage
 
 # Interface: QueueBlobMessage
 
@@ -21,7 +21,7 @@ Helper interface for queue-to-blob metadata.
 
 • **blobName**: *string*
 
-Defined in: [lib/Interfaces.ts:10](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/Interfaces.ts#L10)
+Defined in: [lib/Interfaces.ts:10](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/Interfaces.ts#L10)
 
 ___
 
@@ -29,4 +29,4 @@ ___
 
 • **container**: *string*
 
-Defined in: [lib/Interfaces.ts:11](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/Interfaces.ts#L11)
+Defined in: [lib/Interfaces.ts:11](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/Interfaces.ts#L11)

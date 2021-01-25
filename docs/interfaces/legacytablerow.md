@@ -1,4 +1,4 @@
-[@nhsllc/azure-utils](../index.md) / [Exports](../modules.md) / LegacyTableRow
+[@nhsllc/azure-utils](../README.md) / [Exports](../modules.md) / LegacyTableRow
 
 # Interface: LegacyTableRow
 
@@ -27,7 +27,7 @@ Helper interface for legacy table rows.
 
 • **PartitionKey**: *string* | StringProperty
 
-Defined in: [lib/Interfaces.ts:18](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/Interfaces.ts#L18)
+Defined in: [lib/Interfaces.ts:18](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/Interfaces.ts#L18)
 
 ___
 
@@ -35,4 +35,4 @@ ___
 
 • **RowKey**: *string* | StringProperty
 
-Defined in: [lib/Interfaces.ts:19](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/Interfaces.ts#L19)
+Defined in: [lib/Interfaces.ts:19](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/Interfaces.ts#L19)

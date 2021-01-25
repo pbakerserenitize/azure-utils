@@ -1,4 +1,4 @@
-[@nhsllc/azure-utils](../index.md) / [Exports](../modules.md) / BlobAllBase
+[@nhsllc/azure-utils](../README.md) / [Exports](../modules.md) / BlobAllBase
 
 # Interface: BlobAllBase
 
@@ -26,7 +26,7 @@
 
 • **container**: *string*
 
-Defined in: [lib/BlockBlobService.ts:14](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L14)
+Defined in: [lib/BlockBlobService.ts:14](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L14)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • **name**: *string*
 
-Defined in: [lib/BlockBlobService.ts:15](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L15)
+Defined in: [lib/BlockBlobService.ts:15](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L15)
 
 ___
 
@@ -42,4 +42,4 @@ ___
 
 • **operation**: [*BlobOperation*](../modules.md#bloboperation)
 
-Defined in: [lib/BlockBlobService.ts:13](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L13)
+Defined in: [lib/BlockBlobService.ts:13](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L13)

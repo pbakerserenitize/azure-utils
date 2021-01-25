@@ -1,4 +1,4 @@
-[@nhsllc/azure-utils](../index.md) / [Exports](../modules.md) / BlobAllRead
+[@nhsllc/azure-utils](../README.md) / [Exports](../modules.md) / BlobAllRead
 
 # Interface: BlobAllRead
 
@@ -25,7 +25,7 @@
 
 Inherited from: [BlobAllBase](bloballbase.md).[container](bloballbase.md#container)
 
-Defined in: [lib/BlockBlobService.ts:14](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L14)
+Defined in: [lib/BlockBlobService.ts:14](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L14)
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • `Optional` **json**: *boolean*
 
-Defined in: [lib/BlockBlobService.ts:24](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L24)
+Defined in: [lib/BlockBlobService.ts:24](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L24)
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 Inherited from: [BlobAllBase](bloballbase.md).[name](bloballbase.md#name)
 
-Defined in: [lib/BlockBlobService.ts:15](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L15)
+Defined in: [lib/BlockBlobService.ts:15](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L15)
 
 ___
 
@@ -53,4 +53,4 @@ ___
 
 Overrides: [BlobAllBase](bloballbase.md).[operation](bloballbase.md#operation)
 
-Defined in: [lib/BlockBlobService.ts:23](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L23)
+Defined in: [lib/BlockBlobService.ts:23](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L23)

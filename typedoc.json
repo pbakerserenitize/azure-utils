@@ -1,4 +1,4 @@
 {
   "entryPoints": ["index.ts"],
-  "entryDocument": "index.md"
+  "entryDocument": "README.md"
 }

@@ -1,4 +1,4 @@
-[@nhsllc/azure-utils](index.md) / Exports
+[@nhsllc/azure-utils](README.md) / Exports
 
 # @nhsllc/azure-utils
 
@@ -40,7 +40,7 @@
 
 Ƭ **BlobAllInput**: [*BlobAllDelete*](interfaces/bloballdelete.md) | [*BlobAllRead*](interfaces/bloballread.md) | [*BlobAllWrite*](interfaces/bloballwrite.md)
 
-Defined in: [lib/BlockBlobService.ts:32](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L32)
+Defined in: [lib/BlockBlobService.ts:32](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L32)
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 Ƭ **BlobAllResult**: BlobDeleteIfExistsResponse | Buffer | *Record*<*string*, *any*\> | *any*[] | *null* | BlockBlobUploadResponse
 
-Defined in: [lib/BlockBlobService.ts:10](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L10)
+Defined in: [lib/BlockBlobService.ts:10](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L10)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 Ƭ **BlobOperation**: *delete* | *read* | *write*
 
-Defined in: [lib/BlockBlobService.ts:9](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L9)
+Defined in: [lib/BlockBlobService.ts:9](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L9)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 Ƭ **TableWriterMessage**: *Partial*<*Omit*<[*TableWriter*](classes/tablewriter.md), *tableRows*\>\> & { `tableRows?`: ([*LegacyTableRow*](interfaces/legacytablerow.md) | [*TableRow*](interfaces/tablerow.md))[] ; `writeType?`: TableOperation  }
 
-Defined in: [lib/TableWriter.ts:44](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/TableWriter.ts#L44)
+Defined in: [lib/TableWriter.ts:44](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/TableWriter.ts#L44)
 
 ## AzureFunctionHelper Variables
 
@@ -74,4 +74,4 @@ Defined in: [lib/TableWriter.ts:44](https://github.com/nhsllc/azure-utils/blob/e
 
 Named export of all Azure Function helpers and interfaces.
 
-Defined in: [index.ts:11](https://github.com/nhsllc/azure-utils/blob/ed89cf0/index.ts#L11)
+Defined in: [index.ts:11](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/index.ts#L11)

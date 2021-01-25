@@ -1,4 +1,4 @@
-[@nhsllc/azure-utils](../index.md) / [Exports](../modules.md) / BlockBlobService
+[@nhsllc/azure-utils](../README.md) / [Exports](../modules.md) / BlockBlobService
 
 # Class: BlockBlobService
 
@@ -61,7 +61,7 @@ Name | Type | Description |
 
 **Returns:** [*BlockBlobService*](blockblobservice.md)
 
-Defined in: [lib/BlockBlobService.ts:99](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L99)
+Defined in: [lib/BlockBlobService.ts:99](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L99)
 
 ## Properties
 
@@ -69,7 +69,7 @@ Defined in: [lib/BlockBlobService.ts:99](https://github.com/nhsllc/azure-utils/b
 
 • **blobService**: *BlobServiceClient*
 
-Defined in: [lib/BlockBlobService.ts:117](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L117)
+Defined in: [lib/BlockBlobService.ts:117](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L117)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 • **containers**: *BlobContainerManager*
 
-Defined in: [lib/BlockBlobService.ts:118](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L118)
+Defined in: [lib/BlockBlobService.ts:118](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L118)
 
 ## Methods
 
@@ -95,7 +95,7 @@ Name | Type |
 
 **Returns:** *Promise*<*BlobDeleteIfExistsResponse*[]\>
 
-Defined in: [lib/BlockBlobService.ts:219](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L219)
+Defined in: [lib/BlockBlobService.ts:219](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L219)
 
 ▸ **all**(`inputs`: [*BlobAllRead*](../interfaces/bloballread.md)[]): *Promise*<(*any*[] | *Buffer* | *Record*<*string*, *any*\>)[]\>
 
@@ -107,7 +107,7 @@ Name | Type |
 
 **Returns:** *Promise*<(*any*[] | *Buffer* | *Record*<*string*, *any*\>)[]\>
 
-Defined in: [lib/BlockBlobService.ts:220](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L220)
+Defined in: [lib/BlockBlobService.ts:220](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L220)
 
 ▸ **all**(`inputs`: [*BlobAllWrite*](../interfaces/bloballwrite.md)[]): *Promise*<BlockBlobUploadResponse[]\>
 
@@ -119,7 +119,7 @@ Name | Type |
 
 **Returns:** *Promise*<BlockBlobUploadResponse[]\>
 
-Defined in: [lib/BlockBlobService.ts:221](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L221)
+Defined in: [lib/BlockBlobService.ts:221](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L221)
 
 ▸ **all**(`inputs`: [*BlobAllInput*](../modules.md#bloballinput)[]): *Promise*<[*BlobAllResult*](../modules.md#bloballresult)[]\>
 
@@ -131,7 +131,7 @@ Name | Type |
 
 **Returns:** *Promise*<[*BlobAllResult*](../modules.md#bloballresult)[]\>
 
-Defined in: [lib/BlockBlobService.ts:222](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L222)
+Defined in: [lib/BlockBlobService.ts:222](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L222)
 
 ___
 
@@ -150,7 +150,7 @@ Name | Type | Description |
 
 **Returns:** *Promise*<*BlobDeleteIfExistsResponse*\>
 
-Defined in: [lib/BlockBlobService.ts:138](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L138)
+Defined in: [lib/BlockBlobService.ts:138](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L138)
 
 ___
 
@@ -171,7 +171,7 @@ Name | Type | Description |
 
 The contents of the blob; objects and arrays will be jsonified.
 
-Defined in: [lib/BlockBlobService.ts:126](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L126)
+Defined in: [lib/BlockBlobService.ts:126](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L126)
 
 ___
 
@@ -193,7 +193,7 @@ Name | Type | Description |
 
 The blob contents as a buffer instance.
 
-Defined in: [lib/BlockBlobService.ts:177](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L177)
+Defined in: [lib/BlockBlobService.ts:177](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L177)
 
 ▸ **read**(`blobContainer`: *string*, `blobName`: *string*, `json`: *false*): *Promise*<*Buffer*\>
 
@@ -207,7 +207,7 @@ Name | Type |
 
 **Returns:** *Promise*<*Buffer*\>
 
-Defined in: [lib/BlockBlobService.ts:178](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L178)
+Defined in: [lib/BlockBlobService.ts:178](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L178)
 
 ▸ **read**(`blobContainer`: *string*, `blobName`: *string*, `json`: *true*): *Promise*<*any*\>
 
@@ -221,7 +221,7 @@ Name | Type |
 
 **Returns:** *Promise*<*any*\>
 
-Defined in: [lib/BlockBlobService.ts:179](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L179)
+Defined in: [lib/BlockBlobService.ts:179](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L179)
 
 ▸ **read**(`blobContainer`: *string*, `blobName`: *string*, `json`: *boolean*): *Promise*<*any*\>
 
@@ -235,7 +235,7 @@ Name | Type |
 
 **Returns:** *Promise*<*any*\>
 
-Defined in: [lib/BlockBlobService.ts:180](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L180)
+Defined in: [lib/BlockBlobService.ts:180](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L180)
 
 ___
 
@@ -256,7 +256,7 @@ Name | Type |
 
 **Returns:** *Promise*<*Buffer*\>
 
-Defined in: [lib/BlockBlobService.ts:210](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L210)
+Defined in: [lib/BlockBlobService.ts:210](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L210)
 
 ___
 
@@ -276,4 +276,4 @@ Name | Type | Description |
 
 **Returns:** *Promise*<BlockBlobUploadResponse\>
 
-Defined in: [lib/BlockBlobService.ts:154](https://github.com/nhsllc/azure-utils/blob/ed89cf0/lib/BlockBlobService.ts#L154)
+Defined in: [lib/BlockBlobService.ts:154](https://github.com/nhsllc/azure-utils/blob/6ef1e3a/lib/BlockBlobService.ts#L154)
