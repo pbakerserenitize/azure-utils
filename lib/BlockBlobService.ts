@@ -191,9 +191,14 @@ export class BlockBlobService {
 
     if (json) {
       const buffer = await tryDownload()
+
+      // If file is empty, don't try to parse it.
+      if (buffer.length === 0) return null
+
       const content = buffer.toString('utf8')
 
-      return JSON.parse(content === '' ? 'null' : content)
+      // If JSON is expected, don't hide the fact that it is malformed.
+      return JSON.parse(content)
     }
 
     return await tryDownload()
