@@ -1,6 +1,6 @@
 {
   "name": "@nhsllc/azure-utils",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Private utilitiy classes and methods for use with Microsoft Azure projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,6 +28,7 @@
   "dependencies": {
     "@azure/storage-blob": "^12.4.0",
     "@azure/storage-queue": "^12.3.0",
+    "azure-table-promise": "^1.2.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
