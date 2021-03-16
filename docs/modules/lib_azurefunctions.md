@@ -16,7 +16,7 @@
 
 ### tableWriterBatch
 
-▸ **tableWriterBatch**(`options`: [*TWBOptions*](../interfaces/lib_azurefunctions.twboptions.md)): *Promise*<*void*\>
+▸ **tableWriterBatch**(`options`: [*TWBOptions*](../interfaces/lib_azurefunctions.twboptions.md)): *Promise*<void\>
 
 Helper method which acts as the body of an Azure Function designed for batching table writer instances.
 
@@ -46,9 +46,9 @@ module.exports = logger.azureFunctionHandler(
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `options` | [*TWBOptions*](../interfaces/lib_azurefunctions.twboptions.md) |
 
-**Returns:** *Promise*<*void*\>
+**Returns:** *Promise*<void\>
 
-Defined in: [lib/AzureFunctions/tableWriterBatch.ts:33](https://github.com/nhsllc/azure-utils/blob/a788737/lib/AzureFunctions/tableWriterBatch.ts#L33)
+Defined in: [lib/AzureFunctions/tableWriterBatch.ts:33](https://github.com/nhsllc/azure-utils/blob/183635e/lib/AzureFunctions/tableWriterBatch.ts#L33)

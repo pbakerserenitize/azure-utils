@@ -6,10 +6,6 @@
 
 Helper interface for legacy table rows.
 
-## Hierarchy
-
-* **LegacyTableRow**
-
 ## Indexable
 
 ▪ [property: *string*]: *any*
@@ -27,14 +23,14 @@ Helper interface for legacy table rows.
 
 ### PartitionKey
 
-• **PartitionKey**: *string* | StringProperty
+• **PartitionKey**: *string* \| StringProperty
 
-Defined in: [lib/Interfaces.ts:59](https://github.com/nhsllc/azure-utils/blob/a788737/lib/Interfaces.ts#L59)
+Defined in: [lib/Interfaces.ts:60](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L60)
 
 ___
 
 ### RowKey
 
-• **RowKey**: *string* | StringProperty
+• **RowKey**: *string* \| StringProperty
 
-Defined in: [lib/Interfaces.ts:60](https://github.com/nhsllc/azure-utils/blob/a788737/lib/Interfaces.ts#L60)
+Defined in: [lib/Interfaces.ts:61](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L61)
