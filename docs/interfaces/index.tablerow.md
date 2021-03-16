@@ -6,10 +6,6 @@
 
 Helper interface for table rows. This is the preferred object.
 
-## Hierarchy
-
-* **TableRow**
-
 ## Indexable
 
 ▪ [property: *string*]: *any*
@@ -29,7 +25,7 @@ Helper interface for table rows. This is the preferred object.
 
 • **partitionKey**: *string*
 
-Defined in: [lib/Interfaces.ts:68](https://github.com/nhsllc/azure-utils/blob/a788737/lib/Interfaces.ts#L68)
+Defined in: [lib/Interfaces.ts:69](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L69)
 
 ___
 
@@ -37,4 +33,4 @@ ___
 
 • **rowKey**: *string*
 
-Defined in: [lib/Interfaces.ts:69](https://github.com/nhsllc/azure-utils/blob/a788737/lib/Interfaces.ts#L69)
+Defined in: [lib/Interfaces.ts:70](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L70)

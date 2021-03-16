@@ -154,13 +154,14 @@ export class BlockBlobService {
    * @param {string} blobContainer - The container for the blob.
    * @param {string} blobName - The name of the blob.
    * @param {boolean} [json=false] - Parse the blob to JSON.
-   * @returns {Promise<Buffer>} The blob contents as a buffer instance.
+   * @returns {Promise<Buffer|string|Record<string, any>|any[]>} The blob contents as a buffer instance.
    */
   async read (blobContainer: string, blobName: string): Promise<Buffer>
+  async read (blobContainer: string, blobName: string, encoding: BufferEncoding): Promise<string>
   async read (blobContainer: string, blobName: string, json: false): Promise<Buffer>
-  async read (blobContainer: string, blobName: string, json: true): Promise<any>
-  async read (blobContainer: string, blobName: string, json: boolean): Promise<any>
-  async read (blobContainer: string, blobName: string, json: boolean = false): Promise<any> {
+  async read (blobContainer: string, blobName: string, json: true): Promise<Record<string, any> | any[] | null | any>
+  async read (blobContainer: string, blobName: string, json: boolean | BufferEncoding): Promise<any>
+  async read (blobContainer: string, blobName: string, jsonOrEnc: boolean | BufferEncoding = false): Promise<any> {
     const containerClient = await this.containers.add(blobContainer)
     const blockBlobClient = containerClient.getBlockBlobClient(blobName)
     const tryDownload = async () => {
@@ -171,7 +172,7 @@ export class BlockBlobService {
       }
     }
 
-    if (json) {
+    if (typeof jsonOrEnc === 'boolean' && jsonOrEnc) {
       const buffer = await tryDownload()
 
       // If file is empty, don't try to parse it.
@@ -181,6 +182,10 @@ export class BlockBlobService {
 
       // If JSON is expected, don't hide the fact that it is malformed.
       return JSON.parse(content)
+    } else if (typeof jsonOrEnc === 'string') {
+      const buffer = await tryDownload()
+
+      return buffer.toString(jsonOrEnc)
     }
 
     return await tryDownload()
@@ -199,7 +204,7 @@ export class BlockBlobService {
 
   /** Takes an array of inputs, and returns them using Promise.all in the order they were given. */
   async all (inputs: BlobAllDelete[]): Promise<BlobDeleteIfExistsResponse[]>
-  async all (inputs: BlobAllRead[]): Promise<Array<Buffer | Record<string, any> | any[] | null>>
+  async all (inputs: BlobAllRead[]): Promise<Array<Buffer | string | Record<string, any> | any[] | null>>
   async all (inputs: BlobAllWrite[]): Promise<BlockBlobUploadResponse[]>
   async all (inputs: BlobAllInput[]): Promise<BlobAllResult[]>
   async all (inputs: BlobAllInput[]): Promise<BlobAllResult[]> {
@@ -211,7 +216,7 @@ export class BlockBlobService {
           promises.push(this.delete(input.container, input.name))
           break
         case 'read':
-          promises.push(this.read(input.container, input.name, input.json))
+          promises.push(this.read(input.container, input.name, typeof input.json === 'boolean' ? input.json : input.encoding))
           break
         case 'write':
           promises.push(this.write(input.container, input.name, input.content))

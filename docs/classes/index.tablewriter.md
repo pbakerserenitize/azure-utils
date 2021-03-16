@@ -22,10 +22,6 @@ module.exports = async function example (context) {
 }
 ```
 
-## Hierarchy
-
-* **TableWriter**
-
 ## Table of contents
 
 ### Constructors
@@ -68,29 +64,29 @@ Class for managing a complete round-trip of one or more table rows for upsert in
 
 #### Parameters:
 
-Name | Type | Default value |
------- | ------ | ------ |
-`message` | [*TableWriterMessage*](../modules/index.md#tablewritermessage) | ... |
+Name | Type |
+:------ | :------ |
+`message` | [*TableWriterMessage*](../modules/index.md#tablewritermessage) |
 
 **Returns:** [*TableWriter*](index.tablewriter.md)
 
-Defined in: [lib/TableWriter.ts:68](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L68)
+Defined in: [lib/TableWriter.ts:68](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L68)
 
 ## Properties
 
 ### \_operationMap
 
-• `Private` **\_operationMap**: *Record*<TableOperation, *Set*<*string*\>\>
+• `Private` **\_operationMap**: *Record*<TableOperation, Set<string\>\>
 
-Defined in: [lib/TableWriter.ts:168](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L168)
+Defined in: [lib/TableWriter.ts:168](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L168)
 
 ___
 
 ### \_tableRowMap
 
-• `Private` **\_tableRowMap**: *Map*<*string*, [*LegacyTableRow*](../interfaces/index.legacytablerow.md)\>
+• `Private` **\_tableRowMap**: *Map*<string, [*LegacyTableRow*](../interfaces/index.legacytablerow.md)\>
 
-Defined in: [lib/TableWriter.ts:167](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L167)
+Defined in: [lib/TableWriter.ts:167](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L167)
 
 ___
 
@@ -100,7 +96,7 @@ ___
 
 A blob name; one will be set dynamically, which is recommended.
 
-Defined in: [lib/TableWriter.ts:158](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L158)
+Defined in: [lib/TableWriter.ts:158](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L158)
 
 ___
 
@@ -110,7 +106,7 @@ ___
 
 An Azure connection string.
 
-Defined in: [lib/TableWriter.ts:160](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L160)
+Defined in: [lib/TableWriter.ts:160](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L160)
 
 ___
 
@@ -120,7 +116,7 @@ ___
 
 A blob container; defaults to `table-writer`, will be dynamically created.
 
-Defined in: [lib/TableWriter.ts:162](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L162)
+Defined in: [lib/TableWriter.ts:162](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L162)
 
 ___
 
@@ -130,7 +126,7 @@ ___
 
 A partition key; will be determined from the first table row unless provided.
 
-Defined in: [lib/TableWriter.ts:164](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L164)
+Defined in: [lib/TableWriter.ts:164](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L164)
 
 ___
 
@@ -140,86 +136,86 @@ ___
 
 A table name; table will be created dynamically when executing the batch.
 
-Defined in: [lib/TableWriter.ts:166](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L166)
+Defined in: [lib/TableWriter.ts:166](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L166)
 
 ## Accessors
 
 ### operations
 
-• **operations**(): TableWriterOperations
+• get **operations**(): TableWriterOperations
 
 **Returns:** TableWriterOperations
 
-Defined in: [lib/TableWriter.ts:180](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L180)
+Defined in: [lib/TableWriter.ts:180](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L180)
 
 ___
 
 ### size
 
-• **size**(): *number*
+• get **size**(): *number*
 
 **Returns:** *number*
 
-Defined in: [lib/TableWriter.ts:188](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L188)
+Defined in: [lib/TableWriter.ts:188](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L188)
 
 ___
 
 ### tableRows
 
-• **tableRows**(): [*LegacyTableRow*](../interfaces/index.legacytablerow.md)[]
+• get **tableRows**(): [*LegacyTableRow*](../interfaces/index.legacytablerow.md)[]
 
 **Returns:** [*LegacyTableRow*](../interfaces/index.legacytablerow.md)[]
 
-Defined in: [lib/TableWriter.ts:170](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L170)
+Defined in: [lib/TableWriter.ts:170](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L170)
 
-• **tableRows**(`rows`: [*LegacyTableRow*](../interfaces/index.legacytablerow.md)[]): *void*
+• set **tableRows**(`rows`: [*LegacyTableRow*](../interfaces/index.legacytablerow.md)[]): *void*
 
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `rows` | [*LegacyTableRow*](../interfaces/index.legacytablerow.md)[] |
 
 **Returns:** *void*
 
-Defined in: [lib/TableWriter.ts:174](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L174)
+Defined in: [lib/TableWriter.ts:174](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L174)
 
 ## Methods
 
 ### addTableRow
 
-▸ **addTableRow**(`tableRow`: [*LegacyTableRow*](../interfaces/index.legacytablerow.md) | [*TableRow*](../interfaces/index.tablerow.md), `operation?`: TableOperation): *void*
+▸ **addTableRow**(`tableRow`: [*LegacyTableRow*](../interfaces/index.legacytablerow.md) \| [*TableRow*](../interfaces/index.tablerow.md), `operation?`: TableOperation): *void*
 
 Adds a single table row to this instance of writer.
 
 #### Parameters:
 
 Name | Type | Default value |
------- | ------ | ------ |
-`tableRow` | [*LegacyTableRow*](../interfaces/index.legacytablerow.md) | [*TableRow*](../interfaces/index.tablerow.md) | - |
+:------ | :------ | :------ |
+`tableRow` | [*LegacyTableRow*](../interfaces/index.legacytablerow.md) \| [*TableRow*](../interfaces/index.tablerow.md) | - |
 `operation` | TableOperation | 'merge' |
 
 **Returns:** *void*
 
-Defined in: [lib/TableWriter.ts:193](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L193)
+Defined in: [lib/TableWriter.ts:193](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L193)
 
 ___
 
 ### executeBatch
 
-▸ **executeBatch**(`connection?`: *string*): *Promise*<*void*\>
+▸ **executeBatch**(`connection?`: *string*): *Promise*<void\>
 
 Executes a batch, creating the table if it does not exist.
 
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `connection?` | *string* |
 
-**Returns:** *Promise*<*void*\>
+**Returns:** *Promise*<void\>
 
-Defined in: [lib/TableWriter.ts:215](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L215)
+Defined in: [lib/TableWriter.ts:215](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L215)
 
 ___
 
@@ -232,13 +228,13 @@ Removes a single table row from this isntance of writer.
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `partitionKey` | *string* |
 `rowKey` | *string* |
 
 **Returns:** *boolean*
 
-Defined in: [lib/TableWriter.ts:208](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L208)
+Defined in: [lib/TableWriter.ts:208](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L208)
 
 ___
 
@@ -250,7 +246,7 @@ Exports this instance as a plain JS object for `JSON.stringify`.
 
 **Returns:** *Partial*<[*TableWriter*](index.tablewriter.md)\>
 
-Defined in: [lib/TableWriter.ts:279](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L279)
+Defined in: [lib/TableWriter.ts:279](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L279)
 
 ___
 
@@ -263,47 +259,47 @@ Writes this instance of table writer to blob storage, and generates blob metadat
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `connection?` | *string* |
 
 **Returns:** *Promise*<[*QueueBlobMessage*](../interfaces/index.queueblobmessage.md)\>
 
-Defined in: [lib/TableWriter.ts:265](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L265)
+Defined in: [lib/TableWriter.ts:265](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L265)
 
 ___
 
 ### from
 
-▸ `Static`**from**(`json`: *string* | [*TableWriterMessage*](../modules/index.md#tablewritermessage), `connection?`: *string*): [*TableWriter*](index.tablewriter.md)
+▸ `Static`**from**(`json`: *string* \| [*TableWriterMessage*](../modules/index.md#tablewritermessage), `connection?`: *string*): [*TableWriter*](index.tablewriter.md)
 
 Creates an instance of table writer from valid JSON or from a plain JS object.
 
 #### Parameters:
 
 Name | Type |
------- | ------ |
-`json` | *string* | [*TableWriterMessage*](../modules/index.md#tablewritermessage) |
+:------ | :------ |
+`json` | *string* \| [*TableWriterMessage*](../modules/index.md#tablewritermessage) |
 `connection?` | *string* |
 
 **Returns:** [*TableWriter*](index.tablewriter.md)
 
-Defined in: [lib/TableWriter.ts:291](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L291)
+Defined in: [lib/TableWriter.ts:291](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L291)
 
 ___
 
 ### fromBlob
 
-▸ `Static`**fromBlob**(`message`: [*QueueBlobMessage*](../interfaces/index.queueblobmessage.md), `connection`: *string* | [*BlockBlobService*](index.blockblobservice.md)): *Promise*<[*TableWriter*](index.tablewriter.md)\>
+▸ `Static`**fromBlob**(`message`: [*QueueBlobMessage*](../interfaces/index.queueblobmessage.md), `connection`: *string* \| [*BlockBlobService*](index.blockblobservice.md)): *Promise*<[*TableWriter*](index.tablewriter.md)\>
 
 Creates an instance of table writer from blob metadata.
 
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `message` | [*QueueBlobMessage*](../interfaces/index.queueblobmessage.md) |
-`connection` | *string* | [*BlockBlobService*](index.blockblobservice.md) |
+`connection` | *string* \| [*BlockBlobService*](index.blockblobservice.md) |
 
 **Returns:** *Promise*<[*TableWriter*](index.tablewriter.md)\>
 
-Defined in: [lib/TableWriter.ts:302](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriter.ts#L302)
+Defined in: [lib/TableWriter.ts:302](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriter.ts#L302)

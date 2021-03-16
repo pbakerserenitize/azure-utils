@@ -6,10 +6,6 @@
 
 Helper interface for queue-to-blob metadata.
 
-## Hierarchy
-
-* **QueueBlobMessage**
-
 ## Table of contents
 
 ### Properties
@@ -23,7 +19,7 @@ Helper interface for queue-to-blob metadata.
 
 • **blobName**: *string*
 
-Defined in: [lib/Interfaces.ts:51](https://github.com/nhsllc/azure-utils/blob/a788737/lib/Interfaces.ts#L51)
+Defined in: [lib/Interfaces.ts:52](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L52)
 
 ___
 
@@ -31,4 +27,4 @@ ___
 
 • **container**: *string*
 
-Defined in: [lib/Interfaces.ts:52](https://github.com/nhsllc/azure-utils/blob/a788737/lib/Interfaces.ts#L52)
+Defined in: [lib/Interfaces.ts:53](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L53)

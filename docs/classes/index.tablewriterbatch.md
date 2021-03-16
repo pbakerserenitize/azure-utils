@@ -29,10 +29,6 @@ module.exports = async function example (context) {
 }
 ```
 
-## Hierarchy
-
-* **TableWriterBatch**
-
 ## Table of contents
 
 ### Constructors
@@ -71,29 +67,29 @@ Class for managing one or more TableWriter instances to round-trip into Azure Ta
 
 #### Parameters:
 
-Name | Type | Default value |
------- | ------ | ------ |
-`batchMessage` | *Partial*<[*TableWriterBatch*](index.tablewriterbatch.md)\> | ... |
+Name | Type |
+:------ | :------ |
+`batchMessage` | *Partial*<[*TableWriterBatch*](index.tablewriterbatch.md)\> |
 
 **Returns:** [*TableWriterBatch*](index.tablewriterbatch.md)
 
-Defined in: [lib/TableWriterBatch.ts:32](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L32)
+Defined in: [lib/TableWriterBatch.ts:32](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L32)
 
 ## Properties
 
 ### \_sizeLimitCache
 
-• `Private` **\_sizeLimitCache**: *Map*<*string*, *string*\>
+• `Private` **\_sizeLimitCache**: *Map*<string, string\>
 
-Defined in: [lib/TableWriterBatch.ts:52](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L52)
+Defined in: [lib/TableWriterBatch.ts:52](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L52)
 
 ___
 
 ### \_tableWriterMap
 
-• `Private` **\_tableWriterMap**: *Map*<*string*, [*TableWriter*](index.tablewriter.md)\>
+• `Private` **\_tableWriterMap**: *Map*<string, [*TableWriter*](index.tablewriter.md)\>
 
-Defined in: [lib/TableWriterBatch.ts:51](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L51)
+Defined in: [lib/TableWriterBatch.ts:51](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L51)
 
 ___
 
@@ -103,7 +99,7 @@ ___
 
 An Azure connection string.
 
-Defined in: [lib/TableWriterBatch.ts:48](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L48)
+Defined in: [lib/TableWriterBatch.ts:48](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L48)
 
 ___
 
@@ -113,39 +109,39 @@ ___
 
 Limit the size of table writer instances.
 
-Defined in: [lib/TableWriterBatch.ts:50](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L50)
+Defined in: [lib/TableWriterBatch.ts:50](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L50)
 
 ## Accessors
 
 ### size
 
-• **size**(): *number*
+• get **size**(): *number*
 
 **Returns:** *number*
 
-Defined in: [lib/TableWriterBatch.ts:64](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L64)
+Defined in: [lib/TableWriterBatch.ts:64](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L64)
 
 ___
 
 ### tableWriters
 
-• **tableWriters**(): *Partial*<[*TableWriter*](index.tablewriter.md)\>[]
+• get **tableWriters**(): *Partial*<[*TableWriter*](index.tablewriter.md)\>[]
 
 **Returns:** *Partial*<[*TableWriter*](index.tablewriter.md)\>[]
 
-Defined in: [lib/TableWriterBatch.ts:54](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L54)
+Defined in: [lib/TableWriterBatch.ts:54](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L54)
 
-• **tableWriters**(`writers`: *Partial*<[*TableWriter*](index.tablewriter.md)\>[]): *void*
+• set **tableWriters**(`writers`: *Partial*<[*TableWriter*](index.tablewriter.md)\>[]): *void*
 
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `writers` | *Partial*<[*TableWriter*](index.tablewriter.md)\>[] |
 
 **Returns:** *void*
 
-Defined in: [lib/TableWriterBatch.ts:58](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L58)
+Defined in: [lib/TableWriterBatch.ts:58](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L58)
 
 ## Methods
 
@@ -158,31 +154,31 @@ Adds a single table writer to this instance; merges writers with same table name
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `writer` | [*TableWriterMessage*](../modules/index.md#tablewritermessage) |
 `connection?` | *string* |
 
 **Returns:** *void*
 
-Defined in: [lib/TableWriterBatch.ts:69](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L69)
+Defined in: [lib/TableWriterBatch.ts:69](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L69)
 
 ___
 
 ### executeBatches
 
-▸ **executeBatches**(`connection?`: *string*): *Promise*<*void*\>
+▸ **executeBatches**(`connection?`: *string*): *Promise*<void\>
 
 Executes batches on all table writers in this instance.
 
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `connection?` | *string* |
 
-**Returns:** *Promise*<*void*\>
+**Returns:** *Promise*<void\>
 
-Defined in: [lib/TableWriterBatch.ts:149](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L149)
+Defined in: [lib/TableWriterBatch.ts:149](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L149)
 
 ___
 
@@ -195,14 +191,14 @@ Adds a single table row to this instance of writer.
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `tableName` | *string* |
 `partitionKey` | *string* |
 `rowKey` | *string* |
 
 **Returns:** *boolean*
 
-Defined in: [lib/TableWriterBatch.ts:129](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L129)
+Defined in: [lib/TableWriterBatch.ts:129](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L129)
 
 ___
 
@@ -212,7 +208,7 @@ ___
 
 **Returns:** *Partial*<[*TableWriterBatch*](index.tablewriterbatch.md)\>
 
-Defined in: [lib/TableWriterBatch.ts:166](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L166)
+Defined in: [lib/TableWriterBatch.ts:166](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L166)
 
 ___
 
@@ -225,47 +221,47 @@ Generates an array of all queue messages in this instance, committing table writ
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `connection?` | *string* |
 
 **Returns:** *Promise*<[*QueueBlobMessage*](../interfaces/index.queueblobmessage.md)[]\>
 
-Defined in: [lib/TableWriterBatch.ts:156](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L156)
+Defined in: [lib/TableWriterBatch.ts:156](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L156)
 
 ___
 
 ### from
 
-▸ `Static`**from**(`json`: *string* | *Partial*<[*TableWriterBatch*](index.tablewriterbatch.md)\>, `connection?`: *string*): [*TableWriterBatch*](index.tablewriterbatch.md)
+▸ `Static`**from**(`json`: *string* \| *Partial*<[*TableWriterBatch*](index.tablewriterbatch.md)\>, `connection?`: *string*): [*TableWriterBatch*](index.tablewriterbatch.md)
 
 Creates a table writer batch instance from valid JSON or a JS object.
 
 #### Parameters:
 
 Name | Type |
------- | ------ |
-`json` | *string* | *Partial*<[*TableWriterBatch*](index.tablewriterbatch.md)\> |
+:------ | :------ |
+`json` | *string* \| *Partial*<[*TableWriterBatch*](index.tablewriterbatch.md)\> |
 `connection?` | *string* |
 
 **Returns:** [*TableWriterBatch*](index.tablewriterbatch.md)
 
-Defined in: [lib/TableWriterBatch.ts:173](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L173)
+Defined in: [lib/TableWriterBatch.ts:173](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L173)
 
 ___
 
 ### fromBlobs
 
-▸ `Static`**fromBlobs**(`messages`: [*QueueBlobMessage*](../interfaces/index.queueblobmessage.md)[], `connection`: *string* | [*BlockBlobService*](index.blockblobservice.md)): *Promise*<[*TableWriterBatch*](index.tablewriterbatch.md)\>
+▸ `Static`**fromBlobs**(`messages`: [*QueueBlobMessage*](../interfaces/index.queueblobmessage.md)[], `connection`: *string* \| [*BlockBlobService*](index.blockblobservice.md)): *Promise*<[*TableWriterBatch*](index.tablewriterbatch.md)\>
 
 Creates a table writer batch instance from an array of blob metadata.
 
 #### Parameters:
 
 Name | Type |
------- | ------ |
+:------ | :------ |
 `messages` | [*QueueBlobMessage*](../interfaces/index.queueblobmessage.md)[] |
-`connection` | *string* | [*BlockBlobService*](index.blockblobservice.md) |
+`connection` | *string* \| [*BlockBlobService*](index.blockblobservice.md) |
 
 **Returns:** *Promise*<[*TableWriterBatch*](index.tablewriterbatch.md)\>
 
-Defined in: [lib/TableWriterBatch.ts:184](https://github.com/nhsllc/azure-utils/blob/a788737/lib/TableWriterBatch.ts#L184)
+Defined in: [lib/TableWriterBatch.ts:184](https://github.com/nhsllc/azure-utils/blob/183635e/lib/TableWriterBatch.ts#L184)
