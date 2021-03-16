@@ -22,12 +22,13 @@ describe('BlockBlobService', async () => {
     })
   })
 
-  it('should support buffer on error and revive json', async () => {
+  it('should support buffer on error, return a string, and revive json', async () => {
     const blobService = new BlockBlobService(connection)
     const container = 'testing'
     const filename = 'test.txt'
     const filename2 = 'test2.txt'
     const content = { hello: 'world!' }
+    const contentString = JSON.stringify(content)
 
     await blobService.write(container, filename, content)
     await blobService.write(container, filename2, 'not JSON')
@@ -36,11 +37,13 @@ describe('BlockBlobService', async () => {
     const buf = await blobService.readWithFallback(container, filename, 'not-real.txt')
     const zeroBuf = await blobService.read(container, 'not-real.txt')
     const nullResult = await blobService.read(container, 'not-real.txt', true)
+    const stringResult = await blobService.read(container, filename, 'utf8')
 
     deepStrictEqual(hello, content)
-    strictEqual(buf.toString('utf8'), JSON.stringify(content))
+    strictEqual(buf.toString('utf8'), contentString)
     strictEqual(zeroBuf.toString('utf8'), '')
     strictEqual(nullResult, null)
+    strictEqual(stringResult, contentString)
 
     rejects(async () => {
       await blobService.read(container, filename2, true)

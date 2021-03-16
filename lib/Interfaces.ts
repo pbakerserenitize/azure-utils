@@ -29,6 +29,7 @@ export interface BlobAllDelete extends BlobAllBase {
 export interface BlobAllRead extends BlobAllBase {
   operation: 'read'
   json?: boolean
+  encoding?: BufferEncoding
 }
 
 /** Helper interface for `BlockBlobService.all`.
