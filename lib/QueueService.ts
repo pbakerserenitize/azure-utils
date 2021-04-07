@@ -22,19 +22,6 @@ export type QueuePeekResult<T = any> = QueueResult<'peek', T, QueuePeekMessagesR
 
 export type QueueReceiveResult<T = any> = QueueResult<'receive', T, QueueReceiveMessageResponse>
 
-export interface ProcessQueueOptions<T = any> {
-  /** The name of the queue to process. */
-  queueName: string
-  /** number of messages to receive. */
-  messageCount: number
-  /** Assign an output to the results array. Be default returns a dequeued message object to the result set. */
-  onMessage?: (message: DequeuedMessage) => T
-  /** Handle the successful processing of a message. By default this is a noop. */
-  onSuccess?: () => void
-  /** Handle the failure of processing a message. Return `true` to throw an error. Defaults to `true` by default. */
-  onFailure?: (error: Error) => boolean
-}
-
 function * splitCount (count: number): Generator<number> {
   if (typeof count !== 'number' || Number.isNaN(count) || !Number.isFinite(count) || count < 1) return
 
@@ -57,17 +44,29 @@ function * splitCount (count: number): Generator<number> {
 /** Wrapper for easy handling of queue messages returned by `receive` method. */
 class DequeuedMessage<T = any> implements DequeuedMessageItem {
   constructor (dequeuedMessage: DequeuedMessageItem) {
-    
+    this.dequeueCount = dequeuedMessage.dequeueCount
+    this.expiresOn = dequeuedMessage.expiresOn
+    this.insertedOn = dequeuedMessage.insertedOn
+    this.messageId = dequeuedMessage.messageId
+    this.messageText = dequeuedMessage.messageText
+    this.nextVisibleOn = dequeuedMessage.nextVisibleOn
+    this.popReceipt = dequeuedMessage.popReceipt
   }
 
+  dequeueCount: number
+  expiresOn: Date
+  insertedOn: Date
   messageId: string
   messageText: string
-  insertedOn: Date
-  expiresOn: Date
-  popReceipt: string
   nextVisibleOn: Date
-  dequeueCount: number
+  popReceipt: string
 
+  /** Convert a base64 string to a Buffer. */
+  toBuffer (): Buffer {
+    return Buffer.from(this.messageText, 'base64')
+  }
+
+  /** Convert a base64 string to an object. */
   toJSObject (): T {
     // PLACEHOLDER
     return {} as T
@@ -179,7 +178,6 @@ export class QueueService {
       if (Array.isArray(response.receivedMessageItems) && response.receivedMessageItems.length > 0) {
         for (const messageItem of response.receivedMessageItems) {
           result.messageItems.push(messageItem)
-          
         }
       } else {
         break
@@ -195,44 +193,61 @@ export class QueueService {
   /** Delete one or more messages from a queue. */
   async delete (queueName: string) {}
 
-  /** Mount a queue for processing and handle the lifecycle of each message. */
-  async process<T = any> (queueName: string, count: number = 1): Promise<ProcessQueue<T>> {
-    const queueClient = await this.queues.add(queueName)
-
-    return new ProcessQueue(queueClient, count)
+  /** Mount a queue for processing and handling the lifecycle of each message. */
+  process<T = any> (queueName: string, count: number = 1): ProcessQueue<T> {
+    return new ProcessQueue(queueName, count, this)
   }
 }
 
 class ProcessQueue<T = any> {
-  constructor (queue: QueueClient, count: number) {
-    this.queue = queue
+  constructor (queueName: string, count: number, queueService: QueueService) {
+    this.queueName = queueName
+    this.queueService = queueService
     this.count = count
+    this._cancel = false
+    this._skip = false
   }
 
-  queue: QueueClient
-  count: number
-  private _continue: boolean
+  private readonly queueName: string
+  private readonly queueService: QueueService
+  private readonly count: number
+  private _skip: boolean
+  private _cancel: boolean
 
   /** Skip deleting the current message off the queue. */
-  continue () {
-    this._continue = true
+  skip (): void {
+    this._skip = true
+  }
+
+  /** Skip deleting the current message off the queue and stop processing all remaining messages. */
+  cancel (): void {
+    this._cancel = true
   }
 
   async * [Symbol.asyncIterator] (): AsyncGenerator<DequeuedMessage<T>> {
+    const queueClient = await this.queueService.queues.add(this.queueName)
+
     for (const messageCount of splitCount(this.count)) {
-      const response = await this.queue.receiveMessages({ numberOfMessages: messageCount })
+      const response = await queueClient.receiveMessages({ numberOfMessages: messageCount })
 
       if (Array.isArray(response.receivedMessageItems) && response.receivedMessageItems.length > 0) {
         for (const messageItem of response.receivedMessageItems) {
           yield new DequeuedMessage<T>(messageItem)
 
-          if (this._continue) {
-            this._continue = false
+          if (this._skip) {
+            this._skip = false
             continue
           }
 
-          this.queue.deleteMessage(messageItem.messageId, messageItem.popReceipt)
+          if (this._cancel) {
+            this._cancel = false
+            break
+          }
+
+          queueClient.deleteMessage(messageItem.messageId, messageItem.popReceipt)
         }
+      } else {
+        break
       }
     }
   }
