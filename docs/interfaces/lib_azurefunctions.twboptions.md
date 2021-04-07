@@ -23,7 +23,7 @@ Options for Azure Function helper `tableWriterBatch`.
 
 Connection string override for all connections.
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:6](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/AzureFunctions/Interfaces.ts#L6)
+Defined in: [lib/AzureFunctions/Interfaces.ts:6](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/AzureFunctions/Interfaces.ts#L6)
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 Connection string to use for blob storage.
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:8](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/AzureFunctions/Interfaces.ts#L8)
+Defined in: [lib/AzureFunctions/Interfaces.ts:8](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/AzureFunctions/Interfaces.ts#L8)
 
 ___
 
@@ -51,7 +51,7 @@ Name | Type | Description |
 `name` | *string* | Name of the queue to read from, where TableWriter queue messages live.   |
 `numberOfMessages`? | *number* | The number of messages to retrieve from the queue. Defaults to the max of 32.   |
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:10](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/AzureFunctions/Interfaces.ts#L10)
+Defined in: [lib/AzureFunctions/Interfaces.ts:10](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/AzureFunctions/Interfaces.ts#L10)
 
 ___
 
@@ -61,4 +61,4 @@ ___
 
 Connection string to use for table storage.
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:19](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/AzureFunctions/Interfaces.ts#L19)
+Defined in: [lib/AzureFunctions/Interfaces.ts:19](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/AzureFunctions/Interfaces.ts#L19)

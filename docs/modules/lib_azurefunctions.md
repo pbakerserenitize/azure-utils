@@ -51,4 +51,4 @@ Name | Type |
 
 **Returns:** *Promise*<void\>
 
-Defined in: [lib/AzureFunctions/tableWriterBatch.ts:33](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/AzureFunctions/tableWriterBatch.ts#L33)
+Defined in: [lib/AzureFunctions/tableWriterBatch.ts:33](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/AzureFunctions/tableWriterBatch.ts#L33)

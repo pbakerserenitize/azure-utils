@@ -28,7 +28,7 @@ Helper interface for `BlockBlobService.all`.
 
 Inherited from: [BlobAllBase](index.bloballbase.md).[container](index.bloballbase.md#container)
 
-Defined in: [lib/Interfaces.ts:20](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/Interfaces.ts#L20)
+Defined in: [lib/Interfaces.ts:20](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L20)
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 Inherited from: [BlobAllBase](index.bloballbase.md).[name](index.bloballbase.md#name)
 
-Defined in: [lib/Interfaces.ts:21](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/Interfaces.ts#L21)
+Defined in: [lib/Interfaces.ts:21](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L21)
 
 ___
 
@@ -48,4 +48,4 @@ ___
 
 Overrides: [BlobAllBase](index.bloballbase.md).[operation](index.bloballbase.md#operation)
 
-Defined in: [lib/Interfaces.ts:28](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/Interfaces.ts#L28)
+Defined in: [lib/Interfaces.ts:28](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L28)

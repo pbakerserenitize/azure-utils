@@ -30,7 +30,7 @@ Helper interface for `BlockBlobService.all`.
 
 • **container**: *string*
 
-Defined in: [lib/Interfaces.ts:20](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/Interfaces.ts#L20)
+Defined in: [lib/Interfaces.ts:20](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L20)
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 • **name**: *string*
 
-Defined in: [lib/Interfaces.ts:21](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/Interfaces.ts#L21)
+Defined in: [lib/Interfaces.ts:21](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L21)
 
 ___
 
@@ -46,4 +46,4 @@ ___
 
 • **operation**: [*BlobOperation*](../modules/index.md#bloboperation)
 
-Defined in: [lib/Interfaces.ts:19](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/Interfaces.ts#L19)
+Defined in: [lib/Interfaces.ts:19](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L19)

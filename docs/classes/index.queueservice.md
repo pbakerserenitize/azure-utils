@@ -4,7 +4,7 @@
 
 [index](../modules/index.md).QueueService
 
-Convenience wrapper for managing blob service instances gracefully.
+Convenience wrapper for managing queue service instances gracefully.
 
 ```javascript
 const { QueueService } = require('@nhsllc/azure-utils')
@@ -71,7 +71,7 @@ Name | Type |
 
 **Returns:** [*QueueService*](index.queueservice.md)
 
-Defined in: [lib/QueueService.ts:257](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L257)
+Defined in: [lib/QueueService.ts:257](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/QueueService.ts#L257)
 
 \+ **new QueueService**(`accountName`: *string*, `accountKey`: *string*): [*QueueService*](index.queueservice.md)
 
@@ -86,7 +86,7 @@ Name | Type |
 
 **Returns:** [*QueueService*](index.queueservice.md)
 
-Defined in: [lib/QueueService.ts:259](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L259)
+Defined in: [lib/QueueService.ts:259](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/QueueService.ts#L259)
 
 ## Properties
 
@@ -94,7 +94,7 @@ Defined in: [lib/QueueService.ts:259](https://github.com/nhsllc/azure-utils/blob
 
 • **queueService**: *QueueServiceClient*
 
-Defined in: [lib/QueueService.ts:275](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L275)
+Defined in: [lib/QueueService.ts:275](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/QueueService.ts#L275)
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 • **queues**: *QueueReferenceManager*
 
-Defined in: [lib/QueueService.ts:276](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L276)
+Defined in: [lib/QueueService.ts:276](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/QueueService.ts#L276)
 
 ## Methods
 
@@ -122,7 +122,7 @@ Name | Type |
 
 **Returns:** *Promise*<MessageIdDeleteResponse\>
 
-Defined in: [lib/QueueService.ts:388](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L388)
+Defined in: [lib/QueueService.ts:388](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/QueueService.ts#L388)
 
 ___
 
@@ -141,7 +141,7 @@ Name | Type |
 
 **Returns:** *Promise*<MessageIdDeleteResponse[]\>
 
-Defined in: [lib/QueueService.ts:375](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L375)
+Defined in: [lib/QueueService.ts:375](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/QueueService.ts#L375)
 
 ___
 
@@ -159,7 +159,7 @@ Name | Type |
 
 **Returns:** *Promise*<[*QueuePeekResult*](../modules/index.md#queuepeekresult)<PeekedMessageItem\>\>
 
-Defined in: [lib/QueueService.ts:279](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L279)
+Defined in: [lib/QueueService.ts:279](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/QueueService.ts#L279)
 
 ___
 
@@ -184,7 +184,7 @@ Name | Type | Default value |
 
 **Returns:** [*ProcessQueue*](index.processqueue.md)<T\>
 
-Defined in: [lib/QueueService.ts:395](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L395)
+Defined in: [lib/QueueService.ts:395](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/QueueService.ts#L395)
 
 ___
 
@@ -203,7 +203,7 @@ Name | Type | Default value |
 
 **Returns:** *Promise*<[*QueueReceiveResult*](../modules/index.md#queuereceiveresult)<DequeuedMessageItem\>\>
 
-Defined in: [lib/QueueService.ts:302](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L302)
+Defined in: [lib/QueueService.ts:302](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/QueueService.ts#L302)
 
 ___
 
@@ -222,7 +222,7 @@ Name | Type |
 
 **Returns:** *Promise*<QueueSendMessageResponse\>
 
-Defined in: [lib/QueueService.ts:344](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L344)
+Defined in: [lib/QueueService.ts:344](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/QueueService.ts#L344)
 
 ___
 
@@ -241,4 +241,4 @@ Name | Type |
 
 **Returns:** *Promise*<QueueSendMessageResponse[]\>
 
-Defined in: [lib/QueueService.ts:331](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L331)
+Defined in: [lib/QueueService.ts:331](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/QueueService.ts#L331)

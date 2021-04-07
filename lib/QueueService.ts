@@ -223,7 +223,7 @@ class QueueReferenceManager {
   }
 }
 
-/** Convenience wrapper for managing blob service instances gracefully.
+/** Convenience wrapper for managing queue service instances gracefully.
  *
  * ```javascript
  * const { QueueService } = require('@nhsllc/azure-utils')
