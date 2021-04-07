@@ -1,5 +1,6 @@
-import { BlobDeleteIfExistsResponse, BlockBlobUploadResponse } from '@azure/storage-blob'
-import { azure } from 'azure-table-promise'
+import type { BlobDeleteIfExistsResponse, BlockBlobUploadResponse } from '@azure/storage-blob'
+import type { QueuePeekMessagesResponse, QueueReceiveMessageResponse } from '@azure/storage-queue'
+import type { azure } from 'azure-table-promise'
 
 /** @hidden */
 type StringProperty = azure.TableUtilities.entityGenerator.EntityProperty<string>
@@ -70,3 +71,29 @@ export interface TableRow {
   rowKey: string
   [property: string]: any
 }
+
+/** The queue result type.
+ * @category AzureUtility
+ */
+export type QueueResultType = 'peek' | 'receive'
+
+/** The queue result base.
+ * @category AzureUtility
+ */
+export interface QueueResult<TResultType extends QueueResultType, TItems = any, TResponse = any> {
+  date: Date
+  hasMessages: boolean
+  resultType: TResultType
+  messageItems: TItems[]
+  responses: TResponse[]
+}
+
+/** The queue peek result.
+ * @category AzureUtility
+ */
+export type QueuePeekResult<T = any> = QueueResult<'peek', T, QueuePeekMessagesResponse>
+
+/** The queue receive result.
+ * @category AzureUtility
+ */
+export type QueueReceiveResult<T = any> = QueueResult<'receive', T, QueueReceiveMessageResponse>
