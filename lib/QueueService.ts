@@ -245,6 +245,7 @@ class QueueReferenceManager {
  *     } else {
  *       // OH NO'S!! ME NO GOOD!
  *       console.error("I don't feel well.", message.messageId)
+ *       // The message can be skipped, which will prevent its deletion from the storage queue.
  *       queue.skip()
  *     }
  *   }

@@ -30,7 +30,7 @@ Helper interface for `BlockBlobService.all`.
 
 Inherited from: [BlobAllBase](index.bloballbase.md).[container](index.bloballbase.md#container)
 
-Defined in: [lib/Interfaces.ts:16](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/Interfaces.ts#L16)
+Defined in: [lib/Interfaces.ts:16](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/Interfaces.ts#L16)
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 • `Optional` **encoding**: BufferEncoding
 
-Defined in: [lib/Interfaces.ts:33](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/Interfaces.ts#L33)
+Defined in: [lib/Interfaces.ts:33](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/Interfaces.ts#L33)
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 • `Optional` **json**: *boolean*
 
-Defined in: [lib/Interfaces.ts:32](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/Interfaces.ts#L32)
+Defined in: [lib/Interfaces.ts:32](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/Interfaces.ts#L32)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 Inherited from: [BlobAllBase](index.bloballbase.md).[name](index.bloballbase.md#name)
 
-Defined in: [lib/Interfaces.ts:17](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/Interfaces.ts#L17)
+Defined in: [lib/Interfaces.ts:17](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/Interfaces.ts#L17)
 
 ___
 
@@ -66,4 +66,4 @@ ___
 
 Overrides: [BlobAllBase](index.bloballbase.md).[operation](index.bloballbase.md#operation)
 
-Defined in: [lib/Interfaces.ts:31](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/Interfaces.ts#L31)
+Defined in: [lib/Interfaces.ts:31](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/Interfaces.ts#L31)
