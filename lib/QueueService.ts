@@ -96,13 +96,13 @@ export class QueueService {
     const queueClient = await this.queues.add(queueName)
     const response = await queueClient.peekMessages({ numberOfMessages: 1 })
 
+    result.responses.push(response)
+
     if (response.peekedMessageItems.length > 0) {
       for (const messageItem of response.peekedMessageItems) result.messageItems.push(messageItem)
 
       result.hasMessages = true
     }
-
-    result.responses.push(response)
 
     return result
   }
