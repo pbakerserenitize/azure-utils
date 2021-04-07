@@ -9,7 +9,9 @@ import {
 } from '@azure/storage-queue'
 import type { QueueMessageContent, QueuePeekResult, QueueReceiveResult } from './Interfaces'
 
-/** Takes a whole number and divides it into results of up to 32, including the remainder. */
+/** Takes a whole number and divides it into results of up to 32, including the remainder.
+ * @hidden
+ */
 function * splitCount (count: number): Generator<number> {
   if (typeof count !== 'number' || Number.isNaN(count) || !Number.isFinite(count) || count < 1) return
 
@@ -29,7 +31,9 @@ function * splitCount (count: number): Generator<number> {
   }
 }
 
-/** Checks a string to see if it opens and closes with `[]` or `{}` and is therefore probably JSON. Only really supports arrays and objects. */
+/** Checks a string to see if it opens and closes with `[]` or `{}` and is therefore probably JSON. Only really supports arrays and objects.
+ * @hidden
+ */
 function probablyJson (str: string): boolean {
   if (typeof str !== 'string') return false
 
@@ -40,7 +44,10 @@ function probablyJson (str: string): boolean {
   return (open === '{' && close === '}') || (open === '[' && close === ']')
 }
 
-/** Wrapper for easy handling of queue messages returned by `receive` method. */
+/** Wrapper for easy handling of queue messages returned by `receive` or `process` methods.
+ * Not intended to be used directly; exported for type information.
+ * @category AzureUtility
+ */
 export class DequeuedMessage<T = any> implements DequeuedMessageItem {
   constructor (dequeuedMessage: DequeuedMessageItem) {
     this.dequeueCount = dequeuedMessage.dequeueCount
@@ -91,6 +98,10 @@ export class DequeuedMessage<T = any> implements DequeuedMessageItem {
   }
 }
 
+/** A helper class for processing a count of messages from a queue.
+ * Not intended to be used directly; exported for type information.
+ * @category AzureUtility
+ */
 export class ProcessQueue<T = any> implements AsyncIterable<DequeuedMessage<T>> {
   /** Constructs an instance of the ProcessQueue async iterator. */
   constructor (queueName: string, count: number, queueService: QueueService) {
@@ -167,6 +178,7 @@ export class ProcessQueue<T = any> implements AsyncIterable<DequeuedMessage<T>> 
   }
 }
 
+/** @hidden */
 class QueueReferenceManager {
   constructor (queueService: QueueServiceClient) {
     this.queueService = queueService
