@@ -97,3 +97,8 @@ export type QueuePeekResult<T = any> = QueueResult<'peek', T, QueuePeekMessagesR
  * @category AzureUtility
  */
 export type QueueReceiveResult<T = any> = QueueResult<'receive', T, QueueReceiveMessageResponse>
+
+/** Valid queue message types.
+ * @category AzureUtility
+ */
+export type QueueMessageContent = string | number | Record<string, any> | any[]

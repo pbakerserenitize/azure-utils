@@ -1,27 +1,15 @@
 import {
   DequeuedMessageItem,
+  MessageIdDeleteResponse,
   PeekedMessageItem,
   QueueClient,
-  QueuePeekMessagesResponse,
-  QueueReceiveMessageResponse,
+  QueueSendMessageResponse,
   QueueServiceClient,
   StorageSharedKeyCredential as QueueCredential
 } from '@azure/storage-queue'
+import type { QueueMessageContent, QueuePeekResult, QueueReceiveResult } from './Interfaces'
 
-export type QueueResultType = 'peek' | 'receive'
-
-export interface QueueResult<TResultType extends QueueResultType, TItems = any, TResponse = any> {
-  date: Date
-  hasMessages: boolean
-  resultType: TResultType
-  messageItems: TItems[]
-  responses: TResponse[]
-}
-
-export type QueuePeekResult<T = any> = QueueResult<'peek', T, QueuePeekMessagesResponse>
-
-export type QueueReceiveResult<T = any> = QueueResult<'receive', T, QueueReceiveMessageResponse>
-
+/** Takes a whole number and divides it into results of up to 32, including the remainder. */
 function * splitCount (count: number): Generator<number> {
   if (typeof count !== 'number' || Number.isNaN(count) || !Number.isFinite(count) || count < 1) return
 
@@ -41,8 +29,19 @@ function * splitCount (count: number): Generator<number> {
   }
 }
 
+/** Checks a string to see if it opens and closes with `[]` or `{}` and is therefore probably JSON. Only really supports arrays and objects. */
+function probablyJson (str: string): boolean {
+  if (typeof str !== 'string') return false
+
+  const trimmed = str.trim()
+  const open = trimmed.substring(0, 1)
+  const close = trimmed.substring(str.length - 1, str.length)
+
+  return (open === '{' && close === '}') || (open === '[' && close === ']')
+}
+
 /** Wrapper for easy handling of queue messages returned by `receive` method. */
-class DequeuedMessage<T = any> implements DequeuedMessageItem {
+export class DequeuedMessage<T = any> implements DequeuedMessageItem {
   constructor (dequeuedMessage: DequeuedMessageItem) {
     this.dequeueCount = dequeuedMessage.dequeueCount
     this.expiresOn = dequeuedMessage.expiresOn
@@ -60,16 +59,111 @@ class DequeuedMessage<T = any> implements DequeuedMessageItem {
   messageText: string
   nextVisibleOn: Date
   popReceipt: string
+  /** If defined, should contain an instance of Error describing why `toBuffer` or `toJSObject` failed. */
+  error?: Error
 
   /** Convert a base64 string to a Buffer. */
   toBuffer (): Buffer {
-    return Buffer.from(this.messageText, 'base64')
+    try {
+      return Buffer.from(this.messageText, 'base64')
+    } catch (error) {
+      this.error = error
+
+      return Buffer.alloc(0)
+    }
   }
 
   /** Convert a base64 string to an object. */
   toJSObject (): T {
-    // PLACEHOLDER
-    return {} as T
+    const string = this.toBuffer().toString('utf8')
+
+    if (typeof this.error === 'undefined') {
+      if (probablyJson(string)) {
+        try {
+          return JSON.parse(string)
+        } catch (error) {
+          this.error = error
+        }
+      } else {
+        this.error = new Error('String did not open and close like an object or array; must be one of either to try parsing.')
+      }
+    }
+  }
+}
+
+export class ProcessQueue<T = any> implements AsyncIterable<DequeuedMessage<T>> {
+  /** Constructs an instance of the ProcessQueue async iterator. */
+  constructor (queueName: string, count: number, queueService: QueueService) {
+    this.queueName = queueName
+    this.poisonQueueName = queueName + '-poison'
+    this.queueService = queueService
+    this.count = count
+    this._cancel = false
+    this._skip = false
+  }
+
+  private readonly queueName: string
+  private readonly poisonQueueName: string
+  private readonly queueService: QueueService
+  private readonly count: number
+  private _skip: boolean
+  private _cancel: boolean
+  private _poison: boolean
+
+  /** Skip deleting the current message off the queue and stop processing all remaining messages. */
+  cancel (): void {
+    this._cancel = true
+    this._poison = false
+    this._skip = false
+  }
+
+  /** Skip deleting the current message off the queue. */
+  skip (): void {
+    this._cancel = false
+    this._poison = false
+    this._skip = true
+  }
+
+  /** Send the message to a poison queue corresponding to the instance queue name. */
+  poison (): void {
+    this._cancel = false
+    this._poison = true
+    this._skip = false
+  }
+
+  async * [Symbol.asyncIterator] (): AsyncGenerator<DequeuedMessage<T>> {
+    const queueClient = await this.queueService.queues.add(this.queueName)
+
+    for (const messageCount of splitCount(this.count)) {
+      const response = await queueClient.receiveMessages({ numberOfMessages: messageCount })
+
+      if (Array.isArray(response.receivedMessageItems) && response.receivedMessageItems.length > 0) {
+        for (const messageItem of response.receivedMessageItems) {
+          yield new DequeuedMessage<T>(messageItem)
+
+          if (this._skip) {
+            this._skip = false
+            continue
+          }
+
+          if (this._cancel) {
+            this._cancel = false
+            break
+          }
+
+          if (this._poison) {
+            this._poison = false
+            const poisonQueueClient = await this.queueService.queues.add(this.poisonQueueName)
+
+            await poisonQueueClient.sendMessage(messageItem.messageText)
+          }
+
+          await queueClient.deleteMessage(messageItem.messageId, messageItem.popReceipt)
+        }
+      } else {
+        break
+      }
+    }
   }
 }
 
@@ -87,6 +181,7 @@ class QueueReferenceManager {
     return this.references.has(queueName)
   }
 
+  /** Add a queue reference by name. */
   async add (queueName: string): Promise<QueueClient> {
     if (this.has(queueName)) return this.get(queueName)
 
@@ -97,6 +192,7 @@ class QueueReferenceManager {
     return queueClient
   }
 
+  /** Get a queue reference by name. */
   get (queueName: string): QueueClient {
     return this.references.get(queueName)
   }
@@ -105,7 +201,7 @@ class QueueReferenceManager {
     const queueClient = this.queueService.getQueueClient(queueName)
 
     try {
-      await queueClient.createIfNotExists()
+      await queueClient.create()
     } catch (error) {
       if (error.statusCode !== 409) throw error
     }
@@ -114,10 +210,39 @@ class QueueReferenceManager {
   }
 }
 
+/** Convenience wrapper for managing blob service instances gracefully.
+ *
+ * ```javascript
+ * const { QueueService } = require('@nhsllc/azure-utils')
+ *
+ * module.exports = async function example (context) {
+ *   const queueService = new QueueService(process.env.STORAGE_CONNECTION)
+ *   const queue = queueService.process<MyObject[]>('my-queue-name', 100)
+ *
+ *   for await (const message of queue) {
+ *     // For this example only, deserializing the message results in an array.
+ *     const obj = message.toJSObject()
+ * 
+ *     if (Array.isArray(obj)) {
+ *       for (const item of obj) {
+ *         console.log(item.message)
+ *       }
+ *     } else {
+ *       // OH NO'S!! ME NO GOOD!
+ *       console.error("I don't feel well.", message.messageId)
+ *       // The following method call will create a poison queue if it does not exist,
+ *       // and shuffles the message over to that queue
+ *       queue.poison()
+ *     }
+ *   }
+ * }
+ * ```
+ * @category AzureUtility
+ */
 export class QueueService {
   /** Create an instance with a single connection string. */
   constructor (connectionString: string)
-  /** Create an instance with an accoutn name and key. */
+  /** Create an instance with an account name and key. */
   constructor (accountName: string, accountKey: string)
   constructor (accountNameOrConnectionString: string, accountKey?: string) {
     if (typeof accountKey === 'undefined' || accountKey === null || accountKey === '') {
@@ -187,68 +312,72 @@ export class QueueService {
     return result
   }
 
-  /** Send one or more messages to a queue. */
-  async send (queueName: string) {}
+  /** Send multiple messages to a queue. Errors will bubble up to the array of results. */
+  async sendAll (queueName: string, messages: QueueMessageContent[]): Promise<QueueSendMessageResponse[]> {
+    const promises: Promise<QueueSendMessageResponse>[] = []
 
-  /** Delete one or more messages from a queue. */
-  async delete (queueName: string) {}
+    if (Array.isArray(messages)) {
+      for (const message of messages) {
+        promises.push(this.send(queueName, message).catch(reason => reason))
+      }
+    }
+
+    return await Promise.all(promises)
+  }
+
+  /** Send a single message to a queue. */
+  async send (queueName: string, message: QueueMessageContent): Promise<QueueSendMessageResponse> {
+    const queueClient = await this.queues.add(queueName)
+    let messageText: string
+
+    switch (typeof message) {
+      case 'string':
+        if (probablyJson(message)) {
+          messageText = Buffer.from(message, 'utf8').toString('base64')
+        } else {
+          messageText = message
+        }
+        break
+      case 'number':
+        messageText = message.toString()
+        break
+      case 'object':
+        if (message === null) {
+          break
+        }
+        messageText = JSON.stringify(message)
+        messageText = Buffer.from(messageText, 'utf8').toString('base64')
+        break
+    }
+
+    // Should we throw an error if it's undefined?
+    if (typeof messageText !== 'undefined') {
+      return await queueClient.sendMessage(messageText)
+    }
+  }
+
+  /** Delete multiple messages from a queue. Errors will bubble up to the array of results. */
+  async deleteAll (queueName: string, deletes: Array<[messageId: string, popReceipt: string]>): Promise<MessageIdDeleteResponse[]> {
+    const promises: Promise<MessageIdDeleteResponse>[] = []
+
+    if (Array.isArray(deletes)) {
+      for (const [messageId, popReceipt] of deletes) {
+        promises.push(this.delete(queueName, messageId, popReceipt).catch(reason => reason))
+      }
+    }
+
+    return await Promise.all(promises)
+  }
+
+  /** Delete one message from a queue. */
+  async delete (queueName: string, messageId: string, popReceipt: string): Promise<MessageIdDeleteResponse> {
+    const queueClient = await this.queues.add(queueName)
+
+    return await queueClient.deleteMessage(messageId, popReceipt)
+  }
 
   /** Mount a queue for processing and handling the lifecycle of each message. */
   process<T = any> (queueName: string, count: number = 1): ProcessQueue<T> {
     return new ProcessQueue(queueName, count, this)
-  }
-}
-
-class ProcessQueue<T = any> {
-  constructor (queueName: string, count: number, queueService: QueueService) {
-    this.queueName = queueName
-    this.queueService = queueService
-    this.count = count
-    this._cancel = false
-    this._skip = false
-  }
-
-  private readonly queueName: string
-  private readonly queueService: QueueService
-  private readonly count: number
-  private _skip: boolean
-  private _cancel: boolean
-
-  /** Skip deleting the current message off the queue. */
-  skip (): void {
-    this._skip = true
-  }
-
-  /** Skip deleting the current message off the queue and stop processing all remaining messages. */
-  cancel (): void {
-    this._cancel = true
-  }
-
-  async * [Symbol.asyncIterator] (): AsyncGenerator<DequeuedMessage<T>> {
-    const queueClient = await this.queueService.queues.add(this.queueName)
-
-    for (const messageCount of splitCount(this.count)) {
-      const response = await queueClient.receiveMessages({ numberOfMessages: messageCount })
-
-      if (Array.isArray(response.receivedMessageItems) && response.receivedMessageItems.length > 0) {
-        for (const messageItem of response.receivedMessageItems) {
-          yield new DequeuedMessage<T>(messageItem)
-
-          if (this._skip) {
-            this._skip = false
-            continue
-          }
-
-          if (this._cancel) {
-            this._cancel = false
-            break
-          }
-
-          queueClient.deleteMessage(messageItem.messageId, messageItem.popReceipt)
-        }
-      } else {
-        break
-      }
-    }
   }
 }
