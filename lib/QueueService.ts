@@ -22,6 +22,58 @@ export type QueuePeekResult<T = any> = QueueResult<'peek', T, QueuePeekMessagesR
 
 export type QueueReceiveResult<T = any> = QueueResult<'receive', T, QueueReceiveMessageResponse>
 
+export interface ProcessQueueOptions<T = any> {
+  /** The name of the queue to process. */
+  queueName: string
+  /** number of messages to receive. */
+  messageCount: number
+  /** Assign an output to the results array. Be default returns a dequeued message object to the result set. */
+  onMessage?: (message: DequeuedMessage) => T
+  /** Handle the successful processing of a message. By default this is a noop. */
+  onSuccess?: () => void
+  /** Handle the failure of processing a message. Return `true` to throw an error. Defaults to `true` by default. */
+  onFailure?: (error: Error) => boolean
+}
+
+function * splitCount (count: number): Generator<number> {
+  if (typeof count !== 'number' || Number.isNaN(count) || !Number.isFinite(count) || count < 1) return
+
+  const MAX_MESSAGES = 32
+
+  if (count < MAX_MESSAGES) {
+    yield count
+  } else {
+    const result = Math.floor(count / MAX_MESSAGES)
+    const remainder = Math.floor(count % MAX_MESSAGES)
+
+    for (let i = 0; i < result; i += 1) {
+      yield MAX_MESSAGES
+    }
+
+    if (remainder > 0) yield remainder
+  }
+}
+
+/** Wrapper for easy handling of queue messages returned by `receive` method. */
+class DequeuedMessage<T = any> implements DequeuedMessageItem {
+  constructor (dequeuedMessage: DequeuedMessageItem) {
+    
+  }
+
+  messageId: string
+  messageText: string
+  insertedOn: Date
+  expiresOn: Date
+  popReceipt: string
+  nextVisibleOn: Date
+  dequeueCount: number
+
+  toJSObject (): T {
+    // PLACEHOLDER
+    return {} as T
+  }
+}
+
 class QueueReferenceManager {
   constructor (queueService: QueueServiceClient) {
     this.queueService = queueService
@@ -118,14 +170,17 @@ export class QueueService {
     }
     const queueClient = await this.queues.add(queueName)
 
-    for (const messageCount of this.splitCount(count)) {
+    for (const messageCount of splitCount(count)) {
       const response = await queueClient.receiveMessages({ numberOfMessages: messageCount })
 
       result.responses.push(response)
 
       // Break out of loop if 
       if (Array.isArray(response.receivedMessageItems) && response.receivedMessageItems.length > 0) {
-        for (const messageItem of response.receivedMessageItems) result.messageItems.push(messageItem)
+        for (const messageItem of response.receivedMessageItems) {
+          result.messageItems.push(messageItem)
+          
+        }
       } else {
         break
       }
@@ -140,22 +195,45 @@ export class QueueService {
   /** Delete one or more messages from a queue. */
   async delete (queueName: string) {}
 
-  private * splitCount (count: number): Generator<number> {
-    if (typeof count !== 'number' || Number.isNaN(count) || !Number.isFinite(count) || count < 1) return
+  /** Mount a queue for processing and handle the lifecycle of each message. */
+  async process<T = any> (queueName: string, count: number = 1): Promise<ProcessQueue<T>> {
+    const queueClient = await this.queues.add(queueName)
 
-    const MAX_MESSAGES = 32
+    return new ProcessQueue(queueClient, count)
+  }
+}
 
-    if (count < MAX_MESSAGES) {
-      yield count
-    } else {
-      const result = Math.floor(count / MAX_MESSAGES)
-      const remainder = Math.floor(count % MAX_MESSAGES)
+class ProcessQueue<T = any> {
+  constructor (queue: QueueClient, count: number) {
+    this.queue = queue
+    this.count = count
+  }
 
-      for (let i = 0; i < result; i += 1) {
-        yield MAX_MESSAGES
+  queue: QueueClient
+  count: number
+  private _continue: boolean
+
+  /** Skip deleting the current message off the queue. */
+  continue () {
+    this._continue = true
+  }
+
+  async * [Symbol.asyncIterator] (): AsyncGenerator<DequeuedMessage<T>> {
+    for (const messageCount of splitCount(this.count)) {
+      const response = await this.queue.receiveMessages({ numberOfMessages: messageCount })
+
+      if (Array.isArray(response.receivedMessageItems) && response.receivedMessageItems.length > 0) {
+        for (const messageItem of response.receivedMessageItems) {
+          yield new DequeuedMessage<T>(messageItem)
+
+          if (this._continue) {
+            this._continue = false
+            continue
+          }
+
+          this.queue.deleteMessage(messageItem.messageId, messageItem.popReceipt)
+        }
       }
-
-      if (remainder > 0) yield remainder
     }
   }
 }
