@@ -1,4 +1,26 @@
-import { QueueClient, QueueServiceClient, StorageSharedKeyCredential as QueueCredential } from '@azure/storage-queue'
+import {
+  DequeuedMessageItem,
+  PeekedMessageItem,
+  QueueClient,
+  QueuePeekMessagesResponse,
+  QueueReceiveMessageResponse,
+  QueueServiceClient,
+  StorageSharedKeyCredential as QueueCredential
+} from '@azure/storage-queue'
+
+export type QueueResultType = 'peek' | 'receive'
+
+export interface QueueResult<TResultType extends QueueResultType, TItems = any, TResponse = any> {
+  date: Date
+  hasMessages: boolean
+  resultType: TResultType
+  messageItems: TItems[]
+  responses: TResponse[]
+}
+
+export type QueuePeekResult<T = any> = QueueResult<'peek', T, QueuePeekMessagesResponse>
+
+export type QueueReceiveResult<T = any> = QueueResult<'receive', T, QueueReceiveMessageResponse>
 
 class QueueReferenceManager {
   constructor (queueService: QueueServiceClient) {
@@ -62,20 +84,66 @@ export class QueueService {
   queueService: QueueServiceClient
   queues: QueueReferenceManager
 
-  async peek (queueName: string, count: number = 1) {
-    const queueClient = await this.queues.add(queueName)
-    const result = []
-
-    for (const messageCount of this.splitCount(count)) {
-      const response = await queueClient.peekMessages({ numberOfMessages: messageCount })
+  /** Peek to see if a queue has one or more messages. Retrieves no more than 1 message. */
+  async peek (queueName: string): Promise<QueuePeekResult<PeekedMessageItem>> {
+    const result: QueuePeekResult<PeekedMessageItem> = {
+      date: new Date(),
+      hasMessages: false,
+      resultType: 'peek',
+      messageItems: [],
+      responses: []
     }
+    const queueClient = await this.queues.add(queueName)
+    const response = await queueClient.peekMessages({ numberOfMessages: 1 })
+
+    if (response.peekedMessageItems.length > 0) {
+      for (const messageItem of response.peekedMessageItems) result.messageItems.push(messageItem)
+
+      result.hasMessages = true
+    }
+
+    result.responses.push(response)
+
+    return result
   }
 
-  retrieve (queueName: string, count: number) {}
+  /** Receive one or more messages from a queue. */
+  async receive (queueName: string, count: number = 1) {
+    const result: QueueReceiveResult<DequeuedMessageItem> = {
+      date: new Date(),
+      hasMessages: false,
+      resultType: 'receive',
+      messageItems: [],
+      responses: []
+    }
+    const queueClient = await this.queues.add(queueName)
+
+    for (const messageCount of this.splitCount(count)) {
+      const response = await queueClient.receiveMessages({ numberOfMessages: messageCount })
+
+      result.responses.push(response)
+
+      // Break out of loop if 
+      if (Array.isArray(response.receivedMessageItems) && response.receivedMessageItems.length > 0) {
+        for (const messageItem of response.receivedMessageItems) result.messageItems.push(messageItem)
+      } else {
+        break
+      }
+    }
+
+    return result
+  }
+
+  /** Send one or more messages to a queue. */
+  async send (queueName: string) {}
+
+  /** Delete one or more messages from a queue. */
+  async delete (queueName: string) {}
 
   private * splitCount (count: number): Generator<number> {
-    const MAX_MESSAGES = 32
     if (typeof count !== 'number' || Number.isNaN(count) || !Number.isFinite(count) || count < 1) return
+
+    const MAX_MESSAGES = 32
 
     if (count < MAX_MESSAGES) {
       yield count
