@@ -5,8 +5,12 @@ import type { azure } from 'azure-table-promise'
 /** @hidden */
 type StringProperty = azure.TableUtilities.entityGenerator.EntityProperty<string>
 
+/** @category AzureUtility */
 export type BlobOperation = 'delete' | 'read' | 'write'
+/** @category AzureUtility */
 export type BlobAllResult = BlobDeleteIfExistsResponse | Buffer | Record<string, any> | any[] | null | BlockBlobUploadResponse
+/** @category AzureUtility */
+export type TableOperation = 'delete' | 'merge' | 'replace'
 
 /** Helper interface for `BlockBlobService.all`.
  * @category AzureUtility

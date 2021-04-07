@@ -142,6 +142,7 @@ export class ProcessQueue<T = any> implements AsyncIterable<DequeuedMessage<T>> 
     this._skip = false
   }
 
+  /** Implements the AsyncIterable implicit function. */
   async * [Symbol.asyncIterator] (): AsyncGenerator<DequeuedMessage<T>> {
     const queueClient = await this.queueService.queues.add(this.queueName)
 

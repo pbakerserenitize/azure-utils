@@ -71,7 +71,7 @@ Name | Type |
 
 **Returns:** [*QueueService*](index.queueservice.md)
 
-Defined in: [lib/QueueService.ts:256](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/QueueService.ts#L256)
+Defined in: [lib/QueueService.ts:257](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L257)
 
 \+ **new QueueService**(`accountName`: *string*, `accountKey`: *string*): [*QueueService*](index.queueservice.md)
 
@@ -86,7 +86,7 @@ Name | Type |
 
 **Returns:** [*QueueService*](index.queueservice.md)
 
-Defined in: [lib/QueueService.ts:258](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/QueueService.ts#L258)
+Defined in: [lib/QueueService.ts:259](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L259)
 
 ## Properties
 
@@ -94,7 +94,7 @@ Defined in: [lib/QueueService.ts:258](https://github.com/nhsllc/azure-utils/blob
 
 • **queueService**: *QueueServiceClient*
 
-Defined in: [lib/QueueService.ts:274](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/QueueService.ts#L274)
+Defined in: [lib/QueueService.ts:275](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L275)
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 • **queues**: *QueueReferenceManager*
 
-Defined in: [lib/QueueService.ts:275](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/QueueService.ts#L275)
+Defined in: [lib/QueueService.ts:276](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L276)
 
 ## Methods
 
@@ -122,7 +122,7 @@ Name | Type |
 
 **Returns:** *Promise*<MessageIdDeleteResponse\>
 
-Defined in: [lib/QueueService.ts:387](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/QueueService.ts#L387)
+Defined in: [lib/QueueService.ts:388](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L388)
 
 ___
 
@@ -141,7 +141,7 @@ Name | Type |
 
 **Returns:** *Promise*<MessageIdDeleteResponse[]\>
 
-Defined in: [lib/QueueService.ts:374](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/QueueService.ts#L374)
+Defined in: [lib/QueueService.ts:375](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L375)
 
 ___
 
@@ -159,7 +159,7 @@ Name | Type |
 
 **Returns:** *Promise*<[*QueuePeekResult*](../modules/index.md#queuepeekresult)<PeekedMessageItem\>\>
 
-Defined in: [lib/QueueService.ts:278](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/QueueService.ts#L278)
+Defined in: [lib/QueueService.ts:279](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L279)
 
 ___
 
@@ -184,7 +184,7 @@ Name | Type | Default value |
 
 **Returns:** [*ProcessQueue*](index.processqueue.md)<T\>
 
-Defined in: [lib/QueueService.ts:394](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/QueueService.ts#L394)
+Defined in: [lib/QueueService.ts:395](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L395)
 
 ___
 
@@ -203,7 +203,7 @@ Name | Type | Default value |
 
 **Returns:** *Promise*<[*QueueReceiveResult*](../modules/index.md#queuereceiveresult)<DequeuedMessageItem\>\>
 
-Defined in: [lib/QueueService.ts:301](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/QueueService.ts#L301)
+Defined in: [lib/QueueService.ts:302](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L302)
 
 ___
 
@@ -222,7 +222,7 @@ Name | Type |
 
 **Returns:** *Promise*<QueueSendMessageResponse\>
 
-Defined in: [lib/QueueService.ts:343](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/QueueService.ts#L343)
+Defined in: [lib/QueueService.ts:344](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L344)
 
 ___
 
@@ -241,4 +241,4 @@ Name | Type |
 
 **Returns:** *Promise*<QueueSendMessageResponse[]\>
 
-Defined in: [lib/QueueService.ts:330](https://github.com/nhsllc/azure-utils/blob/1d75559/lib/QueueService.ts#L330)
+Defined in: [lib/QueueService.ts:331](https://github.com/nhsllc/azure-utils/blob/ac67aa4/lib/QueueService.ts#L331)

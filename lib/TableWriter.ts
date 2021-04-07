@@ -2,9 +2,14 @@ import { azure } from 'azure-table-promise'
 import { createPromiseTableService } from 'azure-table-promise/dist/src/CreateTableService'
 import { v4 as uuidv4 } from 'uuid'
 import { BlockBlobService } from './BlockBlobService'
-import type { LegacyTableRow, QueueBlobMessage, TableRow } from './Interfaces'
+import type { LegacyTableRow, QueueBlobMessage, TableOperation, TableRow } from './Interfaces'
 
-type TableOperation = 'delete' | 'merge' | 'replace'
+/** @category AzureUtility */
+export type TableWriterMessage = Partial<Omit<TableWriter, 'tableRows'>> & {
+  tableRows?: Array<LegacyTableRow | TableRow>
+  writeType?: TableOperation
+}
+
 interface TableWriterOperations {
   delete?: string[]
   merge?: string[]
@@ -39,11 +44,6 @@ export function safeTableRow (item: LegacyTableRow | TableRow): LegacyTableRow {
     PartitionKey: { _: partitionKey, $: 'Edm.String' },
     RowKey: { _: rowKey, $: 'Edm.String' }
   }
-}
-
-export type TableWriterMessage = Partial<Omit<TableWriter, 'tableRows'>> & {
-  tableRows?: Array<LegacyTableRow | TableRow>
-  writeType?: TableOperation
 }
 
 /** Class for managing a complete round-trip of one or more table rows for upsert into Azure Table Storage.
