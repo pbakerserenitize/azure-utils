@@ -59,7 +59,7 @@ Name | Type |
 
 **Returns:** [*DequeuedMessage*](index.dequeuedmessage.md)<T\>
 
-Defined in: [lib/QueueService.ts:51](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L51)
+Defined in: [lib/QueueService.ts:51](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L51)
 
 ## Properties
 
@@ -69,7 +69,7 @@ Defined in: [lib/QueueService.ts:51](https://github.com/nhsllc/azure-utils/blob/
 
 Implementation of: void
 
-Defined in: [lib/QueueService.ts:62](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L62)
+Defined in: [lib/QueueService.ts:62](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L62)
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 If defined, should contain an instance of Error describing why `toBuffer` or `toJSObject` failed.
 
-Defined in: [lib/QueueService.ts:70](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L70)
+Defined in: [lib/QueueService.ts:70](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L70)
 
 ___
 
@@ -89,7 +89,7 @@ ___
 
 Implementation of: void
 
-Defined in: [lib/QueueService.ts:63](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L63)
+Defined in: [lib/QueueService.ts:63](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L63)
 
 ___
 
@@ -99,7 +99,7 @@ ___
 
 Implementation of: void
 
-Defined in: [lib/QueueService.ts:64](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L64)
+Defined in: [lib/QueueService.ts:64](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L64)
 
 ___
 
@@ -109,7 +109,7 @@ ___
 
 Implementation of: void
 
-Defined in: [lib/QueueService.ts:65](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L65)
+Defined in: [lib/QueueService.ts:65](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L65)
 
 ___
 
@@ -119,7 +119,7 @@ ___
 
 Implementation of: void
 
-Defined in: [lib/QueueService.ts:66](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L66)
+Defined in: [lib/QueueService.ts:66](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L66)
 
 ___
 
@@ -129,7 +129,7 @@ ___
 
 Implementation of: void
 
-Defined in: [lib/QueueService.ts:67](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L67)
+Defined in: [lib/QueueService.ts:67](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L67)
 
 ___
 
@@ -139,7 +139,7 @@ ___
 
 Implementation of: void
 
-Defined in: [lib/QueueService.ts:68](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L68)
+Defined in: [lib/QueueService.ts:68](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L68)
 
 ## Methods
 
@@ -151,7 +151,7 @@ Convert a base64 string to a Buffer.
 
 **Returns:** *Buffer*
 
-Defined in: [lib/QueueService.ts:73](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L73)
+Defined in: [lib/QueueService.ts:73](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L73)
 
 ___
 
@@ -163,4 +163,4 @@ Convert a base64 string to an object.
 
 **Returns:** T
 
-Defined in: [lib/QueueService.ts:84](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L84)
+Defined in: [lib/QueueService.ts:84](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L84)

@@ -232,19 +232,20 @@ class QueueReferenceManager {
  *   const queue = queueService.process<MyObject[]>('my-queue-name', 100)
  *
  *   for await (const message of queue) {
- *     // For this example only, deserializing the message results in an array.
  *     const obj = message.toJSObject()
  * 
- *     if (Array.isArray(obj)) {
+ *     if (typeof message.error !== 'undefined') {
+ *       // The error state can be checked after using `toBuffer` or `toJSObject`.
+ *       console.error(message.error)
+ *       queue.poison()
+ *     } else if (Array.isArray(obj)) {
  *       for (const item of obj) {
  *         console.log(item.message)
  *       }
  *     } else {
  *       // OH NO'S!! ME NO GOOD!
  *       console.error("I don't feel well.", message.messageId)
- *       // The following method call will create a poison queue if it does not exist,
- *       // and shuffles the message over to that queue
- *       queue.poison()
+ *       queue.skip()
  *     }
  *   }
  * }

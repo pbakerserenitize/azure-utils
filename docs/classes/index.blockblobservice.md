@@ -59,7 +59,7 @@ Name | Type | Description |
 
 **Returns:** [*BlockBlobService*](index.blockblobservice.md)
 
-Defined in: [lib/BlockBlobService.ts:81](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L81)
+Defined in: [lib/BlockBlobService.ts:81](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L81)
 
 ## Properties
 
@@ -67,7 +67,7 @@ Defined in: [lib/BlockBlobService.ts:81](https://github.com/nhsllc/azure-utils/b
 
 • **blobService**: *BlobServiceClient*
 
-Defined in: [lib/BlockBlobService.ts:99](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L99)
+Defined in: [lib/BlockBlobService.ts:99](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L99)
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 • **containers**: *BlobContainerManager*
 
-Defined in: [lib/BlockBlobService.ts:100](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L100)
+Defined in: [lib/BlockBlobService.ts:100](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L100)
 
 ## Methods
 
@@ -93,7 +93,7 @@ Name | Type |
 
 **Returns:** *Promise*<BlobDeleteIfExistsResponse[]\>
 
-Defined in: [lib/BlockBlobService.ts:206](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L206)
+Defined in: [lib/BlockBlobService.ts:206](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L206)
 
 ▸ **all**(`inputs`: [*BlobAllRead*](../interfaces/index.bloballread.md)[]): *Promise*<(string \| any[] \| Buffer \| Record<string, any\>)[]\>
 
@@ -105,7 +105,7 @@ Name | Type |
 
 **Returns:** *Promise*<(string \| any[] \| Buffer \| Record<string, any\>)[]\>
 
-Defined in: [lib/BlockBlobService.ts:207](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L207)
+Defined in: [lib/BlockBlobService.ts:207](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L207)
 
 ▸ **all**(`inputs`: [*BlobAllWrite*](../interfaces/index.bloballwrite.md)[]): *Promise*<BlockBlobUploadResponse[]\>
 
@@ -117,7 +117,7 @@ Name | Type |
 
 **Returns:** *Promise*<BlockBlobUploadResponse[]\>
 
-Defined in: [lib/BlockBlobService.ts:208](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L208)
+Defined in: [lib/BlockBlobService.ts:208](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L208)
 
 ▸ **all**(`inputs`: [*BlobAllInput*](../modules/index.md#bloballinput)[]): *Promise*<[*BlobAllResult*](../modules/index.md#bloballresult)[]\>
 
@@ -129,7 +129,7 @@ Name | Type |
 
 **Returns:** *Promise*<[*BlobAllResult*](../modules/index.md#bloballresult)[]\>
 
-Defined in: [lib/BlockBlobService.ts:209](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L209)
+Defined in: [lib/BlockBlobService.ts:209](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L209)
 
 ___
 
@@ -148,7 +148,7 @@ Name | Type | Description |
 
 **Returns:** *Promise*<BlobDeleteIfExistsResponse\>
 
-Defined in: [lib/BlockBlobService.ts:120](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L120)
+Defined in: [lib/BlockBlobService.ts:120](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L120)
 
 ___
 
@@ -169,7 +169,7 @@ Name | Type | Description |
 
 The contents of the blob; objects and arrays will be jsonified.
 
-Defined in: [lib/BlockBlobService.ts:108](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L108)
+Defined in: [lib/BlockBlobService.ts:108](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L108)
 
 ___
 
@@ -191,7 +191,7 @@ Name | Type | Description |
 
 The blob contents as a buffer instance.
 
-Defined in: [lib/BlockBlobService.ts:159](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L159)
+Defined in: [lib/BlockBlobService.ts:159](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L159)
 
 ▸ **read**(`blobContainer`: *string*, `blobName`: *string*, `encoding`: BufferEncoding): *Promise*<string\>
 
@@ -205,7 +205,7 @@ Name | Type |
 
 **Returns:** *Promise*<string\>
 
-Defined in: [lib/BlockBlobService.ts:160](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L160)
+Defined in: [lib/BlockBlobService.ts:160](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L160)
 
 ▸ **read**(`blobContainer`: *string*, `blobName`: *string*, `json`: *false*): *Promise*<Buffer\>
 
@@ -219,7 +219,7 @@ Name | Type |
 
 **Returns:** *Promise*<Buffer\>
 
-Defined in: [lib/BlockBlobService.ts:161](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L161)
+Defined in: [lib/BlockBlobService.ts:161](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L161)
 
 ▸ **read**(`blobContainer`: *string*, `blobName`: *string*, `json`: *true*): *Promise*<any\>
 
@@ -233,7 +233,7 @@ Name | Type |
 
 **Returns:** *Promise*<any\>
 
-Defined in: [lib/BlockBlobService.ts:162](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L162)
+Defined in: [lib/BlockBlobService.ts:162](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L162)
 
 ▸ **read**(`blobContainer`: *string*, `blobName`: *string*, `json`: *boolean* \| BufferEncoding): *Promise*<any\>
 
@@ -247,7 +247,7 @@ Name | Type |
 
 **Returns:** *Promise*<any\>
 
-Defined in: [lib/BlockBlobService.ts:163](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L163)
+Defined in: [lib/BlockBlobService.ts:163](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L163)
 
 ___
 
@@ -268,7 +268,7 @@ Name | Type |
 
 **Returns:** *Promise*<Buffer\>
 
-Defined in: [lib/BlockBlobService.ts:197](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L197)
+Defined in: [lib/BlockBlobService.ts:197](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L197)
 
 ___
 
@@ -288,4 +288,4 @@ Name | Type | Description |
 
 **Returns:** *Promise*<BlockBlobUploadResponse\>
 
-Defined in: [lib/BlockBlobService.ts:136](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/BlockBlobService.ts#L136)
+Defined in: [lib/BlockBlobService.ts:136](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/BlockBlobService.ts#L136)

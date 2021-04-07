@@ -14,19 +14,20 @@ module.exports = async function example (context) {
   const queue = queueService.process<MyObject[]>('my-queue-name', 100)
 
   for await (const message of queue) {
-    // For this example only, deserializing the message results in an array.
     const obj = message.toJSObject()
 
-    if (Array.isArray(obj)) {
+    if (typeof message.error !== 'undefined') {
+      // The error state can be checked after using `toBuffer` or `toJSObject`.
+      console.error(message.error)
+      queue.poison()
+    } else if (Array.isArray(obj)) {
       for (const item of obj) {
         console.log(item.message)
       }
     } else {
       // OH NO'S!! ME NO GOOD!
       console.error("I don't feel well.", message.messageId)
-      // The following method call will create a poison queue if it does not exist,
-      // and shuffles the message over to that queue
-      queue.poison()
+      queue.skip()
     }
   }
 }
@@ -69,7 +70,7 @@ Name | Type |
 
 **Returns:** [*QueueService*](index.queueservice.md)
 
-Defined in: [lib/QueueService.ts:254](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L254)
+Defined in: [lib/QueueService.ts:255](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L255)
 
 \+ **new QueueService**(`accountName`: *string*, `accountKey`: *string*): [*QueueService*](index.queueservice.md)
 
@@ -84,7 +85,7 @@ Name | Type |
 
 **Returns:** [*QueueService*](index.queueservice.md)
 
-Defined in: [lib/QueueService.ts:256](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L256)
+Defined in: [lib/QueueService.ts:257](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L257)
 
 ## Properties
 
@@ -92,7 +93,7 @@ Defined in: [lib/QueueService.ts:256](https://github.com/nhsllc/azure-utils/blob
 
 • **queueService**: *QueueServiceClient*
 
-Defined in: [lib/QueueService.ts:272](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L272)
+Defined in: [lib/QueueService.ts:273](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L273)
 
 ___
 
@@ -100,7 +101,7 @@ ___
 
 • **queues**: *QueueReferenceManager*
 
-Defined in: [lib/QueueService.ts:273](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L273)
+Defined in: [lib/QueueService.ts:274](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L274)
 
 ## Methods
 
@@ -120,7 +121,7 @@ Name | Type |
 
 **Returns:** *Promise*<MessageIdDeleteResponse\>
 
-Defined in: [lib/QueueService.ts:385](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L385)
+Defined in: [lib/QueueService.ts:386](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L386)
 
 ___
 
@@ -139,7 +140,7 @@ Name | Type |
 
 **Returns:** *Promise*<MessageIdDeleteResponse[]\>
 
-Defined in: [lib/QueueService.ts:372](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L372)
+Defined in: [lib/QueueService.ts:373](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L373)
 
 ___
 
@@ -157,7 +158,7 @@ Name | Type |
 
 **Returns:** *Promise*<[*QueuePeekResult*](../modules/index.md#queuepeekresult)<PeekedMessageItem\>\>
 
-Defined in: [lib/QueueService.ts:276](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L276)
+Defined in: [lib/QueueService.ts:277](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L277)
 
 ___
 
@@ -182,7 +183,7 @@ Name | Type | Default value |
 
 **Returns:** [*ProcessQueue*](index.processqueue.md)<T\>
 
-Defined in: [lib/QueueService.ts:392](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L392)
+Defined in: [lib/QueueService.ts:393](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L393)
 
 ___
 
@@ -201,7 +202,7 @@ Name | Type | Default value |
 
 **Returns:** *Promise*<[*QueueReceiveResult*](../modules/index.md#queuereceiveresult)<DequeuedMessageItem\>\>
 
-Defined in: [lib/QueueService.ts:299](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L299)
+Defined in: [lib/QueueService.ts:300](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L300)
 
 ___
 
@@ -220,7 +221,7 @@ Name | Type |
 
 **Returns:** *Promise*<QueueSendMessageResponse\>
 
-Defined in: [lib/QueueService.ts:341](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L341)
+Defined in: [lib/QueueService.ts:342](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L342)
 
 ___
 
@@ -239,4 +240,4 @@ Name | Type |
 
 **Returns:** *Promise*<QueueSendMessageResponse[]\>
 
-Defined in: [lib/QueueService.ts:328](https://github.com/nhsllc/azure-utils/blob/bc78d50/lib/QueueService.ts#L328)
+Defined in: [lib/QueueService.ts:329](https://github.com/nhsllc/azure-utils/blob/cab3408/lib/QueueService.ts#L329)
