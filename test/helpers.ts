@@ -36,7 +36,7 @@ export const tableRows: Array<LegacyTableRow | TableRow> = [
   }
 ]
 
-export function mockTableService () {
+export function mockTableService (): void {
   // This entire mock may be able to be removed when Azurite V3 supports tables.
   const createTableSvcShadow = createPromiseTableService
 
@@ -48,6 +48,6 @@ export function mockTableService () {
   })
 }
 
-export function unmockTableService () {
+export function unmockTableService (): void {
   ImportMock.restore()
 }

@@ -19,7 +19,7 @@ Helper interface for queue-to-blob metadata.
 
 • **blobName**: *string*
 
-Defined in: [lib/Interfaces.ts:52](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L52)
+Defined in: [lib/Interfaces.ts:57](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L57)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 • **container**: *string*
 
-Defined in: [lib/Interfaces.ts:53](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L53)
+Defined in: [lib/Interfaces.ts:58](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L58)

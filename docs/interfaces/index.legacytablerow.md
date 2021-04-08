@@ -25,7 +25,7 @@ Helper interface for legacy table rows.
 
 • **PartitionKey**: *string* \| StringProperty
 
-Defined in: [lib/Interfaces.ts:60](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L60)
+Defined in: [lib/Interfaces.ts:65](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L65)
 
 ___
 
@@ -33,4 +33,4 @@ ___
 
 • **RowKey**: *string* \| StringProperty
 
-Defined in: [lib/Interfaces.ts:61](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L61)
+Defined in: [lib/Interfaces.ts:66](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L66)

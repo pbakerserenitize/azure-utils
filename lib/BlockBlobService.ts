@@ -164,7 +164,7 @@ export class BlockBlobService {
   async read (blobContainer: string, blobName: string, jsonOrEnc: boolean | BufferEncoding = false): Promise<any> {
     const containerClient = await this.containers.add(blobContainer)
     const blockBlobClient = containerClient.getBlockBlobClient(blobName)
-    const tryDownload = async () => {
+    const tryDownload = async (): Promise<Buffer> => {
       try {
         return await blockBlobClient.downloadToBuffer()
       } catch (error) {
@@ -208,7 +208,7 @@ export class BlockBlobService {
   async all (inputs: BlobAllWrite[]): Promise<BlockBlobUploadResponse[]>
   async all (inputs: BlobAllInput[]): Promise<BlobAllResult[]>
   async all (inputs: BlobAllInput[]): Promise<BlobAllResult[]> {
-    const promises: Promise<any>[]= []
+    const promises: Array<Promise<any>> = []
 
     for (const input of inputs) {
       switch (input.operation) {

@@ -1,13 +1,13 @@
 import * as gulp from 'gulp'
 import * as shell from 'gulp-shell'
-import { default as rmdir } from 'rimraf'
+import rmdir from 'rimraf'
 import { normalize } from 'path'
 import { existsSync, mkdirSync } from 'fs'
 import { Service } from 'managed-service-daemon'
 
 const azuriteV3Dir = './.azurite-v3'
 const azuriteV2Dir = './.azurite-v2'
-const createAzuriteService = function (serviceName, servicePath, workingDir) {
+const createAzuriteService = function createAzuriteService (serviceName: string, servicePath: string, workingDir: string): Service {
   return new Service({
     name: serviceName,
     command: 'node',
@@ -18,7 +18,7 @@ const createAzuriteService = function (serviceName, servicePath, workingDir) {
     },
     onStop: () => {
       rmdir(workingDir, function (err) {
-        if (err) console.log(err)
+        if (typeof err !== 'undefined' && err !== null) console.log(err)
       })
     },
     onReady: () => {},
@@ -37,23 +37,19 @@ const azuriteStop = gulp.parallel(azuriteTable.stop, azuriteBlob.stop, azuriteQu
 
 function shellTask (
   commands: string | string[],
-  options?: { name?: string; [prop: string]: any }
+  options?: { name?: string, [prop: string]: any }
 ): () => Promise<void> {
   const task = shell.task(commands, options as any)
 
-  if (options && typeof options.name === 'string') {
+  if (typeof options === 'object' && typeof options.name === 'string') {
     Object.defineProperty(task, 'name', { value: options.name })
   }
 
   return task
 }
 
-export const lint = shellTask(['prettier-standard --check --lint'], {
-  name: 'format'
-})
-export const format = shellTask(['prettier-standard --lint'], {
-  name: 'format'
-})
+export const lint = shellTask(['ts-standard'], { name: 'lint' })
+export const format = shellTask(['ts-standard --fix'], { name: 'format' })
 
 export const mocha = shellTask(['mocha'], { name: 'mocha', ignoreErrors: true })
 export const nyc = shellTask(['nyc mocha'], { name: 'nyc', ignoreErrors: true })

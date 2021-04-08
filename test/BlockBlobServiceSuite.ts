@@ -2,7 +2,7 @@ import { deepStrictEqual, doesNotThrow, rejects, strictEqual } from 'assert'
 import { BlockBlobService, BlobAllInput } from '../index'
 import { connection } from './helpers'
 
-describe('BlockBlobService', async () => {
+describe('BlockBlobService', () => {
   it('should read and write files', async () => {
     const blobService = new BlockBlobService(connection)
     const blobService2 = new BlockBlobService(connection)
@@ -45,7 +45,7 @@ describe('BlockBlobService', async () => {
     strictEqual(nullResult, null)
     strictEqual(stringResult, contentString)
 
-    rejects(async () => {
+    await rejects(async () => {
       await blobService.read(container, filename2, true)
     })
   })
@@ -101,7 +101,7 @@ describe('BlockBlobService', async () => {
     if (readResult instanceof Buffer) {
       strictEqual(readResult.toString('utf8'), content)
     } else {
-      throw new Error("Read result was not an instance of Buffer.")
+      throw new Error('Read result was not an instance of Buffer.')
     }
     if ('etag' in writeResult) {
       strictEqual(typeof writeResult.etag, 'string')

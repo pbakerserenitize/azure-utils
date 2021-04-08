@@ -2,7 +2,7 @@ import { doesNotThrow, strictEqual, doesNotReject } from 'assert'
 import { TableWriterBatch, TableWriter } from '../index'
 import { connection, mockTableService, tableRows, unmockTableService } from './helpers'
 
-describe('TableWriterBatch', async () => {
+describe('TableWriterBatch', () => {
   beforeEach(async () => {
     mockTableService()
   })

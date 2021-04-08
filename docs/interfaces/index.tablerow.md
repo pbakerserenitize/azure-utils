@@ -25,7 +25,7 @@ Helper interface for table rows. This is the preferred object.
 
 • **partitionKey**: *string*
 
-Defined in: [lib/Interfaces.ts:69](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L69)
+Defined in: [lib/Interfaces.ts:74](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L74)
 
 ___
 
@@ -33,4 +33,4 @@ ___
 
 • **rowKey**: *string*
 
-Defined in: [lib/Interfaces.ts:70](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L70)
+Defined in: [lib/Interfaces.ts:75](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L75)

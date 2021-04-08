@@ -29,7 +29,7 @@ Helper interface for `BlockBlobService.all`.
 
 Inherited from: [BlobAllBase](index.bloballbase.md).[container](index.bloballbase.md#container)
 
-Defined in: [lib/Interfaces.ts:15](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L15)
+Defined in: [lib/Interfaces.ts:20](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L20)
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 • **content**: *string* \| *any*[] \| *Buffer* \| *Record*<string \| number, any\>
 
-Defined in: [lib/Interfaces.ts:40](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L40)
+Defined in: [lib/Interfaces.ts:45](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L45)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 Inherited from: [BlobAllBase](index.bloballbase.md).[name](index.bloballbase.md#name)
 
-Defined in: [lib/Interfaces.ts:16](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L16)
+Defined in: [lib/Interfaces.ts:21](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L21)
 
 ___
 
@@ -57,4 +57,4 @@ ___
 
 Overrides: [BlobAllBase](index.bloballbase.md).[operation](index.bloballbase.md#operation)
 
-Defined in: [lib/Interfaces.ts:39](https://github.com/nhsllc/azure-utils/blob/183635e/lib/Interfaces.ts#L39)
+Defined in: [lib/Interfaces.ts:44](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L44)

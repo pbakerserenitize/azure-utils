@@ -3,7 +3,7 @@ import { doesNotReject } from 'assert'
 import { FunctionHelpers, TableWriter } from '../index'
 import { connection, mockTableService, tableRows, unmockTableService } from './helpers'
 
-describe('AzureFunctions', async () => {
+describe('AzureFunctions', () => {
   beforeEach(async () => {
     mockTableService()
   })
@@ -14,7 +14,7 @@ describe('AzureFunctions', async () => {
 
   it('should process batch messages from queue', async () => {
     const queueService = QueueServiceClient.fromConnectionString(connection)
-    const queueName = 'test-queue'
+    const queueName = 'batch-queue'
     const queueClient = queueService.getQueueClient(queueName)
     const queueMessage = await TableWriter.from({
       tableName: 'Test',
@@ -28,7 +28,8 @@ describe('AzureFunctions', async () => {
     await doesNotReject(async () => {
       await FunctionHelpers.tableWriterBatch({
         allConnections: connection,
-        queue: { name: queueName }
+        queue: { name: queueName },
+        logger: { error: () => {} }
       })
     })
   })
