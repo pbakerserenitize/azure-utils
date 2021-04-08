@@ -18,7 +18,7 @@ const createAzuriteService = function createAzuriteService (serviceName: string,
     },
     onStop: () => {
       rmdir(workingDir, function (err) {
-        if (typeof err !== 'undefined') console.log(err)
+        if (typeof err !== 'undefined' && err !== null) console.log(err)
       })
     },
     onReady: () => {},
