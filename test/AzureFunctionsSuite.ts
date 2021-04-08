@@ -3,7 +3,7 @@ import { doesNotReject } from 'assert'
 import { FunctionHelpers, TableWriter } from '../index'
 import { connection, mockTableService, tableRows, unmockTableService } from './helpers'
 
-describe('AzureFunctions', async () => {
+describe('AzureFunctions', () => {
   beforeEach(async () => {
     mockTableService()
   })

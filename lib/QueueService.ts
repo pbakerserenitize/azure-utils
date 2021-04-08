@@ -234,7 +234,7 @@ class QueueReferenceManager {
  *
  *   for await (const message of queue) {
  *     const obj = message.toJSObject()
- * 
+ *
  *     if (typeof message.error !== 'undefined') {
  *       // The error state can be checked after using `toBuffer` or `toJSObject`.
  *       console.error(message.error)
@@ -336,7 +336,7 @@ export class QueueService {
 
   /** Send multiple messages to a queue. Errors will bubble up to the array of results. */
   async sendAll (queueName: string, messages: QueueMessageContent[]): Promise<QueueSendMessageResponse[]> {
-    const promises: Promise<QueueSendMessageResponse>[] = []
+    const promises: Array<Promise<QueueSendMessageResponse>> = []
 
     if (Array.isArray(messages)) {
       for (const message of messages) {
@@ -380,7 +380,7 @@ export class QueueService {
 
   /** Delete multiple messages from a queue. Errors will bubble up to the array of results. */
   async deleteAll (queueName: string, deletes: Array<[messageId: string, popReceipt: string]>): Promise<MessageIdDeleteResponse[]> {
-    const promises: Promise<MessageIdDeleteResponse>[] = []
+    const promises: Array<Promise<MessageIdDeleteResponse>> = []
 
     if (Array.isArray(deletes)) {
       for (const [messageId, popReceipt] of deletes) {

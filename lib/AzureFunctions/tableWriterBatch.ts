@@ -30,11 +30,11 @@ import type { TWBOptions } from './Interfaces'
  * ```
  * @category AzureFunctionHelper
  */
-export async function tableWriterBatch (options: TWBOptions) {
+export async function tableWriterBatch (options: TWBOptions): Promise<void> {
   const { allConnections, blobConnection, queue, tableConnection, logger = console } = options
   const { name: queueName, connection: queueConnection, numberOfMessages } = queue
   const queueCount = typeof numberOfMessages === 'number' ? numberOfMessages : 32
-  const queueService = new QueueService(allConnections || queueConnection)
+  const queueService = new QueueService(allConnections ?? queueConnection)
   const messages = queueService.process<QueueBlobMessage>(queueName, queueCount)
   const queueBlobs: QueueBlobMessage[] = []
 
@@ -50,9 +50,9 @@ export async function tableWriterBatch (options: TWBOptions) {
   }
 
   if (queueBlobs.length > 0) {
-    const blobService = new BlockBlobService(allConnections || blobConnection)
+    const blobService = new BlockBlobService(allConnections ?? blobConnection)
     const writerBatch = await TableWriterBatch.fromBlobs(queueBlobs, blobService)
 
-    await writerBatch.executeBatches(allConnections || tableConnection)
+    await writerBatch.executeBatches(allConnections ?? tableConnection)
   }
 }

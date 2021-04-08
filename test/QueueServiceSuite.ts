@@ -1,4 +1,4 @@
-import { deepStrictEqual, doesNotReject, doesNotThrow, rejects, strictEqual } from 'assert'
+import { deepStrictEqual, doesNotReject, doesNotThrow, strictEqual } from 'assert'
 import { QueueService } from '../index'
 import { connection } from './helpers'
 
@@ -74,7 +74,7 @@ describe('QueueService', () => {
     const payloadAll: any[] = []
 
     for (let i = 0; i < 90; i += 1) {
-      switch(i) {
+      switch (i) {
         case twentyThree:
           payloadAll.push(i)
           break

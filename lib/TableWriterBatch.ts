@@ -48,14 +48,14 @@ export class TableWriterBatch {
   connection?: string
   /** Limit the size of table writer instances. */
   maxWriterSize?: number
-  private _tableWriterMap: Map<string, TableWriter>
-  private _sizeLimitCache: Map<string, string>
+  private readonly _tableWriterMap: Map<string, TableWriter>
+  private readonly _sizeLimitCache: Map<string, string>
 
-  get tableWriters (): Partial<TableWriter>[] {
+  get tableWriters (): Array<Partial<TableWriter>> {
     return Array.from(this._tableWriterMap.values())
   }
 
-  set tableWriters (writers: Partial<TableWriter>[]) {
+  set tableWriters (writers: Array<Partial<TableWriter>>) {
     for (const tableWriter of writers) {
       this.addTableWriter(tableWriter)
     }
@@ -67,38 +67,38 @@ export class TableWriterBatch {
 
   /** Adds a single table writer to this instance; merges writers with same table name/partition key combination. */
   addTableWriter (writer: TableWriterMessage, connection?: string): void {
-    const inferPartitionKey = () => {
+    const inferPartitionKey = (): string => {
       if (Array.isArray(writer.tableRows) && writer.tableRows.length > 0) {
         return typeof writer.tableRows[0].partitionKey === 'string'
           ? writer.tableRows[0].partitionKey
           : typeof writer.tableRows[0].PartitionKey === 'object'
-          ? writer.tableRows[0].PartitionKey._
-          : writer.tableRows[0].PartitionKey
+            ? (writer.tableRows[0].PartitionKey as unknown as Record<string, string>)._
+            : writer.tableRows[0].PartitionKey as string
       }
     }
-    const key = `${writer.tableName}::${writer.partitionKey || inferPartitionKey()}`
+    const key = `${writer.tableName as string}::${writer.partitionKey ?? inferPartitionKey()}`
 
     if (typeof this.maxWriterSize === 'undefined' || this.maxWriterSize === 0) {
       const merged = this._tableWriterMap.get(key)
 
       if (typeof merged === 'undefined') {
-        this._tableWriterMap.set(key, TableWriter.from(writer, connection || this.connection))
+        this._tableWriterMap.set(key, TableWriter.from(writer, connection ?? this.connection))
       } else {
         for (const tableRow of writer.tableRows) {
           merged.addTableRow(tableRow)
         }
       }
     } else {
-      const setNewMerged = () => {
+      const setNewMerged = (): TableWriter => {
         return new TableWriter({
           tableName: writer.tableName,
-          partitionKey: writer.partitionKey || inferPartitionKey(),
+          partitionKey: writer.partitionKey ?? inferPartitionKey(),
           container: writer.container,
-          connection: writer.connection || connection || this.connection
+          connection: writer.connection ?? connection ?? this.connection
         })
       }
-      let uuidKey = this._sizeLimitCache.get(key) || uuidv4()
-      let merged = this._tableWriterMap.get(uuidKey) || setNewMerged()
+      let uuidKey = this._sizeLimitCache.get(key) ?? uuidv4()
+      let merged = this._tableWriterMap.get(uuidKey) ?? setNewMerged()
 
       for (const tableRow of writer.tableRows) {
         if (merged.size < this.maxWriterSize) {
@@ -148,7 +148,7 @@ export class TableWriterBatch {
   /** Executes batches on all table writers in this instance. */
   async executeBatches (connection?: string): Promise<void> {
     for (const writer of this.tableWriters) {
-      await writer.executeBatch(connection || this.connection)
+      await writer.executeBatch(connection ?? this.connection)
     }
   }
 
@@ -157,7 +157,7 @@ export class TableWriterBatch {
     const messages: QueueBlobMessage[] = []
 
     for (const writer of this.tableWriters) {
-      messages.push(await writer.toQueueMessage(connection || this.connection))
+      messages.push(await writer.toQueueMessage(connection ?? this.connection))
     }
 
     return messages
