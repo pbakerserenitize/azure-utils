@@ -1,5 +1,6 @@
 import { deepStrictEqual, doesNotReject, doesNotThrow, strictEqual } from 'assert'
 import { QueueService } from '../index'
+import { probablyBase64, probablyBinary, probablyJson } from '../lib/Helpers'
 import { connection } from './helpers'
 
 describe('QueueService', () => {
@@ -57,6 +58,10 @@ describe('QueueService', () => {
       await queueService.deleteAll(queueName, hello3.messageItems.map(message => [message.messageId, message.popReceipt]))
     })
 
+    await doesNotReject(async () => {
+      await queueService.receive(queueName, NaN)
+    })
+
     doesNotThrow(() => {
       const queueService3 = new QueueService(connection, connection)
 
@@ -77,6 +82,9 @@ describe('QueueService', () => {
       switch (i) {
         case twentyThree:
           payloadAll.push(i)
+          break
+        case 38:
+          payloadAll.push(Buffer.from('{ this_is: not valid json } ', 'utf8').toString('base64'))
           break
         case 55:
           payloadAll.push(smolWorld)
@@ -103,8 +111,10 @@ describe('QueueService', () => {
     let counted = 0
 
     for await (const message of queue) {
+      // Arbitrarily set the message text to null
+      if (counted === 10) message.messageText = null as unknown as string
+
       const object = message.toJSObject()
-      counted += 1
 
       if (counted === 87) {
         // Arbitrarily cancelling early for test coverage purposes.
@@ -122,6 +132,8 @@ describe('QueueService', () => {
           queue.poison()
         })
       }
+
+      counted += 1
     }
 
     const poisonQueue = queueName + '-poison'
@@ -129,5 +141,20 @@ describe('QueueService', () => {
     const [message] = poison.messageItems
 
     strictEqual(message.messageText, smolWorld)
+  })
+
+  it('should test queue service helpers', () => {
+    const text1 = 'test'
+    const text2 = "It's a small world."
+
+    strictEqual(probablyBase64(text1), true)
+    strictEqual(probablyBase64(text2), false)
+    strictEqual(probablyBase64(null as unknown as string), false)
+    strictEqual(probablyJson('{}'), true)
+    strictEqual(probablyJson(text1), false)
+    strictEqual(probablyJson(null as unknown as string), false)
+    strictEqual(probablyBinary(Buffer.from(text1, 'base64').toString('utf8')), true)
+    strictEqual(probablyBinary('It\u001as a small\u0002\u0003\u0004\u0005world.'), true)
+    strictEqual(probablyBinary(null as unknown as string), false)
   })
 })

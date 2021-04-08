@@ -7,42 +7,8 @@ import {
   QueueServiceClient,
   StorageSharedKeyCredential as QueueCredential
 } from '@azure/storage-queue'
+import { probablyBase64, probablyBinary, probablyJson, splitCount } from './Helpers'
 import type { QueueMessageContent, QueuePeekResult, QueueReceiveResult } from './Interfaces'
-
-/** Takes a whole number and divides it into results of up to 32, including the remainder.
- * @hidden
- */
-function * splitCount (count: number): Generator<number> {
-  if (typeof count !== 'number' || Number.isNaN(count) || !Number.isFinite(count) || count < 1) return
-
-  const MAX_MESSAGES = 32
-
-  if (count < MAX_MESSAGES) {
-    yield count
-  } else {
-    const result = Math.floor(count / MAX_MESSAGES)
-    const remainder = Math.floor(count % MAX_MESSAGES)
-
-    for (let i = 0; i < result; i += 1) {
-      yield MAX_MESSAGES
-    }
-
-    if (remainder > 0) yield remainder
-  }
-}
-
-/** Checks a string to see if it opens and closes with `[]` or `{}` and is therefore probably JSON. Only really supports arrays and objects.
- * @hidden
- */
-function probablyJson (str: string): boolean {
-  if (typeof str !== 'string') return false
-
-  const trimmed = str.trim()
-  const open = trimmed.substring(0, 1)
-  const close = trimmed.substring(str.length - 1, str.length)
-
-  return (open === '{' && close === '}') || (open === '[' && close === ']')
-}
 
 /** Wrapper for easy handling of queue messages returned by `receive` or `process` methods.
  * Not intended to be used directly; exported for type information.
@@ -72,7 +38,11 @@ export class DequeuedMessage<T = any> implements DequeuedMessageItem {
   /** Convert a base64 string to a Buffer. */
   toBuffer (): Buffer {
     try {
-      return Buffer.from(this.messageText, 'base64')
+      if (probablyBase64(this.messageText)) {
+        return Buffer.from(this.messageText, 'base64')
+      } else {
+        return Buffer.from(this.messageText, 'utf8')
+      }
     } catch (error) {
       this.error = error
 
@@ -82,12 +52,12 @@ export class DequeuedMessage<T = any> implements DequeuedMessageItem {
 
   /** Convert a base64 string to an object. */
   toJSObject (): T {
-    const string = this.toBuffer().toString('utf8')
+    const text = this.toBuffer().toString('utf8')
 
     if (typeof this.error === 'undefined') {
-      if (probablyJson(string)) {
+      if (!probablyBinary(text) && probablyJson(text)) {
         try {
-          return JSON.parse(string)
+          return JSON.parse(text)
         } catch (error) {
           this.error = error
         }
