@@ -59,7 +59,7 @@ Name | Type |
 
 **Returns:** [*DequeuedMessage*](index.dequeuedmessage.md)<T\>
 
-Defined in: [lib/QueueService.ts:51](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L51)
+Defined in: [lib/QueueService.ts:17](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L17)
 
 ## Properties
 
@@ -67,9 +67,9 @@ Defined in: [lib/QueueService.ts:51](https://github.com/nhsllc/azure-utils/blob/
 
 • **dequeueCount**: *number*
 
-Implementation of: void
+Implementation of: DequeuedMessageItem.dequeueCount
 
-Defined in: [lib/QueueService.ts:62](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L62)
+Defined in: [lib/QueueService.ts:28](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L28)
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 If defined, should contain an instance of Error describing why `toBuffer` or `toJSObject` failed.
 
-Defined in: [lib/QueueService.ts:70](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L70)
+Defined in: [lib/QueueService.ts:36](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L36)
 
 ___
 
@@ -87,9 +87,9 @@ ___
 
 • **expiresOn**: Date
 
-Implementation of: void
+Implementation of: DequeuedMessageItem.expiresOn
 
-Defined in: [lib/QueueService.ts:63](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L63)
+Defined in: [lib/QueueService.ts:29](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L29)
 
 ___
 
@@ -97,9 +97,9 @@ ___
 
 • **insertedOn**: Date
 
-Implementation of: void
+Implementation of: DequeuedMessageItem.insertedOn
 
-Defined in: [lib/QueueService.ts:64](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L64)
+Defined in: [lib/QueueService.ts:30](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L30)
 
 ___
 
@@ -107,9 +107,9 @@ ___
 
 • **messageId**: *string*
 
-Implementation of: void
+Implementation of: DequeuedMessageItem.messageId
 
-Defined in: [lib/QueueService.ts:65](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L65)
+Defined in: [lib/QueueService.ts:31](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L31)
 
 ___
 
@@ -117,9 +117,9 @@ ___
 
 • **messageText**: *string*
 
-Implementation of: void
+Implementation of: DequeuedMessageItem.messageText
 
-Defined in: [lib/QueueService.ts:66](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L66)
+Defined in: [lib/QueueService.ts:32](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L32)
 
 ___
 
@@ -127,9 +127,9 @@ ___
 
 • **nextVisibleOn**: Date
 
-Implementation of: void
+Implementation of: DequeuedMessageItem.nextVisibleOn
 
-Defined in: [lib/QueueService.ts:67](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L67)
+Defined in: [lib/QueueService.ts:33](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L33)
 
 ___
 
@@ -137,9 +137,9 @@ ___
 
 • **popReceipt**: *string*
 
-Implementation of: void
+Implementation of: DequeuedMessageItem.popReceipt
 
-Defined in: [lib/QueueService.ts:68](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L68)
+Defined in: [lib/QueueService.ts:34](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L34)
 
 ## Methods
 
@@ -151,7 +151,7 @@ Convert a base64 string to a Buffer.
 
 **Returns:** *Buffer*
 
-Defined in: [lib/QueueService.ts:73](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L73)
+Defined in: [lib/QueueService.ts:39](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L39)
 
 ___
 
@@ -163,4 +163,4 @@ Convert a base64 string to an object.
 
 **Returns:** T
 
-Defined in: [lib/QueueService.ts:84](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L84)
+Defined in: [lib/QueueService.ts:54](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L54)

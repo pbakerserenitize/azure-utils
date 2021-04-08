@@ -24,7 +24,7 @@ Options for Azure Function helper `tableWriterBatch`.
 
 Connection string override for all connections.
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:6](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/AzureFunctions/Interfaces.ts#L6)
+Defined in: [lib/AzureFunctions/Interfaces.ts:6](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/AzureFunctions/Interfaces.ts#L6)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 Connection string to use for blob storage.
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:8](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/AzureFunctions/Interfaces.ts#L8)
+Defined in: [lib/AzureFunctions/Interfaces.ts:8](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/AzureFunctions/Interfaces.ts#L8)
 
 ___
 
@@ -50,7 +50,7 @@ Name | Type |
 :------ | :------ |
 `error` | (...`args`: *any*[]) => *any* |
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:21](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/AzureFunctions/Interfaces.ts#L21)
+Defined in: [lib/AzureFunctions/Interfaces.ts:21](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/AzureFunctions/Interfaces.ts#L21)
 
 ___
 
@@ -68,7 +68,7 @@ Name | Type | Description |
 `name` | *string* | Name of the queue to read from, where TableWriter queue messages live.   |
 `numberOfMessages`? | *number* | The number of messages to retrieve from the queue. Defaults to 32, will accept any number greater than zero.   |
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:10](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/AzureFunctions/Interfaces.ts#L10)
+Defined in: [lib/AzureFunctions/Interfaces.ts:10](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/AzureFunctions/Interfaces.ts#L10)
 
 ___
 
@@ -78,4 +78,4 @@ ___
 
 Connection string to use for table storage.
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:19](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/AzureFunctions/Interfaces.ts#L19)
+Defined in: [lib/AzureFunctions/Interfaces.ts:19](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/AzureFunctions/Interfaces.ts#L19)

@@ -64,7 +64,7 @@ Name | Type |
 
 **Returns:** [*ProcessQueue*](index.processqueue.md)<T\>
 
-Defined in: [lib/QueueService.ts:105](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L105)
+Defined in: [lib/QueueService.ts:75](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L75)
 
 ## Properties
 
@@ -72,7 +72,7 @@ Defined in: [lib/QueueService.ts:105](https://github.com/nhsllc/azure-utils/blob
 
 • `Private` **\_cancel**: *boolean*
 
-Defined in: [lib/QueueService.ts:121](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L121)
+Defined in: [lib/QueueService.ts:91](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L91)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 • `Private` **\_poison**: *boolean*
 
-Defined in: [lib/QueueService.ts:122](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L122)
+Defined in: [lib/QueueService.ts:92](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L92)
 
 ___
 
@@ -88,7 +88,7 @@ ___
 
 • `Private` **\_skip**: *boolean*
 
-Defined in: [lib/QueueService.ts:120](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L120)
+Defined in: [lib/QueueService.ts:90](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L90)
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 • `Private` `Readonly` **count**: *number*
 
-Defined in: [lib/QueueService.ts:119](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L119)
+Defined in: [lib/QueueService.ts:89](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L89)
 
 ___
 
@@ -104,7 +104,7 @@ ___
 
 • `Private` `Readonly` **poisonQueueName**: *string*
 
-Defined in: [lib/QueueService.ts:117](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L117)
+Defined in: [lib/QueueService.ts:87](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L87)
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 • `Private` `Readonly` **queueName**: *string*
 
-Defined in: [lib/QueueService.ts:116](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L116)
+Defined in: [lib/QueueService.ts:86](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L86)
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 • `Private` `Readonly` **queueService**: [*QueueService*](index.queueservice.md)
 
-Defined in: [lib/QueueService.ts:118](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L118)
+Defined in: [lib/QueueService.ts:88](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L88)
 
 ## Methods
 
@@ -132,9 +132,9 @@ Implements the AsyncIterable implicit function.
 
 **Returns:** *AsyncGenerator*<[*DequeuedMessage*](index.dequeuedmessage.md)<T\>, any, unknown\>
 
-Implementation of: void
+Implementation of: AsyncIterable.__@asyncIterator
 
-Defined in: [lib/QueueService.ts:146](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L146)
+Defined in: [lib/QueueService.ts:116](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L116)
 
 ___
 
@@ -146,7 +146,7 @@ Skip deleting the current message off the queue and stop processing all remainin
 
 **Returns:** *void*
 
-Defined in: [lib/QueueService.ts:125](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L125)
+Defined in: [lib/QueueService.ts:95](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L95)
 
 ___
 
@@ -158,7 +158,7 @@ Send the message to a poison queue corresponding to the instance queue name.
 
 **Returns:** *void*
 
-Defined in: [lib/QueueService.ts:139](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L139)
+Defined in: [lib/QueueService.ts:109](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L109)
 
 ___
 
@@ -170,4 +170,4 @@ Skip deleting the current message off the queue.
 
 **Returns:** *void*
 
-Defined in: [lib/QueueService.ts:132](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/QueueService.ts#L132)
+Defined in: [lib/QueueService.ts:102](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/QueueService.ts#L102)

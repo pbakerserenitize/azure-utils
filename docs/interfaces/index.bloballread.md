@@ -30,7 +30,7 @@ Helper interface for `BlockBlobService.all`.
 
 Inherited from: [BlobAllBase](index.bloballbase.md).[container](index.bloballbase.md#container)
 
-Defined in: [lib/Interfaces.ts:20](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L20)
+Defined in: [lib/Interfaces.ts:20](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L20)
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 • `Optional` **encoding**: BufferEncoding
 
-Defined in: [lib/Interfaces.ts:37](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L37)
+Defined in: [lib/Interfaces.ts:37](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L37)
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 • `Optional` **json**: *boolean*
 
-Defined in: [lib/Interfaces.ts:36](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L36)
+Defined in: [lib/Interfaces.ts:36](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L36)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 Inherited from: [BlobAllBase](index.bloballbase.md).[name](index.bloballbase.md#name)
 
-Defined in: [lib/Interfaces.ts:21](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L21)
+Defined in: [lib/Interfaces.ts:21](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L21)
 
 ___
 
@@ -66,4 +66,4 @@ ___
 
 Overrides: [BlobAllBase](index.bloballbase.md).[operation](index.bloballbase.md#operation)
 
-Defined in: [lib/Interfaces.ts:35](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L35)
+Defined in: [lib/Interfaces.ts:35](https://github.com/nhsllc/azure-utils/blob/99cc53d/lib/Interfaces.ts#L35)
