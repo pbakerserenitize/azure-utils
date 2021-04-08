@@ -1,4 +1,4 @@
-import { QueueServiceClient } from '@azure/storage-queue'
+import { QueueService } from '../QueueService'
 import { BlockBlobService } from '../BlockBlobService'
 import { TableWriterBatch } from '../TableWriterBatch'
 import type { QueueBlobMessage } from '../Interfaces'
@@ -31,33 +31,28 @@ import type { TWBOptions } from './Interfaces'
  * @category AzureFunctionHelper
  */
 export async function tableWriterBatch (options: TWBOptions) {
-  const { allConnections, blobConnection, queue, tableConnection } = options
+  const { allConnections, blobConnection, queue, tableConnection, logger = console } = options
   const { name: queueName, connection: queueConnection, numberOfMessages } = queue
-  const queueCount = typeof numberOfMessages === 'number' && numberOfMessages <= 32 ? numberOfMessages : 32
-  const queueService = QueueServiceClient.fromConnectionString(allConnections || queueConnection)
-  const queueClient = queueService.getQueueClient(queueName)
-  const { receivedMessageItems } = await queueClient.receiveMessages({
-    numberOfMessages: queueCount
-  })
+  const queueCount = typeof numberOfMessages === 'number' ? numberOfMessages : 32
+  const queueService = new QueueService(allConnections || queueConnection)
+  const messages = queueService.process<QueueBlobMessage>(queueName, queueCount)
+  const queueBlobs: QueueBlobMessage[] = []
 
-  if (receivedMessageItems.length > 0) {
+  for await (const message of messages) {
+    const item = message.toJSObject()
+
+    if (typeof message.error === 'undefined') {
+      queueBlobs.push(item)
+    } else {
+      logger.error(message.error)
+      messages.poison()
+    }
+  }
+
+  if (queueBlobs.length > 0) {
     const blobService = new BlockBlobService(allConnections || blobConnection)
-    const messages = receivedMessageItems
-      .map(item => {
-        const buffer = Buffer.from(item.messageText, 'base64')
-        const json = buffer.toString('utf8')
-
-        if (json === '') return null
-
-        return JSON.parse(json) as QueueBlobMessage
-      })
-      .filter(item => item !== null)
-    const writerBatch = await TableWriterBatch.fromBlobs(messages, blobService)
+    const writerBatch = await TableWriterBatch.fromBlobs(queueBlobs, blobService)
 
     await writerBatch.executeBatches(allConnections || tableConnection)
-
-    for (const item of receivedMessageItems) {
-      await queueClient.deleteMessage(item.messageId, item.popReceipt)
-    }
   }
 }

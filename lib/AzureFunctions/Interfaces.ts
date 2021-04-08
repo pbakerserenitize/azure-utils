@@ -12,9 +12,11 @@ export interface TWBOptions {
     name: string
     /** Connection string for the queue. May be overridden by property `allConnections`. */
     connection?: string
-    /** The number of messages to retrieve from the queue. Defaults to the max of 32. */
+    /** The number of messages to retrieve from the queue. Defaults to 32, will accept any number greater than zero. */
     numberOfMessages?: number
   }
   /** Connection string to use for table storage. */
   tableConnection?: string
+  /** A logger-like object with an `error` method. */
+  logger?: { error: (...args: any[]) => any }
 }
