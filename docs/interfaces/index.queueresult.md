@@ -30,7 +30,7 @@ Name | Type | Default |
 
 • **date**: Date
 
-Defined in: [lib/Interfaces.ts:88](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L88)
+Defined in: [lib/Interfaces.ts:88](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L88)
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 • **hasMessages**: *boolean*
 
-Defined in: [lib/Interfaces.ts:89](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L89)
+Defined in: [lib/Interfaces.ts:89](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L89)
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 • **messageItems**: TItems[]
 
-Defined in: [lib/Interfaces.ts:91](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L91)
+Defined in: [lib/Interfaces.ts:91](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L91)
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 • **responses**: TResponse[]
 
-Defined in: [lib/Interfaces.ts:92](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L92)
+Defined in: [lib/Interfaces.ts:92](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L92)
 
 ___
 
@@ -62,4 +62,4 @@ ___
 
 • **resultType**: TResultType
 
-Defined in: [lib/Interfaces.ts:90](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L90)
+Defined in: [lib/Interfaces.ts:90](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L90)

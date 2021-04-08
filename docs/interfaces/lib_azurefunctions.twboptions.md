@@ -12,6 +12,7 @@ Options for Azure Function helper `tableWriterBatch`.
 
 - [allConnections](lib_azurefunctions.twboptions.md#allconnections)
 - [blobConnection](lib_azurefunctions.twboptions.md#blobconnection)
+- [logger](lib_azurefunctions.twboptions.md#logger)
 - [queue](lib_azurefunctions.twboptions.md#queue)
 - [tableConnection](lib_azurefunctions.twboptions.md#tableconnection)
 
@@ -23,7 +24,7 @@ Options for Azure Function helper `tableWriterBatch`.
 
 Connection string override for all connections.
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:6](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/AzureFunctions/Interfaces.ts#L6)
+Defined in: [lib/AzureFunctions/Interfaces.ts:6](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/AzureFunctions/Interfaces.ts#L6)
 
 ___
 
@@ -33,7 +34,23 @@ ___
 
 Connection string to use for blob storage.
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:8](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/AzureFunctions/Interfaces.ts#L8)
+Defined in: [lib/AzureFunctions/Interfaces.ts:8](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/AzureFunctions/Interfaces.ts#L8)
+
+___
+
+### logger
+
+• `Optional` **logger**: *object*
+
+A logger-like object with an `error` method.
+
+#### Type declaration:
+
+Name | Type |
+:------ | :------ |
+`error` | (...`args`: *any*[]) => *any* |
+
+Defined in: [lib/AzureFunctions/Interfaces.ts:21](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/AzureFunctions/Interfaces.ts#L21)
 
 ___
 
@@ -49,9 +66,9 @@ Name | Type | Description |
 :------ | :------ | :------ |
 `connection`? | *string* | Connection string for the queue. May be overridden by property `allConnections`.   |
 `name` | *string* | Name of the queue to read from, where TableWriter queue messages live.   |
-`numberOfMessages`? | *number* | The number of messages to retrieve from the queue. Defaults to the max of 32.   |
+`numberOfMessages`? | *number* | The number of messages to retrieve from the queue. Defaults to 32, will accept any number greater than zero.   |
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:10](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/AzureFunctions/Interfaces.ts#L10)
+Defined in: [lib/AzureFunctions/Interfaces.ts:10](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/AzureFunctions/Interfaces.ts#L10)
 
 ___
 
@@ -61,4 +78,4 @@ ___
 
 Connection string to use for table storage.
 
-Defined in: [lib/AzureFunctions/Interfaces.ts:19](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/AzureFunctions/Interfaces.ts#L19)
+Defined in: [lib/AzureFunctions/Interfaces.ts:19](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/AzureFunctions/Interfaces.ts#L19)

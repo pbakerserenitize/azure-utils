@@ -48,7 +48,7 @@
 
 Helper union type for `BlockBlobService.all`.
 
-Defined in: [lib/Interfaces.ts:51](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L51)
+Defined in: [lib/Interfaces.ts:51](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L51)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 Ƭ **BlobAllResult**: BlobDeleteIfExistsResponse \| Buffer \| *Record*<string, any\> \| *any*[] \| *null* \| BlockBlobUploadResponse
 
-Defined in: [lib/Interfaces.ts:11](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L11)
+Defined in: [lib/Interfaces.ts:11](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L11)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 Ƭ **BlobOperation**: *delete* \| *read* \| *write*
 
-Defined in: [lib/Interfaces.ts:9](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L9)
+Defined in: [lib/Interfaces.ts:9](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L9)
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 Valid queue message types.
 
-Defined in: [lib/Interfaces.ts:108](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L108)
+Defined in: [lib/Interfaces.ts:108](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L108)
 
 ___
 
@@ -90,7 +90,7 @@ Name | Default |
 :------ | :------ |
 `T` | *any* |
 
-Defined in: [lib/Interfaces.ts:98](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L98)
+Defined in: [lib/Interfaces.ts:98](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L98)
 
 ___
 
@@ -106,7 +106,7 @@ Name | Default |
 :------ | :------ |
 `T` | *any* |
 
-Defined in: [lib/Interfaces.ts:103](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L103)
+Defined in: [lib/Interfaces.ts:103](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L103)
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 The queue result type.
 
-Defined in: [lib/Interfaces.ts:82](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L82)
+Defined in: [lib/Interfaces.ts:82](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L82)
 
 ___
 
@@ -124,7 +124,7 @@ ___
 
 Ƭ **TableOperation**: *delete* \| *merge* \| *replace*
 
-Defined in: [lib/Interfaces.ts:13](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/Interfaces.ts#L13)
+Defined in: [lib/Interfaces.ts:13](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/Interfaces.ts#L13)
 
 ___
 
@@ -132,7 +132,7 @@ ___
 
 Ƭ **TableWriterMessage**: *Partial*<Omit<[*TableWriter*](../classes/index.tablewriter.md), *tableRows*\>\> & { `tableRows?`: ([*LegacyTableRow*](../interfaces/index.legacytablerow.md) \| [*TableRow*](../interfaces/index.tablerow.md))[] ; `writeType?`: [*TableOperation*](index.md#tableoperation)  }
 
-Defined in: [lib/TableWriter.ts:8](https://github.com/nhsllc/azure-utils/blob/7c240ec/lib/TableWriter.ts#L8)
+Defined in: [lib/TableWriter.ts:8](https://github.com/nhsllc/azure-utils/blob/b48d4d0/lib/TableWriter.ts#L8)
 
 ## AzureFunctionHelper Variables
 
@@ -142,4 +142,4 @@ Defined in: [lib/TableWriter.ts:8](https://github.com/nhsllc/azure-utils/blob/7c
 
 Named export of all Azure Function helpers and interfaces.
 
-Defined in: [index.ts:12](https://github.com/nhsllc/azure-utils/blob/7c240ec/index.ts#L12)
+Defined in: [index.ts:12](https://github.com/nhsllc/azure-utils/blob/b48d4d0/index.ts#L12)
