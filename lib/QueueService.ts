@@ -299,8 +299,8 @@ export class QueueService {
   }
 
   /** Receive one or more messages from a queue. */
-  async receive (queueName: string, count: number = 1) {
-    const result: QueueReceiveResult<DequeuedMessageItem> = {
+  async receive<T = any> (queueName: string, count: number = 1): Promise<QueueReceiveResult<DequeuedMessage<T>>> {
+    const result: QueueReceiveResult<DequeuedMessage<T>> = {
       date: new Date(),
       hasMessages: false,
       resultType: 'receive',
@@ -314,15 +314,22 @@ export class QueueService {
 
       result.responses.push(response)
 
-      // Break out of loop if 
+      // Break out of loop if received message items is not an array or has no messages.
       if (Array.isArray(response.receivedMessageItems) && response.receivedMessageItems.length > 0) {
         for (const messageItem of response.receivedMessageItems) {
-          result.messageItems.push(messageItem)
+          result.messageItems.push(new DequeuedMessage(messageItem))
+        }
+
+        if (response.receivedMessageItems.length < messageCount) {
+          // Break out of loop early if the number of messages received is less than the number of messages requested.
+          break
         }
       } else {
         break
       }
     }
+
+    result.hasMessages = result.messageItems.length > 0
 
     return result
   }
