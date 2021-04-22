@@ -25,8 +25,27 @@ const TABLE_OPERATIONS: TableOperation[] = ['delete', 'merge', 'replace']
 export function safeTableRow (item: LegacyTableRow | TableRow): LegacyTableRow {
   const copy = { ...item }
   const { PartitionKey, RowKey, partitionKey, rowKey } = copy
+  const isLegacy = typeof PartitionKey !== 'undefined' && typeof RowKey !== 'undefined'
+  const isModern = typeof partitionKey === 'string' && typeof rowKey === 'string'
 
-  if (typeof PartitionKey !== 'undefined' && typeof RowKey !== 'undefined') {
+  if (isLegacy && isModern) {
+    throw new Error('Table row contains both legacy PartitonKey/Rowkey and modern partitionKey/rowKey properties; must include either legacy or modern, not both.')
+  }
+
+  // Modern property names should win out.
+  if (isModern) {
+    delete copy.partitionKey
+    delete copy.rowKey
+
+    return {
+      ...copy,
+      PartitionKey: { _: partitionKey, $: 'Edm.String' },
+      RowKey: { _: rowKey, $: 'Edm.String' }
+    }
+  }
+
+  // Falback to legacy property names.
+  if (isLegacy) {
     delete copy.PartitionKey
     delete copy.RowKey
 
@@ -37,15 +56,8 @@ export function safeTableRow (item: LegacyTableRow | TableRow): LegacyTableRow {
     }
   }
 
-  if (typeof partitionKey === 'undefined' || typeof rowKey === 'undefined') {
-    throw new Error('Table row must contain both partitionKey and rowKey.')
-  }
-
-  return {
-    ...copy,
-    PartitionKey: { _: partitionKey, $: 'Edm.String' },
-    RowKey: { _: rowKey, $: 'Edm.String' }
-  }
+  // Throw an error if partition key or row key is missing, recommending use of modern property names.
+  throw new Error('Table row must contain both partitionKey and rowKey.')
 }
 
 /** Class for managing a complete round-trip of one or more table rows for upsert into Azure Table Storage.
