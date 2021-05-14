@@ -3,6 +3,7 @@ import { createPromiseTableService } from 'azure-table-promise/dist/src/CreateTa
 import { v4 as uuidv4 } from 'uuid'
 import { BlockBlobService } from './BlockBlobService'
 import type { LegacyTableRow, QueueBlobMessage, TableOperation, TableRow } from './Interfaces'
+import { RecontextError } from './RecontextError'
 
 /** @category AzureUtility */
 export type TableWriterMessage = Partial<Omit<TableWriter, 'tableRows'>> & {
@@ -236,7 +237,7 @@ export class TableWriter {
         await tableService.createTableIfNotExists(this.tableName)
       } catch (error) {
         if (!(typeof error.message === 'string' && (error as unknown as Record<string, string>).message.includes('table specified already exists'))) {
-          throw error
+          throw new RecontextError(error)
         }
       }
 
@@ -244,10 +245,14 @@ export class TableWriter {
         let batch = new azure.TableBatch() // tableClient.createBatch(this.partitionKey)
         let batchSize = 0
         const submit = async (): Promise<void> => {
-          await tableService.executeBatch(this.tableName, batch) // batch.submitBatch()
+          try {
+            await tableService.executeBatch(this.tableName, batch) // batch.submitBatch()
 
-          batch = new azure.TableBatch() // tableClient.createBatch(this.partitionKey)
-          batchSize = 0
+            batch = new azure.TableBatch() // tableClient.createBatch(this.partitionKey)
+            batchSize = 0
+          } catch (error) {
+            throw new RecontextError(error)
+          }
         }
 
         for (const mapKey of this._operationMap[operation]) {
@@ -257,13 +262,25 @@ export class TableWriter {
 
           switch (operation) {
             case 'delete':
-              batch.deleteEntity(tableRow) // batch.deleteEntity(tableRow.partitionKey, tableRow.rowKey)
+              try {
+                batch.deleteEntity(tableRow) // batch.deleteEntity(tableRow.partitionKey, tableRow.rowKey)
+              } catch (error) {
+                throw new RecontextError(error)
+              }
               break
             case 'merge':
-              batch.insertOrMergeEntity(tableRow) // batch.updateEntity(tableRow, 'Merge')
+              try {
+                batch.insertOrMergeEntity(tableRow) // batch.updateEntity(tableRow, 'Merge')
+              } catch (error) {
+                throw new RecontextError(error)
+              }
               break
             case 'replace':
-              batch.insertOrReplaceEntity(tableRow) // batch.updateEntity(tableRow, 'Replace')
+              try {
+                batch.insertOrReplaceEntity(tableRow) // batch.updateEntity(tableRow, 'Replace')
+              } catch (error) {
+                throw new RecontextError(error)
+              }
               break
           }
 
