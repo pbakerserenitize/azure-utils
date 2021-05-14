@@ -12,6 +12,7 @@ import {
   BlobAllResult,
   BlobAllWrite
 } from './Interfaces'
+import { RecontextError } from './RecontextError'
 
 /** @hidden */
 class BlobContainerManager {
@@ -47,15 +48,19 @@ class BlobContainerManager {
   }
 
   private async createIfNotExist (blobContainer: string): Promise<ContainerClient> {
-    const containerClient = this.blobService.getContainerClient(blobContainer)
-
     try {
-      await containerClient.create()
-    } catch (error) {
-      if (error.statusCode !== 409) throw error
-    }
+      const containerClient = this.blobService.getContainerClient(blobContainer)
 
-    return containerClient
+      try {
+        await containerClient.create()
+      } catch (error) {
+        if (error.statusCode !== 409) throw new RecontextError (error)
+      }
+
+      return containerClient
+    } catch (error) {
+      throw new RecontextError (error)
+    }
   }
 }
 
@@ -85,7 +90,11 @@ export class BlockBlobService {
    */
   constructor (accountNameOrConnectionString: string, accountKey?: string) {
     if (typeof accountKey === 'undefined' || accountKey === null || accountKey === '') {
-      this.blobService = BlobServiceClient.fromConnectionString(accountNameOrConnectionString)
+      try {
+        this.blobService = BlobServiceClient.fromConnectionString(accountNameOrConnectionString)
+      } catch (error) {
+        throw new RecontextError(error)
+      }
     } else {
       this.blobService = new BlobServiceClient(
         `https://${accountNameOrConnectionString}.blob.core.windows.net`,
@@ -107,9 +116,13 @@ export class BlockBlobService {
    */
   async has (blobContainer: string, blobName: string): Promise<boolean> {
     const containerClient = await this.containers.add(blobContainer)
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName)
+    try {
+      const blockBlobClient = containerClient.getBlockBlobClient(blobName)
 
-    return await blockBlobClient.exists()
+      return await blockBlobClient.exists()
+    } catch (error) {
+      throw new RecontextError(error)
+    }
   }
 
   /**
@@ -122,9 +135,13 @@ export class BlockBlobService {
     blobName: string
   ): Promise<BlobDeleteIfExistsResponse> {
     const containerClient = await this.containers.add(blobContainer)
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName)
+    try {
+      const blockBlobClient = containerClient.getBlockBlobClient(blobName)
 
-    return await blockBlobClient.deleteIfExists()
+      return await blockBlobClient.deleteIfExists()
+    } catch (error) {
+      throw new RecontextError(error)
+    }
   }
 
   /**
@@ -139,13 +156,17 @@ export class BlockBlobService {
     blobContent: string | Buffer | any[] | Record<string | number, any>
   ): Promise<BlockBlobUploadResponse> {
     const containerClient = await this.containers.add(blobContainer)
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName)
+    try {
+      const blockBlobClient = containerClient.getBlockBlobClient(blobName)
 
-    if (!Buffer.isBuffer(blobContent) && typeof blobContent === 'object') {
-      blobContent = JSON.stringify(blobContent)
+      if (!Buffer.isBuffer(blobContent) && typeof blobContent === 'object') {
+        blobContent = JSON.stringify(blobContent)
+      }
+
+      return await blockBlobClient.upload(blobContent, blobContent.length)
+    } catch (error) {
+      throw new RecontextError(error)
     }
-
-    return await blockBlobClient.upload(blobContent, blobContent.length)
   }
 
   /**

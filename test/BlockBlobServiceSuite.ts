@@ -1,4 +1,6 @@
+import { BlobServiceClient, BlockBlobClient, ContainerClient } from '@azure/storage-blob'
 import { deepStrictEqual, doesNotThrow, rejects, strictEqual } from 'assert'
+import * as sinon from 'sinon'
 import { BlockBlobService, BlobAllInput } from '../index'
 import { connection } from './helpers'
 
@@ -108,5 +110,54 @@ describe('BlockBlobService', () => {
     } else {
       throw new Error("Write result misisng property 'etag'.")
     }
+  })
+
+  it('should handle errors', async () => {
+    const error = new Error('My fake error.')
+    const sandbox = sinon.createSandbox()
+
+    sandbox.stub(BlockBlobClient.prototype, 'exists').rejects(error)
+
+    await rejects(async () => {
+      const blobService = new BlockBlobService(connection)
+
+      await blobService.has('myContainer', 'doogie')
+    })
+
+    sandbox.stub(BlockBlobClient.prototype, 'deleteIfExists').rejects(error)
+
+    await rejects(async () => {
+      const blobService = new BlockBlobService(connection)
+
+      await blobService.delete('myContainer', 'doogie')
+    })
+
+    sandbox.stub(BlockBlobClient.prototype, 'upload').rejects(error)
+
+    await rejects(async () => {
+      const blobService = new BlockBlobService(connection)
+
+      await blobService.write('myContainer', 'doogie', '')
+    })
+
+    sandbox.stub(ContainerClient.prototype, 'create').throws(error)
+
+    rejects(async () => {
+      const blobService = new BlockBlobService(connection)
+
+      await blobService.has('myContainer', 'doogie')
+    })
+
+    sandbox.stub(BlobServiceClient, 'fromConnectionString').throws(error)
+
+    rejects(async () => {
+      new BlockBlobService(connection)
+    })
+
+    rejects(async () => {
+      new BlockBlobService(connection, connection)
+    })
+
+    sandbox.restore()
   })
 })
