@@ -20,6 +20,7 @@ describe('RecontextError', () => {
 
       strictEqual(typeof result.stack, 'string')
       strictEqual(typeof error.stack, 'string')
+      strictEqual(result.name, error.name)
       strictEqual(result.stack, error.stack)
     }
   })
@@ -35,6 +36,7 @@ describe('RecontextError', () => {
 
       strictEqual(typeof result.stack, 'string')
       strictEqual(typeof error.stack, 'string')
+      strictEqual(result.name, error.name)
       notStrictEqual(result.stack, error.stack)
     }
   })

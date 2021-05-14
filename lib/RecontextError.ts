@@ -32,6 +32,7 @@ export class RecontextError extends Error {
       this.name = donor.name
       this.stack = `${donor.message}\n${recontextCalleeLine}\n${donor.stack}\n${remainingStack.join('\n')}`
     } else {
+      this.name = error.name
       this.stack = error.stack
     }
   }
