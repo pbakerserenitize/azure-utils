@@ -9,6 +9,7 @@ import {
 } from '@azure/storage-queue'
 import { probablyBase64, probablyBinary, probablyJson, splitCount } from './Helpers'
 import type { QueueMessageContent, QueuePeekResult, QueueReceiveResult } from './Interfaces'
+import { RecontextError } from './RecontextError'
 
 /** Wrapper for easy handling of queue messages returned by `receive` or `process` methods.
  * Not intended to be used directly; exported for type information.
@@ -181,15 +182,19 @@ class QueueReferenceManager {
   }
 
   private async createIfNotExist (queueName: string): Promise<QueueClient> {
-    const queueClient = this.queueService.getQueueClient(queueName)
-
     try {
-      await queueClient.create()
-    } catch (error) {
-      if (error.statusCode !== 409) throw error
-    }
+      const queueClient = this.queueService.getQueueClient(queueName)
 
-    return queueClient
+      try {
+        await queueClient.create()
+      } catch (error) {
+        if (error.statusCode !== 409) throw new RecontextError(error)
+      }
+
+      return queueClient
+    } catch (error) {
+      throw new RecontextError(error)
+    }
   }
 }
 
@@ -231,7 +236,11 @@ export class QueueService {
   constructor (accountName: string, accountKey: string)
   constructor (accountNameOrConnectionString: string, accountKey?: string) {
     if (typeof accountKey === 'undefined' || accountKey === null || accountKey === '') {
-      this.queueService = QueueServiceClient.fromConnectionString(accountNameOrConnectionString)
+      try {
+        this.queueService = QueueServiceClient.fromConnectionString(accountNameOrConnectionString)
+      } catch (error) {
+        throw new RecontextError(error)
+      }
     } else {
       this.queueService = new QueueServiceClient(
         `https://${accountNameOrConnectionString}.queue.core.windows.net`,
@@ -255,17 +264,21 @@ export class QueueService {
       responses: []
     }
     const queueClient = await this.queues.add(queueName)
-    const response = await queueClient.peekMessages({ numberOfMessages: 1 })
+    try {
+      const response = await queueClient.peekMessages({ numberOfMessages: 1 })
 
-    result.responses.push(response)
+      result.responses.push(response)
 
-    if (response.peekedMessageItems.length > 0) {
-      for (const messageItem of response.peekedMessageItems) result.messageItems.push(messageItem)
+      if (response.peekedMessageItems.length > 0) {
+        for (const messageItem of response.peekedMessageItems) result.messageItems.push(messageItem)
 
-      result.hasMessages = true
+        result.hasMessages = true
+      }
+
+      return result
+    } catch (error) {
+      throw new RecontextError(error)
     }
-
-    return result
   }
 
   /** Receive one or more messages from a queue. */
@@ -280,22 +293,26 @@ export class QueueService {
     const queueClient = await this.queues.add(queueName)
 
     for (const messageCount of splitCount(count)) {
-      const response = await queueClient.receiveMessages({ numberOfMessages: messageCount })
+      try {
+        const response = await queueClient.receiveMessages({ numberOfMessages: messageCount })
 
-      result.responses.push(response)
+        result.responses.push(response)
 
-      // Break out of loop if received message items is not an array or has no messages.
-      if (Array.isArray(response.receivedMessageItems) && response.receivedMessageItems.length > 0) {
-        for (const messageItem of response.receivedMessageItems) {
-          result.messageItems.push(new DequeuedMessage(messageItem))
-        }
+        // Break out of loop if received message items is not an array or has no messages.
+        if (Array.isArray(response.receivedMessageItems) && response.receivedMessageItems.length > 0) {
+          for (const messageItem of response.receivedMessageItems) {
+            result.messageItems.push(new DequeuedMessage(messageItem))
+          }
 
-        if (response.receivedMessageItems.length < messageCount) {
-          // Break out of loop early if the number of messages received is less than the number of messages requested.
+          if (response.receivedMessageItems.length < messageCount) {
+            // Break out of loop early if the number of messages received is less than the number of messages requested.
+            break
+          }
+        } else {
           break
         }
-      } else {
-        break
+      } catch (error) {
+        throw new RecontextError(error)
       }
     }
 
@@ -344,7 +361,11 @@ export class QueueService {
 
     // Should we throw an error if it's undefined?
     if (typeof messageText !== 'undefined') {
-      return await queueClient.sendMessage(messageText)
+      try {
+        return await queueClient.sendMessage(messageText)
+      } catch (error) {
+        throw new RecontextError(error)
+      }
     }
   }
 
@@ -365,7 +386,11 @@ export class QueueService {
   async delete (queueName: string, messageId: string, popReceipt: string): Promise<MessageIdDeleteResponse> {
     const queueClient = await this.queues.add(queueName)
 
-    return await queueClient.deleteMessage(messageId, popReceipt)
+    try {
+      return await queueClient.deleteMessage(messageId, popReceipt)
+    } catch (error) {
+      throw new RecontextError(error)
+    }
   }
 
   /** Mount a queue for processing and handling the lifecycle of each message. */
