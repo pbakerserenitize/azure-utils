@@ -1,4 +1,6 @@
-import { deepStrictEqual, doesNotReject, doesNotThrow, strictEqual } from 'assert'
+import { QueueClient, QueueServiceClient } from '@azure/storage-queue'
+import { deepStrictEqual, doesNotReject, doesNotThrow, rejects, strictEqual } from 'assert'
+import * as sinon from 'sinon'
 import { QueueService } from '../index'
 import { probablyBase64, probablyBinary, probablyJson } from '../lib/Helpers'
 import { connection } from './helpers'
@@ -156,5 +158,74 @@ describe('QueueService', () => {
     strictEqual(probablyBinary(Buffer.from(text1, 'base64').toString('utf8')), true)
     strictEqual(probablyBinary('It\u001as a small\u0002\u0003\u0004\u0005world.'), true)
     strictEqual(probablyBinary(null as unknown as string), false)
+  })
+
+  it('should handle errors', async () => {
+    const error = new Error('My fake error.')
+    const sandbox = sinon.createSandbox()
+
+    sandbox.stub(QueueClient.prototype, 'peekMessages').rejects(error)
+
+    await rejects(async () => {
+      const blobService = new QueueService(connection)
+
+      await blobService.peek('my-queue')
+    })
+
+    sandbox.stub(QueueClient.prototype, 'receiveMessages').rejects(error)
+
+    await rejects(async () => {
+      const blobService = new QueueService(connection)
+
+      await blobService.receive('my-queue')
+    })
+
+    sandbox.stub(QueueClient.prototype, 'sendMessage').rejects(error)
+
+    await rejects(async () => {
+      const blobService = new QueueService(connection)
+
+      await blobService.send('my-queue', 'doogie')
+    })
+
+    await doesNotReject(async () => {
+      const blobService = new QueueService(connection)
+
+      await blobService.sendAll('my-queue', ['doogie'])
+    })
+
+    sandbox.stub(QueueClient.prototype, 'deleteMessage').rejects(error)
+
+    await rejects(async () => {
+      const blobService = new QueueService(connection)
+
+      await blobService.delete('my-queue', '', '')
+    })
+
+    await doesNotReject(async () => {
+      const blobService = new QueueService(connection)
+
+      await blobService.deleteAll('my-queue', [['', '']])
+    })
+
+    sandbox.stub(QueueClient.prototype, 'create').throws(error)
+
+    rejects(async () => {
+      const blobService = new QueueService(connection)
+
+      await blobService.peek('my-queue')
+    })
+
+    sandbox.stub(QueueServiceClient, 'fromConnectionString').throws(error)
+
+    rejects(async () => {
+      new QueueService(connection)
+    })
+
+    rejects(async () => {
+      new QueueService(connection, connection)
+    })
+
+    sandbox.restore()
   })
 })
