@@ -5,6 +5,7 @@ export * from './lib/QueueService'
 export * from './lib/Interfaces'
 export * from './lib/TableWriter'
 export * from './lib/TableWriterBatch'
+export * from './lib/RecontextError'
 
 /** Named export of all Azure Function helpers and interfaces.
  * @category AzureFunctionHelper
