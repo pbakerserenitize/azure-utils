@@ -11,10 +11,6 @@ import { probablyBase64, probablyBinary, probablyJson, splitCount } from './Help
 import type { QueueMessageContent, QueuePeekResult, QueueReceiveResult } from './Interfaces'
 import { RecontextError } from './RecontextError'
 
-/** Wrapper for easy handling of queue messages returned by `receive` or `process` methods.
- * Not intended to be used directly; exported for type information.
- * @category AzureUtility
- */
 export class DequeuedMessage<T = any> implements DequeuedMessageItem {
   constructor (dequeuedMessage: DequeuedMessageItem) {
     this.dequeueCount = dequeuedMessage.dequeueCount
@@ -33,10 +29,8 @@ export class DequeuedMessage<T = any> implements DequeuedMessageItem {
   messageText: string
   nextVisibleOn: Date
   popReceipt: string
-  /** If defined, should contain an instance of Error describing why `toBuffer` or `toJSObject` failed. */
   error?: Error
 
-  /** Convert a base64 string to a Buffer. */
   toBuffer (): Buffer {
     try {
       if (probablyBase64(this.messageText)) {
@@ -51,7 +45,6 @@ export class DequeuedMessage<T = any> implements DequeuedMessageItem {
     }
   }
 
-  /** Convert a base64 string to an object. */
   toJSObject (): T {
     const text = this.toBuffer().toString('utf8')
 
@@ -69,12 +62,8 @@ export class DequeuedMessage<T = any> implements DequeuedMessageItem {
   }
 }
 
-/** A helper class for processing a count of messages from a queue.
- * Not intended to be used directly; exported for type information.
- * @category AzureUtility
- */
 export class ProcessQueue<T = any> implements AsyncIterable<DequeuedMessage<T>> {
-  /** Constructs an instance of the ProcessQueue async iterator. */
+
   constructor (queueName: string, count: number, queueService: QueueService) {
     this.queueName = queueName
     this.poisonQueueName = queueName + '-poison'
@@ -201,7 +190,7 @@ class QueueReferenceManager {
 /** Convenience wrapper for managing queue service instances gracefully.
  *
  * ```javascript
- * const { QueueService } = require('@nhsllc/azure-utils')
+ * const { QueueService } = require('azure-utils')
  *
  * module.exports = async function example (context) {
  *   const queueService = new QueueService(process.env.STORAGE_CONNECTION)

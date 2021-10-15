@@ -64,30 +64,7 @@ class BlobContainerManager {
   }
 }
 
-/** Convenience wrapper for managing blob service instances gracefully.
- *
- * ```javascript
- * const { BlockBlobService } = require('@nhsllc/azure-utils')
- *
- * module.exports = async function example (context) {
- *   const blobService = new BlockBlobService(process.env.STORAGE_CONNECTION)
- *   const container = 'examples'
- *   const json = { hello: 'world' }
- *   const str = 'Hello, world!'
- *   const buf = Buffer.from([20, 30, 40, 50])
- *
- *   await blobService.write(container, 'test.json', json)
- *   await blobService.write(container, 'test.txt', str)
- *   await blobService.write(container, 'test.bin', buf)
- * }
- * ```
- * @category AzureUtility
- */
 export class BlockBlobService {
-  /** Convenience wrapper for managing blob service instances gracefully.
-   * @param {string} accountNameOrConnectionString - The account name or the connection string.
-   * @param {string} [accountKey] - Only required for use with an account name.
-   */
   constructor (accountNameOrConnectionString: string, accountKey?: string) {
     if (typeof accountKey === 'undefined' || accountKey === null || accountKey === '') {
       try {
@@ -108,12 +85,6 @@ export class BlockBlobService {
   blobService: BlobServiceClient
   containers: BlobContainerManager
 
-  /**
-   * Check if a blob exists in a container.
-   * @param {string} blobContainer - The container for the blob.
-   * @param {string} blobName - The name of the blob.
-   * @returns {Promise<boolean>} The contents of the blob; objects and arrays will be jsonified.
-   */
   async has (blobContainer: string, blobName: string): Promise<boolean> {
     const containerClient = await this.containers.add(blobContainer)
     try {
@@ -125,11 +96,6 @@ export class BlockBlobService {
     }
   }
 
-  /**
-   * Delete a blob from a container.
-   * @param {string} blobContainer - The container for the blob.
-   * @param {string} blobName - The name of the blob.
-   */
   async delete (
     blobContainer: string,
     blobName: string
@@ -144,12 +110,6 @@ export class BlockBlobService {
     }
   }
 
-  /**
-   * Write a blob to a container, serializing objects and arrays to JSON.
-   * @param {string} blobContainer - The container for the blob.
-   * @param {string} blobName - The name of the blob.
-   * @param {string|Buffer|Array|object} blobContent - The contents of the blob; objects and arrays will be jsonified.
-   */
   async write (
     blobContainer: string,
     blobName: string,
@@ -169,14 +129,6 @@ export class BlockBlobService {
     }
   }
 
-  /**
-   * Read a blob from a container, optionally parsing JSON.
-   * Always returns a value; receive an empty buffer, or 'null' for empty JSON.
-   * @param {string} blobContainer - The container for the blob.
-   * @param {string} blobName - The name of the blob.
-   * @param {boolean} [json=false] - Parse the blob to JSON.
-   * @returns {Promise<Buffer|string|Record<string, any>|any[]>} The blob contents as a buffer instance.
-   */
   async read (blobContainer: string, blobName: string): Promise<Buffer>
   async read (blobContainer: string, blobName: string, encoding: BufferEncoding): Promise<string>
   async read (blobContainer: string, blobName: string, json: false): Promise<Buffer>
@@ -196,12 +148,10 @@ export class BlockBlobService {
     if (typeof jsonOrEnc === 'boolean' && jsonOrEnc) {
       const buffer = await tryDownload()
 
-      // If file is empty, don't try to parse it.
       if (buffer.length === 0) return null
 
       const content = buffer.toString('utf8')
 
-      // If JSON is expected, don't hide the fact that it is malformed.
       return JSON.parse(content)
     } else if (typeof jsonOrEnc === 'string') {
       const buffer = await tryDownload()
@@ -212,9 +162,6 @@ export class BlockBlobService {
     return await tryDownload()
   }
 
-  /** Read a blob with a fallback blob name.
-   * Always returns a value; receive an empty buffer, or 'null' for empty JSON.
-   */
   async readWithFallback (blobContainer: string, blobName: string, fallbackBlobName: string): Promise<Buffer> {
     if (await this.has(blobContainer, blobName)) {
       return await this.read(blobContainer, blobName)
@@ -222,8 +169,6 @@ export class BlockBlobService {
 
     return await this.read(blobContainer, fallbackBlobName)
   }
-
-  /** Takes an array of inputs, and returns them using Promise.all in the order they were given. */
   async all (inputs: BlobAllDelete[]): Promise<BlobDeleteIfExistsResponse[]>
   async all (inputs: BlobAllRead[]): Promise<Array<Buffer | string | Record<string, any> | any[] | null>>
   async all (inputs: BlobAllWrite[]): Promise<BlockBlobUploadResponse[]>

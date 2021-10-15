@@ -7,7 +7,7 @@ import type { TWBOptions } from './Interfaces'
 /** Helper method which acts as the body of an Azure Function designed for batching table writer instances.
  *
  * ```javascript
- * const { FunctionHelpers } = require('@nhsllc/azure-utils')
+ * const { FunctionHelpers } = require('azure-utils')
  * const { loggerWithDefaults } = require('../shared/rollbar')
  *
  * const logger = loggerWithDefaults()

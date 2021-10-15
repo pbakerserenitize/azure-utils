@@ -6,7 +6,7 @@ import type { QueueBlobMessage } from './Interfaces'
 /** Class for managing one or more TableWriter instances to round-trip into Azure Table Storage.
  *
  * ```javascript
- * const { TableWriterBatch } = require('@nhsllc/azure-utils')
+ * const { TableWriterBatch } = require('azure-utils')
  *
  * module.exports = async function example (context) {
  *   const data = [] // Perhaps some data to generate rows for different table/partition keys

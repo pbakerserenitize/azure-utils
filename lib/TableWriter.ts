@@ -64,7 +64,7 @@ export function safeTableRow (item: LegacyTableRow | TableRow): LegacyTableRow {
 /** Class for managing a complete round-trip of one or more table rows for upsert into Azure Table Storage.
  *
  * ```javascript
- * const { TableWriter } = require('@nhsllc/azure-utils')
+ * const { TableWriter } = require('azure-utils')
  *
  * module.exports = async function example (context) {
  *   const tableRows = [] // Fill up this array with table rows of the same partition key
